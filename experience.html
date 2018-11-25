@@ -1,52 +1,82 @@
----
-layout: page
-title: Experience
-experiences:
-    - title: Work Experiences
-      items:
-        - title: University of Toronto - Workshop Instructor & MSLC Facilitator
-          duration: May 2018 - Present
-          description: >
-            Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/>
-            Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
-        - title: CheaprEats - Co-Founder & System Architect
-          duration: Jan 2018 - Present
-          description: >
-            Co-founded CheaprEats, responsible for designing and maintaining software systems.
-        - title: Trent University - Software Engineering Intern
-          duration: Oct 2017 - May 2018
-          description: >
-            Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.<br/>
-            Tech stack: Angular.js, Socket.io, LESS, MongoDB, and Node.js.<br/>
-            • Improved math equation recognition by tweaking the baseline algorithm used.<br/>
-            • Implemented development tools for the team to automate LESS compilation and Babel transformations, resulted in over 5x development efficiency.<br/>
-            • Developed an image library system that allows user to insert SVG images directly from a pre-built library.
-        - title: University of Saskatchewan - Website Developer Intern
-          duration: Dec 2013 - Jan 2015
-          description: >
-            Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.<br/>
-            Built a fully functional CMS with PHP and MySQL. <br/>
-            Built a website for 25th Canadian Symposium on Catalysis using JavaScript, HTML, CSS, PHP and MySQL.
-    - title: Volunteer Experiences
-      items:
-        - title: TEDxUTSC - Directory of IT
-          duration: Aug 2018 - Present
-          description: >
-            Responsible for developing and maintaining the website.
----
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Experience - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=83dd02c_20181125_135645" rel="stylesheet" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>Experience</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
 
 <section>
     <div class="container">
-        {% for section in page.experiences %}
-            <h2>{{ section.title }}</h2>
-            {% for item in section.items %}
+        
+            <h2>Work Experiences</h2>
+            
                 <div classs="experience-item">
-                    <h3>{{ item.title }}</h3>
-                    <small>{{ item.duration }}</small>
-                    <p>{{ item.description }}</p>
+                    <h3>University of Toronto - Workshop Instructor & MSLC Facilitator</h3>
+                    <small>May 2018 - Present</small>
+                    <p>Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/> Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
+</p>
                 </div>
-            {% endfor %}
-        {% endfor %}
+            
+                <div classs="experience-item">
+                    <h3>CheaprEats - Co-Founder & System Architect</h3>
+                    <small>Jan 2018 - Present</small>
+                    <p>Co-founded CheaprEats, responsible for designing and maintaining software systems.
+</p>
+                </div>
+            
+                <div classs="experience-item">
+                    <h3>Trent University - Software Engineering Intern</h3>
+                    <small>Oct 2017 - May 2018</small>
+                    <p>Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.<br/> Tech stack: Angular.js, Socket.io, LESS, MongoDB, and Node.js.<br/> • Improved math equation recognition by tweaking the baseline algorithm used.<br/> • Implemented development tools for the team to automate LESS compilation and Babel transformations, resulted in over 5x development efficiency.<br/> • Developed an image library system that allows user to insert SVG images directly from a pre-built library.
+</p>
+                </div>
+            
+                <div classs="experience-item">
+                    <h3>University of Saskatchewan - Website Developer Intern</h3>
+                    <small>Dec 2013 - Jan 2015</small>
+                    <p>Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.<br/> Built a fully functional CMS with PHP and MySQL. <br/> Built a website for 25th Canadian Symposium on Catalysis using JavaScript, HTML, CSS, PHP and MySQL.
+</p>
+                </div>
+            
+        
+            <h2>Volunteer Experiences</h2>
+            
+                <div classs="experience-item">
+                    <h3>TEDxUTSC - Directory of IT</h3>
+                    <small>Aug 2018 - Present</small>
+                    <p>Responsible for developing and maintaining the website.
+</p>
+                </div>
+            
+        
         
     </div>
 </section>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 83dd02c_20181125_135645</div>
+    </div>
+</footer>
+</body>
+</html>
