@@ -1,0 +1,52 @@
+---
+layout: page
+title: Experience
+experiences:
+    - title: Work Experiences
+      items:
+        - title: University of Toronto - Workshop Instructor & MSLC Facilitator
+          duration: May 2018 - Present
+          description: >
+            Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/>
+            Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
+        - title: CheaprEats - Co-Founder & System Architect
+          duration: Jan 2018 - Present
+          description: >
+            Co-founded CheaprEats, responsible for designing and maintaining software systems.
+        - title: Trent University - Software Engineering Intern
+          duration: Oct 2017 - May 2018
+          description: >
+            Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.<br/>
+            Tech stack: Angular.js, Socket.io, LESS, MongoDB, and Node.js.<br/>
+            • Improved math equation recognition by tweaking the baseline algorithm used.<br/>
+            • Implemented development tools for the team to automate LESS compilation and Babel transformations, resulted in over 5x development efficiency.<br/>
+            • Developed an image library system that allows user to insert SVG images directly from a pre-built library.
+        - title: University of Saskatchewan - Website Developer Intern
+          duration: Dec 2013 - Jan 2015
+          description: >
+            Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.<br/>
+            Built a fully functional CMS with PHP and MySQL. <br/>
+            Built a website for 25th Canadian Symposium on Catalysis using JavaScript, HTML, CSS, PHP and MySQL.
+    - title: Volunteer Experiences
+      items:
+        - title: TEDxUTSC - Directory of IT
+          duration: Aug 2018 - Present
+          description: >
+            Responsible for developing and maintaining the website.
+---
+
+<section>
+    <div class="container">
+        {% for section in page.experiences %}
+            <h2>{{ section.title }}</h2>
+            {% for item in section.items %}
+                <div classs="experience-item">
+                    <h3>{{ item.title }}</h3>
+                    <small>{{ item.duration }}</small>
+                    <p>{{ item.description }}</p>
+                </div>
+            {% endfor %}
+        {% endfor %}
+        
+    </div>
+</section>
