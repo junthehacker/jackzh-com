@@ -6,15 +6,27 @@ experiences:
       items:
         - title: University of Toronto - Workshop Instructor & MSLC Facilitator
           duration: May 2018 - Present
+          skills:
+            - python
           description: >
             Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/>
             Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
         - title: CheaprEats - Co-Founder & System Architect
           duration: Jan 2018 - Present
+          skills:
+            - javascript
+            - react
+            - graphql
+            - node-js
+            - mongodb
           description: >
             Co-founded CheaprEats, responsible for designing and maintaining software systems.
         - title: Trent University - Software Engineering Intern
           duration: Oct 2017 - May 2018
+          skills:
+            - javascript
+            - socket-io
+            - angular
           description: >
             Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.<br/>
             Tech stack: Angular.js, Socket.io, LESS, MongoDB, and Node.js.<br/>
@@ -23,6 +35,9 @@ experiences:
             • Developed an image library system that allows user to insert SVG images directly from a pre-built library.
         - title: University of Saskatchewan - Website Developer Intern
           duration: Dec 2013 - Jan 2015
+          skills:
+            - php
+            - mysql
           description: >
             Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.<br/>
             Built a fully functional CMS with PHP and MySQL. <br/>
@@ -31,6 +46,8 @@ experiences:
       items:
         - title: TEDxUTSC - Director of IT
           duration: Aug 2018 - Present
+          skills:
+            - scss
           description: >
             Responsible for developing and maintaining the website.
 ---
@@ -40,8 +57,13 @@ experiences:
         {% for section in page.experiences %}
             <h2>{{ section.title }}</h2>
             {% for item in section.items %}
-                <div classs="experience-item">
+                <div class="experience-item">
                     <h3>{{ item.title }}</h3>
+                    <div class="skills-row">
+                        {% for icon in item.skills %}
+                            {% include skill_icon.html icon=icon %}
+                        {% endfor %}
+                    </div>
                     <small>{{ item.duration }}</small>
                     <p>{{ item.description }}</p>
                 </div>
