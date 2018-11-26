@@ -34,5 +34,15 @@ footer {
     font-size: 12px;
     opacity: 0.5; }
 
+.experience-item .skills-row .skill-icon {
+  width: 30px;
+  transition: all ease 0.3s;
+  display: inline-block; }
+  .experience-item .skills-row .skill-icon:hover {
+    transform: scale(1.3);
+    transition: all ease 0.3s; }
+  .experience-item .skills-row .skill-icon .skill-icon-img {
+    width: 100%; }
+
 body {
   font-family: "Shanti", sans-serif; }
