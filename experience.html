@@ -4,14 +4,18 @@ title: Experience
 experiences:
     - title: Work Experiences
       items:
-        - title: University of Toronto - Workshop Instructor & MSLC Facilitator
+        - title: M.Env.Sci Workshop Instructor & MSLC Facilitator
+          company: University of Toronto
+          company_link: https://www.utoronto.ca/
           duration: May 2018 - Present
           skills:
             - python
           description: >
             Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/>
             Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
-        - title: CheaprEats - Co-Founder & System Architect
+        - title: System Architect
+          company: CheaprEats
+          company_link: https://cheapreats.com/
           duration: Jan 2018 - Present
           skills:
             - javascript
@@ -21,35 +25,45 @@ experiences:
             - mongodb
           description: >
             Co-founded CheaprEats, responsible for designing and maintaining software systems.
-        - title: Trent University - Software Engineering Intern
+        - title: Software Engineering Intern
+          company: Trent University
+          company_link: https://www.trentu.ca/
           duration: Oct 2017 - May 2018
           skills:
             - javascript
             - socket-io
             - angular
           description: >
-            Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.<br/>
-            Tech stack: Angular.js, Socket.io, LESS, MongoDB, and Node.js.<br/>
-            • Improved math equation recognition by tweaking the baseline algorithm used.<br/>
-            • Implemented development tools for the team to automate LESS compilation and Babel transformations, resulted in over 5x development efficiency.<br/>
-            • Developed an image library system that allows user to insert SVG images directly from a pre-built library.
-        - title: University of Saskatchewan - Website Developer Intern
+            Developed key features for a math collaboration software at UofT & TrentU. The project is presented at TKF conference in Toronto, and used in MSLC at UofT.
+        - title: Website Developer Intern
+          company: University of Saskatchewan
+          company_link: https://www.usask.ca/
           duration: Dec 2013 - Jan 2015
           skills:
             - php
             - mysql
           description: >
-            Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.<br/>
-            Built a fully functional CMS with PHP and MySQL. <br/>
-            Built a website for 25th Canadian Symposium on Catalysis using JavaScript, HTML, CSS, PHP and MySQL.
+            Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.
     - title: Volunteer Experiences
       items:
-        - title: TEDxUTSC - Director of IT
+        - title: Director of IT
+          company: Hack The Valley
+          company_link: https://hackthevalley.io
+          duration: Aug 2017 - Present
+          skills:
+            - javascript
+            - react
+            - node-js
+          description: >
+            One of the primary signing authority of Hack The Valley. Responsible for designing and implementing IT systems.
+        - title: Director of IT
+          company: TEDxUTSC
+          company_link: https://tedxutsc.com
           duration: Aug 2018 - Present
           skills:
             - scss
           description: >
-            Responsible for developing and maintaining the website.
+            Responsible for developing and maintaining the website. Manage associates, and develop the conference IT infrastructure.
 ---
 
 <section>
@@ -58,14 +72,16 @@ experiences:
             <h2>{{ section.title }}</h2>
             {% for item in section.items %}
                 <div class="experience-item">
-                    <h3>{{ item.title }}</h3>
+                    <h3>{{ item.title }} <a href="{{ item.company_link }}"><small>{{ item.company }}</small></a></h3>
                     <div class="skills-row">
                         {% for icon in item.skills %}
                             {% include skill_icon.html icon=icon %}
                         {% endfor %}
                     </div>
                     <small>{{ item.duration }}</small>
-                    <p>{{ item.description }}</p>
+                    <div class="description">
+                      <p>{{ item.description }}</p>
+                    </div>
                 </div>
             {% endfor %}
         {% endfor %}

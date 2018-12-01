@@ -1,4 +1,14 @@
 .experience-item {
+    border-top: rgba(0,0,0,0.1) 1px solid;
+    h3 {
+        a:link,
+        a:visited {
+            color: black;
+        }
+        small {
+            opacity: 0.7;
+        }
+    }
     .skills-row {
         .skill-icon {
             width: 30px;
@@ -11,6 +21,12 @@
             .skill-icon-img {
                 width: 100%;
             }
+        }
+    }
+    .description {
+        &.collapsed {
+            opacity: 0;
+            height: 0;
         }
     }
 }

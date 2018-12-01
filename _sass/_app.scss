@@ -9,3 +9,43 @@
 body {
     font-family: $primary-font;
 }
+
+.striked {
+    background-color: black;
+    cursor: default;
+    transition: all ease 0.1s;
+    &:hover {
+        background-color: white;
+        transition: all ease 0.1s;
+    }
+    opacity: 0.5;
+}
+
+.super-small {
+    font-size: small;
+}
+
+img {
+    &.thumb {
+        max-height: 100px;
+        transition: all ease 0.1s;
+        &:hover {
+            transform: scale(1.1);
+            transition: all ease 0.1s;
+        }
+    }
+}
+
+a {
+    &.home-large {
+        color: black;
+        font-size: 20px;
+        text-decoration: none;
+        padding-right: 30px;
+        transition: all ease 0.3s;
+        &:hover {
+            padding-left: 10px;
+            transition: all ease 0.3s;
+        }
+    }
+}
