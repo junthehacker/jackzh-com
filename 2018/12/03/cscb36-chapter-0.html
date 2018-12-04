@@ -4,8 +4,9 @@
         <title>CSCB36 Theory of Computation - Chapter 0 - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=a30b3e4_20181204_063517" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=2544649_20181204_073256" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
     </head>
@@ -28,8 +29,11 @@
     </div>
 </nav>
 
-<div class="container">
-<p><code class="highlighter-rouge">These are notes I have taken for CSCB36/236 at UofT.</code></p>
+<div class="container post-content">
+<div class="js-toc"></div>
+<p>Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</p>
+
+<!--more-->
 
 <h2 id="sets">Sets</h2>
 
@@ -57,15 +61,43 @@
 
 <ul>
   <li>$A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$.</li>
-  <li>$B \supseteq A$</li>
+  <li>$B \supseteq A$: If $A \subseteq B$ then this holds.</li>
+  <li>$A \subseteq B$ and $B \subseteq A$ then $A = B$.</li>
+  <li>$A \subseteq B$ and $A \neq B$ then $A$ is a proper subset of $B$, or $A \subset B$.</li>
+  <li>$B \supset A$ if $A \subset B$.</li>
 </ul>
+
+<p>Interesting properties:</p>
+
+<p>$\emptyset \subseteq A$ for all set $A$.</p>
+
+<p>$\emptyset \subset A$ for all set $A \neq \emptyset$.</p>
+
+<h3 id="set-operations">Set Operations</h3>
+
+<ul>
+  <li>
+    <p>Union of $A$ and $B$ or $A \cup B$, is the set of elements that belongs to $A$ or $B$.</p>
+  </li>
+  <li>
+    <p>Intersection of $A$ and $B$ or $A \cap B$, is the set of element that belongs to $A$ and $B$. If $A \cap B = \emptyset$, then $A$ and $B$ are disjoint.</p>
+  </li>
+  <li>
+    <p>Difference of $A$ and $B$ or $A - B$, is the set of elements that belong to $A$ but not to $B$.</p>
+  </li>
+</ul>
+
+<h4 id="arbitrary-number-of-operations">Arbitrary Number of Operations</h4>
+
+<p>fadsf</p>
 
 </div>
 
 <footer>
     <div class="container">
-        <div class="build">[production] a30b3e4_20181204_063517</div>
-        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com
+        <div class="build">[production] 2544649_20181204_073256</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
     </div>
 </footer>
 <script
@@ -75,6 +107,21 @@
 <script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
-<script src="/assets/js/app.js?v=a30b3e4_20181204_063517"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=2544649_20181204_073256"></script>
 </body>
 </html>
+
+<script>
+    tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.js-toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.post-content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h2, h3, h4, h5',
+    collapseDepth: 6
+    });
+    stickybits('.js-toc');
+</script>

@@ -1,4 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-04T06:35:17-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="https://jackzh.com/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="https://jackzh.com/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;These are notes I have taken for CSCB36/236 at UofT.&lt;/code&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-04T07:32:57-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="https://jackzh.com/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="https://jackzh.com/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.&lt;/p&gt;
+
+&lt;!--more--&gt;
 
 &lt;h2 id=&quot;sets&quot;&gt;Sets&lt;/h2&gt;
 
@@ -26,5 +28,32 @@
 
 &lt;ul&gt;
   &lt;li&gt;$A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$.&lt;/li&gt;
-  &lt;li&gt;$B \supseteq A$&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><summary type="html">These are notes I have taken for CSCB36/236 at UofT. Sets If an object is $a$ in $A$, then we write $a \in A$, if not, we write $a \notin A$. If a set has 0 elements, we call that an empty set, or $\emptyset$. Number of elements within a set $A$ is called its size or cardinality, denoted by $|A|$. For infinite set $A$, $|A| = \infty$ For empty set $\emptyset$, $|\emptyset| = 0$ Describing Sets There are 2 ways to describe sets. Extensional: List all elements within a set. For example $\{1,2,3\}$. Intensional: Describle the set with format $\{x: \text{x is odd number}\}$. Relationship Between Sets $A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$. $B \supseteq A$</summary></entry></feed>
+  &lt;li&gt;$B \supseteq A$: If $A \subseteq B$ then this holds.&lt;/li&gt;
+  &lt;li&gt;$A \subseteq B$ and $B \subseteq A$ then $A = B$.&lt;/li&gt;
+  &lt;li&gt;$A \subseteq B$ and $A \neq B$ then $A$ is a proper subset of $B$, or $A \subset B$.&lt;/li&gt;
+  &lt;li&gt;$B \supset A$ if $A \subset B$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Interesting properties:&lt;/p&gt;
+
+&lt;p&gt;$\emptyset \subseteq A$ for all set $A$.&lt;/p&gt;
+
+&lt;p&gt;$\emptyset \subset A$ for all set $A \neq \emptyset$.&lt;/p&gt;
+
+&lt;h3 id=&quot;set-operations&quot;&gt;Set Operations&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;Union of $A$ and $B$ or $A \cup B$, is the set of elements that belongs to $A$ or $B$.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Intersection of $A$ and $B$ or $A \cap B$, is the set of element that belongs to $A$ and $B$. If $A \cap B = \emptyset$, then $A$ and $B$ are disjoint.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Difference of $A$ and $B$ or $A - B$, is the set of elements that belong to $A$ but not to $B$.&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;
+
+&lt;p&gt;fadsf&lt;/p&gt;</content><author><name></name></author><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry></feed>

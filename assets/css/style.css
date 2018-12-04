@@ -53,6 +53,12 @@ footer {
     opacity: 0;
     height: 0; }
 
+.js-toc {
+  float: right; }
+
+.toc-list li {
+  list-style: none; }
+
 body {
   font-family: "Shanti", sans-serif; }
 
