@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB36 Theory of Computation - Chapter 5 - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=3ba99df_20181204_135553" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB36 Theory of Computation - Chapter 5</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container post-content">
+<div class="js-toc"></div>
+<p>Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</p>
+
+<!--more-->
+
+<h2 id="propositional-formulas">Propositional Formulas</h2>
+
+<p>Let $PV$ be a set of propositional variables. The set of propositional formulas, denoted $F_{PV}$ is the smallest set such that:</p>
+
+<p>Basis: Any propositional variable in $PV$ belongs to $F_{PV}$.</p>
+
+<p>Induction Step: If $P_1$ and $P_2$ belong to $F_{PV}$ then so do the following:</p>
+
+<ul>
+  <li>$\neg P_1$</li>
+  <li>$P_1 \wedge P_2$</li>
+  <li>$P_1 \vee P_2$</li>
+  <li>$P_1 \to P_2$</li>
+  <li>$P_1 \iff P_2$</li>
+</ul>
+
+<blockquote>
+  <p>Note: $\neg$ is called unary connective, since it is applied to one subformula, others are called binary connectives.</p>
+</blockquote>
+
+<h3 id="tree-representation-of-f_pv">Tree Representation of $F_{PV}$</h3>
+
+<p>Propositional formulas can be nicely drawn using trees.</p>
+
+<p>For example, the formula $(a \vee b) \wedge \neg c$ can be drawn as</p>
+
+<p><img src="https://www.evernote.com/l/Aq2DY6PnR7hE5YEXbjpYhMppeUPxTWE4VvQB/image.png" alt="Tree" /></p>
+
+<h2 id="truth-assignment">Truth Assignment</h2>
+
+<p>Let $PV$ be a set of propositional variables. A truth assignment is a function $r: PV \to \{0, 1\}$.</p>
+
+<p>A truth assignment tells us, for each propositional variable, whether it represents a proposition that is true or false.</p>
+
+<h2 id="extended-truth-assignment">Extended Truth Assignment</h2>
+
+<p>Extended truth assignment can be used to assign a truth value to any propositional formula, given that you have $r$.</p>
+
+<p>Let $r: PV \to \{0,1\}$. Define a function $r^*:F_{PV} \to \{0,1\}$ so it is the smallest set such that:</p>
+
+<p>Basis: $P \in PV$. In this case, $r^*(P) = r(P)$.</p>
+
+<p>Induction step: $P \notin PV$. Then there are $Q_1, Q_2 \in F_{PV}$ such that $P$ is one of the following formula: $\neg Q_1$, $(Q_1 \wedge Q_2)$, $(Q_1 \vee Q_2)$, $(Q_1 \to Q_2)$, and $(Q_1 \iff Q_2)$.</p>
+
+<p>By induction, we can assume $r^*(Q_1)$ and $r^*(Q_2)$ are already known.</p>
+
+<p>The function for all 5 cases are ignored since they should be trivial to figure out.</p>
+
+<p>If $r^*(P) = 0$ then we say $r$ falsifies $P$, otherwise it satisfies $P$.</p>
+
+<h2 id="some-notes-on-logical-connectives">Some Notes on Logical Connectives</h2>
+
+<h3 id="inclusive--exclusive-or">Inclusive / Exclusive OR</h3>
+
+<p>When OR is inclusive, that means if $A$ and $B$ are both true, then the whole statement is still true.</p>
+
+<p>When it is exclusive, it means if $A$ and $B$ are both true, then the statement is false.</p>
+
+<p>In formal math, we always use inclusive or, we have a special connective for exclusive or, namely xor.</p>
+
+<h2 id="unique-readability-theorem">Unique Readability Theorem</h2>
+
+<p>For any propositional formulas $P_1, P_2, Q_1, Q_2$ and binary connectives $+$ and $-$. If $(P_1 + P_2) = (Q_1 - Q_2)$ then $P_1 = Q_1$, $+ = -$ and $P_2 = Q_2$.</p>
+
+<p>This theroem basically states, there is only one way to construct a formula. However, if we omit the parentheses this is not going to be true anymore.</p>
+
+<p>Even use of parentheses is nice, but usually they are not necessary, so we use some conventions.</p>
+
+<h3 id="conventions-to-omit-parentheses">Conventions to Omit Parentheses</h3>
+
+<ul>
+  <li>
+    <p>There is no need to write outmost parentheses, say $(a \wedge b)$ is the same as $a \wedge b$.</p>
+  </li>
+  <li>
+    <p>$\wedge$ and $\vee$ have precedence over $\to$ and $\iff$.</p>
+  </li>
+  <li>
+    <p>$\wedge$ has precedence over $\vee$.</p>
+  </li>
+  <li>
+    <p>Grouping is assumed to be to the right, $a \to b \to c$ is the same as $a \to (b \to c)$</p>
+  </li>
+</ul>
+
+<h2 id="truth-tables">Truth Tables</h2>
+
+<p>A truth table of $P$ tells us the truth value of $P$ under all possible truth assignments.</p>
+
+<p>For example, $x \vee y \to \neg x \wedge z$, the truth table is going to be:</p>
+
+<p><img src="https://www.evernote.com/l/Aq0DNUDHAlpOW5DOxvSrddvXRNa2T8VFCLgB/image.png" alt="" /></p>
+
+<h2 id="tautologies-and-satisfiability">Tautologies and Satisfiability</h2>
+
+<ul>
+  <li>$P$ is a tautology iff every truth assignment satisfies $P$.</li>
+  <li>$P$ is satisfiable iff there is a truth assignment that satisfied $P$.</li>
+  <li>$P$ is unsatisfiable iff it is not satisfiable. In another word, $\neg P$ is a tautology.</li>
+</ul>
+
+<h2 id="logical-implication">Logical Implication</h2>
+
+<p><strong>Definition</strong>: A propositional formula $P$ logically implies propositional formula $Q$ if and only if every truth assignment that satisfies $P$ also satisfies $Q$.</p>
+
+<p><strong>Theorem</strong>: $P$ logically implies $Q$ iff $P \to Q$ is a tautology.</p>
+
+<h2 id="logical-equivalence">Logical Equivalence</h2>
+
+<p><strong>Definition</strong>: $P$ is logically equivalent to $Q$ iff $P$ logically implis $Q$ and $Q$ logically implies $P$.</p>
+
+<p>Properties of logical equivalence:</p>
+
+<ul>
+  <li>Reflexivity: $P$ is logically equivalent to $P$.</li>
+  <li>Symmetry: If $P$ is logically equivalent to $Q$ and $Q$ is logically equivalent to $P$.</li>
+  <li>Transitivity: If $P$ is logically equivalent to $Q$, and $Q$ is logically equivalent to $R$, then $P$ is logically equivalent to $R$.</li>
+</ul>
+
+<p><strong>Theorem</strong>: $P$ is logically equivalent to $Q$ iff $P \iff Q$ is a tautology.</p>
+
+<h2 id="important-equivalence-laws">Important Equivalence Laws</h2>
+
+
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 3ba99df_20181204_135553</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=3ba99df_20181204_135553"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.js-toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.post-content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h2, h3, h4, h5',
+    collapseDepth: 6
+    });
+    stickybits('.js-toc');
+</script>
