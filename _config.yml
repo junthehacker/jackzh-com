@@ -24,6 +24,10 @@ url: "https://jackzh.com"
 twitter_username: jekyllrb
 github_username:  jekyll
 
+collections:
+  - _pages
+include: 
+  - '_pages'
 # Build settings
 markdown: kramdown
 theme: minima
