@@ -53,12 +53,27 @@ footer {
     opacity: 0;
     height: 0; }
 
+.post-content {
+  padding-right: 260px; }
+
 .js-toc {
+  width: 250px;
+  padding-top: 20px;
   float: right; }
 
 .toc-list li {
-  list-style: none; }
+  list-style: none;
+  font-size: 12px; }
 
+.is-active-link::before {
+  background-color: black !important; }
+
+@media screen and (max-width: 768px) {
+  .post-content {
+    padding-right: 0; }
+
+  .js-toc {
+    display: none; } }
 body {
   font-family: "Shanti", sans-serif; }
 
