@@ -1,1 +1,30 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2018-12-01T14:17:08-05:00</updated><id>/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle></feed>
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2018-12-04T06:15:58-05:00</updated><id>/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;These are notes I have taken for CSCB36/236 at UofT.&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;sets&quot;&gt;Sets&lt;/h2&gt;
+
+&lt;p&gt;If an object is $a$ in $A$, then we write $a \in A$, if not, we write $a \notin A$.&lt;/p&gt;
+
+&lt;p&gt;If a set has 0 elements, we call that an &lt;em&gt;empty set&lt;/em&gt;, or $\emptyset$.&lt;/p&gt;
+
+&lt;p&gt;Number of elements within a set $A$ is called its size or cardinality, denoted by $|A|$.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;For infinite set $A$, $|A| = \infty$&lt;/li&gt;
+  &lt;li&gt;For empty set $\emptyset$, $|\emptyset| = 0$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;describing-sets&quot;&gt;Describing Sets&lt;/h3&gt;
+
+&lt;p&gt;There are 2 ways to describe sets.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Extensional: List all elements within a set. For example $\{1,2,3\}$.&lt;/li&gt;
+  &lt;li&gt;Intensional: Describle the set with format $\{x: \text{x is odd number}\}$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;relationship-between-sets&quot;&gt;Relationship Between Sets&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$.&lt;/li&gt;
+  &lt;li&gt;$B \supseteq A$&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><summary type="html">These are notes I have taken for CSCB36/236 at UofT. Sets If an object is $a$ in $A$, then we write $a \in A$, if not, we write $a \notin A$. If a set has 0 elements, we call that an empty set, or $\emptyset$. Number of elements within a set $A$ is called its size or cardinality, denoted by $|A|$. For infinite set $A$, $|A| = \infty$ For empty set $\emptyset$, $|\emptyset| = 0$ Describing Sets There are 2 ways to describe sets. Extensional: List all elements within a set. For example $\{1,2,3\}$. Intensional: Describle the set with format $\{x: \text{x is odd number}\}$. Relationship Between Sets $A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$. $B \supseteq A$</summary></entry></feed>
