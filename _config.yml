@@ -23,7 +23,7 @@ baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://jackzh.com"
 twitter_username: jekyllrb
 github_username:  jekyll
-
+excerpt_separator: <!--more-->
 collections:
   - _pages
 include: 

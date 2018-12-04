@@ -2,9 +2,23 @@
 {% include partials/header.html %}
 {% include partials/navigation.html %}
 
-<div class="container">
+<div class="container post-content">
+<div class="js-toc"></div>
 {{ content }}
 </div>
 
 {% include partials/footer.html %}
 {% include partials/foot.html %}
+
+<script>
+    tocbot.init({
+    // Where to render the table of contents.
+    tocSelector: '.js-toc',
+    // Where to grab the headings to build the table of contents.
+    contentSelector: '.post-content',
+    // Which headings to grab inside of the contentSelector element.
+    headingSelector: 'h2, h3, h4, h5',
+    collapseDepth: 6
+    });
+    stickybits('.js-toc');
+</script>
