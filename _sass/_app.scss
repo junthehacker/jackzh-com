@@ -1,11 +1,11 @@
-@import "_variables";
+@import "variables";
 
-@import "_containers";
-@import "_header";
-@import "_navigation";
-@import "_footer";
-@import "_experience";
-@import "_post";
+@import "containers";
+@import "header";
+@import "navigation";
+@import "footer";
+@import "experience";
+@import "post";
 
 body {
     font-family: $primary-font;
