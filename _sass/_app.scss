@@ -50,3 +50,13 @@ a {
         }
     }
 }
+
+blockquote {
+    border-left: rgba(0,0,0,0.2) 5px solid;
+    padding-left: 10px;
+    font-style: italic;
+}
+
+img {
+    max-width: 90%;
+}
