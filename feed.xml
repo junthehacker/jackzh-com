@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-04T15:10:32-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 5</title><link href="https://jackzh.com/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-05T11:21:08-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 5</title><link href="https://jackzh.com/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -123,7 +123,60 @@
 
 &lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $P$ is logically equivalent to $Q$ iff $P \iff Q$ is a tautology.&lt;/p&gt;
 
-&lt;h2 id=&quot;important-equivalence-laws&quot;&gt;Important Equivalence Laws&lt;/h2&gt;</content><author><name></name></author><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="https://jackzh.com/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="https://jackzh.com/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.&lt;/p&gt;
+&lt;h2 id=&quot;important-equivalence-laws&quot;&gt;Important Equivalence Laws&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\neg \neg P \equiv P$&lt;/li&gt;
+  &lt;li&gt;$\neg (P \wedge Q) \equiv \neg P \vee \neg Q$&lt;/li&gt;
+  &lt;li&gt;$\neg (P \vee Q) \equiv \neg P \wedge \neg Q$&lt;/li&gt;
+  &lt;li&gt;$P \wedge Q \equiv Q \wedge P$&lt;/li&gt;
+  &lt;li&gt;$P \vee Q \equiv Q \vee P$&lt;/li&gt;
+  &lt;li&gt;$P \wedge (Q \wedge R) \equiv (P \wedge Q) \wedge R$&lt;/li&gt;
+  &lt;li&gt;$P \vee (Q \vee R) \equiv (P \vee Q) \vee R$&lt;/li&gt;
+  &lt;li&gt;$P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$&lt;/li&gt;
+  &lt;li&gt;$P \vee (Q \wedge R) \equiv (P \vee Q) \wedge (P \vee R)$&lt;/li&gt;
+  &lt;li&gt;$P \wedge (Q \vee \neg Q) \equiv P$&lt;/li&gt;
+  &lt;li&gt;$P \vee (Q \wedge \neg Q) \equiv P$&lt;/li&gt;
+  &lt;li&gt;$P \wedge P \equiv P$&lt;/li&gt;
+  &lt;li&gt;$P \vee P \equiv P$&lt;/li&gt;
+  &lt;li&gt;$P \to Q \equiv \neg P \vee Q$&lt;/li&gt;
+  &lt;li&gt;$P \to Q \equiv \neg Q \to \neg P$&lt;/li&gt;
+  &lt;li&gt;$P \iff Q \equiv P \wedge Q \vee \neg P \wedge \neg Q$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: Let $R$ be any propositional formula, $S$ be any subformula of $R$, $S’$ be any formula that is logically equivalent to $S$, and $R’$ be the formula that results from $R$ by replacing $S$ with $S’$. Then $R’$ is logically equivalent to $R$.&lt;/p&gt;
+
+&lt;h2 id=&quot;normal-forms-of-propositional-formulas&quot;&gt;Normal Forms of Propositional Formulas&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Literal - Only have one propositional variable or the negation of that variable.&lt;/li&gt;
+  &lt;li&gt;Minterm - Is a literal, or a conjuction of two or more literals.&lt;/li&gt;
+  &lt;li&gt;Maxterm - Is a literal, or a disjunction of two or more literals.&lt;/li&gt;
+  &lt;li&gt;Disjunctive Normal Form - Is minterm, or a disjunction of two or more minterms.&lt;/li&gt;
+  &lt;li&gt;Conjunctive Normal Form - Is maxterm, or a conjunction of two or more maxterms.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;They talked about circuit design, already took B58 which covers way more details, not going to take notes here.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;complete-sets-of-connectives&quot;&gt;Complete Sets of Connectives&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: A set of connectives is complete iff every boolean function can be represented by a propositional formula that uses only connectives from that set.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $\{\neg, \wedge, \vee\}$ is a complete set of connectives.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $\{\neg, \wedge\}$ is a complete set of connectives.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $\{\neg, \vee\}$ is a complete set of connectives.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $\{|\}$ is a complete set of connectives (NAND).&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorem&lt;/strong&gt;: $\{\downarrow\}$ is a complete set of connectives (NOR).&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$\oplus$ is exclusive or.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="https://jackzh.com/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>https://jackzh.com/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="https://jackzh.com/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.&lt;/p&gt;
 
 &lt;!--more--&gt;
 

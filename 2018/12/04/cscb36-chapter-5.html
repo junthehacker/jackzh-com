@@ -4,7 +4,7 @@
         <title>CSCB36 Theory of Computation - Chapter 5 - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=4a6ec11_20181204_151031" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=cd7e580_20181205_112107" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -30,9 +30,9 @@
 </nav>
 
 <div class="container">
-<div class="js-toc"></div>
-<div class="post-content">
-<p>Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</p>
+    <div class="js-toc"></div>
+    <div class="post-content">
+        <p>Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</p>
 
 <!--more-->
 
@@ -159,13 +159,65 @@
 
 <h2 id="important-equivalence-laws">Important Equivalence Laws</h2>
 
+<ul>
+  <li>$\neg \neg P \equiv P$</li>
+  <li>$\neg (P \wedge Q) \equiv \neg P \vee \neg Q$</li>
+  <li>$\neg (P \vee Q) \equiv \neg P \wedge \neg Q$</li>
+  <li>$P \wedge Q \equiv Q \wedge P$</li>
+  <li>$P \vee Q \equiv Q \vee P$</li>
+  <li>$P \wedge (Q \wedge R) \equiv (P \wedge Q) \wedge R$</li>
+  <li>$P \vee (Q \vee R) \equiv (P \vee Q) \vee R$</li>
+  <li>$P \wedge (Q \vee R) \equiv (P \wedge Q) \vee (P \wedge R)$</li>
+  <li>$P \vee (Q \wedge R) \equiv (P \vee Q) \wedge (P \vee R)$</li>
+  <li>$P \wedge (Q \vee \neg Q) \equiv P$</li>
+  <li>$P \vee (Q \wedge \neg Q) \equiv P$</li>
+  <li>$P \wedge P \equiv P$</li>
+  <li>$P \vee P \equiv P$</li>
+  <li>$P \to Q \equiv \neg P \vee Q$</li>
+  <li>$P \to Q \equiv \neg Q \to \neg P$</li>
+  <li>$P \iff Q \equiv P \wedge Q \vee \neg P \wedge \neg Q$</li>
+</ul>
 
-</div>
+<p><strong>Theorem</strong>: Let $R$ be any propositional formula, $S$ be any subformula of $R$, $S’$ be any formula that is logically equivalent to $S$, and $R’$ be the formula that results from $R$ by replacing $S$ with $S’$. Then $R’$ is logically equivalent to $R$.</p>
+
+<h2 id="normal-forms-of-propositional-formulas">Normal Forms of Propositional Formulas</h2>
+
+<ul>
+  <li>Literal - Only have one propositional variable or the negation of that variable.</li>
+  <li>Minterm - Is a literal, or a conjuction of two or more literals.</li>
+  <li>Maxterm - Is a literal, or a disjunction of two or more literals.</li>
+  <li>Disjunctive Normal Form - Is minterm, or a disjunction of two or more minterms.</li>
+  <li>Conjunctive Normal Form - Is maxterm, or a conjunction of two or more maxterms.</li>
+</ul>
+
+<blockquote>
+  <p>They talked about circuit design, already took B58 which covers way more details, not going to take notes here.</p>
+</blockquote>
+
+<h2 id="complete-sets-of-connectives">Complete Sets of Connectives</h2>
+
+<p><strong>Definition</strong>: A set of connectives is complete iff every boolean function can be represented by a propositional formula that uses only connectives from that set.</p>
+
+<p><strong>Theorem</strong>: $\{\neg, \wedge, \vee\}$ is a complete set of connectives.</p>
+
+<p><strong>Theorem</strong>: $\{\neg, \wedge\}$ is a complete set of connectives.</p>
+
+<p><strong>Theorem</strong>: $\{\neg, \vee\}$ is a complete set of connectives.</p>
+
+<p><strong>Theorem</strong>: $\{|\}$ is a complete set of connectives (NAND).</p>
+
+<p><strong>Theorem</strong>: $\{\downarrow\}$ is a complete set of connectives (NOR).</p>
+
+<blockquote>
+  <p>$\oplus$ is exclusive or.</p>
+</blockquote>
+
+    </div>
 </div>
 
 <footer>
     <div class="container">
-        <div class="build">[production] 4a6ec11_20181204_151031</div>
+        <div class="build">[production] cd7e580_20181205_112107</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         <a href="/opensource.html">Open Source</a>
     </div>
@@ -179,7 +231,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
-<script src="/assets/js/app.js?v=4a6ec11_20181204_151031"></script>
+<script src="/assets/js/app.js?v=cd7e580_20181205_112107"></script>
 </body>
 </html>
 
