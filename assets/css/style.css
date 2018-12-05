@@ -10,6 +10,12 @@ header {
     color: rgba(0, 0, 0, 0.5);
     font-size: 20px; }
 
+@media screen and (max-width: 768px) {
+  header h1 small {
+    display: block; } }
+@media screen and (max-width: 575px) {
+  header h1 small {
+    font-size: 16px; } }
 .navbar {
   border-bottom: rgba(0, 0, 0, 0.1) 1px solid; }
   .navbar ul {
@@ -68,6 +74,12 @@ footer {
 .is-active-link::before {
   background-color: black !important; }
 
+.post-tag {
+  background-color: rgba(0, 0, 0, 0.05);
+  padding: 5px;
+  border-radius: 3px;
+  color: rgba(0, 0, 0, 0.5); }
+
 @media screen and (max-width: 768px) {
   .post-content {
     padding-right: 0; }
@@ -105,3 +117,11 @@ a.home-large {
   a.home-large:hover {
     padding-left: 10px;
     transition: all ease 0.3s; }
+
+blockquote {
+  border-left: rgba(0, 0, 0, 0.2) 5px solid;
+  padding-left: 10px;
+  font-style: italic; }
+
+img {
+  max-width: 90%; }
