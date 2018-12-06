@@ -86,6 +86,22 @@ footer {
 
   .js-toc {
     display: none; } }
+.contact-list {
+  margin: 0;
+  padding: 0; }
+  .contact-list li {
+    list-style: none;
+    font-size: 20px;
+    padding-bottom: 20px; }
+    .contact-list li i {
+      font-size: 30px;
+      opacity: 0.5;
+      padding-right: 20px; }
+    .contact-list li a:link,
+    .contact-list li a:visited {
+      color: black;
+      text-decoration: none; }
+
 body {
   font-family: "Shanti", sans-serif; }
 

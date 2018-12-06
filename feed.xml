@@ -1,4 +1,141 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-05T11:42:52-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 5 Propositional Logic</title><link href="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5 Propositional Logic" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-06T12:45:06-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 6 Predicate Logic</title><link href="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 6 Predicate Logic" /><published>2018-12-05T00:00:00-05:00</published><updated>2018-12-05T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;Predicate logic is a generalisation of propositional logic.&lt;/p&gt;
+
+&lt;p&gt;A predicate is a boolean-valued function. The set $D$ of possible values for a predicate’s arguments is called its domain of discourse. The number $n$ of a predicate’s arguments is called it arity. So a n-ary predicate with domain of discourse $D$ is the function: $P: D \times D \times … \times D \to \{0,1\}$.&lt;/p&gt;
+
+&lt;h2 id=&quot;combining-predicates&quot;&gt;Combining Predicates&lt;/h2&gt;
+
+&lt;h3 id=&quot;using-propositional-connectives&quot;&gt;Using Propositional Connectives&lt;/h3&gt;
+
+&lt;p&gt;We can use propositional connectives to combine predicates, for example:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$S(x)$ - $x$ loves watching TV shows.&lt;/li&gt;
+  &lt;li&gt;$A(x)$ - $x$ loves watching anime.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;We can then conveniently connect them to form new predicates:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$S(x) \wedge \neg A(x)$ - $x$ loves watching TV shows but not anime.&lt;/li&gt;
+  &lt;li&gt;$A(x) \to S(x)$ - If $x$ loves anime, then $x$ must also like TV shows.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;using-quantifiers&quot;&gt;Using Quantifiers&lt;/h3&gt;
+
+&lt;p&gt;We can also use quantifiers, there are 2 main ones:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\exists x A$ - This is true if there is at least one $x$ so that $A$ holds. (existential quantifier)&lt;/li&gt;
+  &lt;li&gt;$\forall x A$ - This is true if for all possible value of $x$, $A$ holds. (universal quantifier)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Take from above example, we can construct the following predicates:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\exists x (S(x) \wedge A(x))$ - There exists $x$ who likes TV shows and anime.&lt;/li&gt;
+  &lt;li&gt;$\forall x (A(x) \to S(x))$ - For all $x$, if $x$ likes anime, then $x$ must also like TV shows.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;syntax-of-predicate-logic&quot;&gt;Syntax of Predicate Logic&lt;/h2&gt;
+
+&lt;h3 id=&quot;first-order-languages&quot;&gt;First-order Languages&lt;/h3&gt;
+
+&lt;p&gt;A first-order lanauge contains:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Infinite set of variables.&lt;/li&gt;
+  &lt;li&gt;Set of predicate symbols.&lt;/li&gt;
+  &lt;li&gt;Set of constant symbols.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All symbols within the language, alongside with connectives, quantifiers, parentheses and comma constitute the basic vocabulary of first-order formulas.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;First-order language with equality is just the language that includes $\approx$ predicate symbol.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;formulas&quot;&gt;Formulas&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A term of $L$ is a variable or a constant symbol.&lt;/li&gt;
+  &lt;li&gt;An atomic formula of $L$ is an expression of the form $A(t_1, t_2,…)$ ($A$ is a predicate symbol).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: The set of first-order formulate of $L$ is the smallest set such that:&lt;/p&gt;
+
+&lt;p&gt;Basis: Any atomic formula is in the set.&lt;/p&gt;
+
+&lt;p&gt;Induction Step: If $F_1$ and $F_2$ are in the set, and $x$ is a variable of $L$ then the following are also in the set:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\neg F_1$&lt;/li&gt;
+  &lt;li&gt;$(F_1 \wedge F_2)$&lt;/li&gt;
+  &lt;li&gt;$(F_1 \vee F_2)$&lt;/li&gt;
+  &lt;li&gt;$(F_1 \to F_2)$&lt;/li&gt;
+  &lt;li&gt;$(F_1 \iff F_2)$&lt;/li&gt;
+  &lt;li&gt;$\forall x F_1$&lt;/li&gt;
+  &lt;li&gt;$\exists x F_1$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;note-when-omitting-parentheses&quot;&gt;Note When Omitting Parentheses&lt;/h3&gt;
+
+&lt;p&gt;When omitting parentheses for quantifiers, they only apply to the formula right after it.&lt;/p&gt;
+
+&lt;p&gt;For example: $\exists x A \wedge B$ is the same as $(\exists A) \wedge B$.&lt;/p&gt;
+
+&lt;h2 id=&quot;free-variables&quot;&gt;Free Variables&lt;/h2&gt;
+
+&lt;p&gt;Free variables are all the variables that is not immidiately followed by a quantifier. Say $\exists y A(x, y)$, in this case $x$ is a free variable.&lt;/p&gt;
+
+&lt;p&gt;The definition of a function called $free(F)$ to compute all free variables in a formula is the following.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;p&gt;Basis: $F$ is an atomic formula, say $A(t_1, t_2,…)$, $A$ is an n-ary connective. In this case, $free(F)$ is the set of terms $t_1, 1 \leq i \leq n$.&lt;/p&gt;
+
+&lt;p&gt;Induction Step: $F$ is not an atomic formula. Then $F$ must be constructed from one or two formulas $F_1, F_2$ using a propositional connective or a quantifier. Assume that we have determined the set of free variables of $F_1$ and $F_2$. The set of free variables of $F$ are as follows:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$F = \neg F_1$. Then $free(F) = free(F_1)$.&lt;/li&gt;
+  &lt;li&gt;Connected using other propositonal connectives, then $free(F) = free(F_1) \cup free(F_2)$.&lt;/li&gt;
+  &lt;li&gt;$F = \exists x F_1$ or $F = \forall x F_1$. Then $free(F) = free(F_1) - \{x\}$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: An occurrence of variable $x$ is free in $F$ iff it does not occur within a subformula of $F$ of the form $\forall x E$ or $\exists x E$.&lt;/p&gt;
+
+&lt;p&gt;If a formula $F$ has no free variables, then it is called a sentence.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If we write out the tree representation, occurrence of variable $x$ is only free if the path to the root contains no $\forall x$ or $\exists x$.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;predicate-logic-semantics&quot;&gt;Predicate Logic Semantics&lt;/h2&gt;
+
+&lt;p&gt;For propositional logic, we cannot determine the truth value of a formula unless we did truth assignment. However it is more complicated for predicate logic (first-order formulas).&lt;/p&gt;
+
+&lt;p&gt;Note that if we are just given a first-order formula, it doesn’t really have a meaning. For example $\exists y (A(x,y) \wedge B(c, y) \wedge C(y))$ where $c$ is a constant.&lt;/p&gt;
+
+&lt;p&gt;We must know the domain, meaning of each predicate and the contant to parse the meaning of this formula.&lt;/p&gt;
+
+&lt;h3 id=&quot;structures-valuations-and-interpretations&quot;&gt;Structures, Valuations and Interpretations&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Let $L$ be a first-order language. A structure $S$ for $L$ contains:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A nonempty set $D$, called the domain of $S$.&lt;/li&gt;
+  &lt;li&gt;For each n-ary predicate symbol $A$ of $L$, an n-ary relation $A^S \subseteq D \times … \times D$.&lt;/li&gt;
+  &lt;li&gt;For each constant symbol $c$ of $L$, an element $c^S \in D$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Given a structure $S$ for $L$, a valuation of $S$ is a function that maps each variable of $L$ to some element of the structure’s domain $D$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: An interpretation $I$ of $L$ is a pair $(S, e)$, where $S$ is the structure and $e$ is the valuation.&lt;/p&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 5 Propositional Logic</title><link href="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5 Propositional Logic" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -232,6 +369,4 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;
-
-&lt;p&gt;fadsf&lt;/p&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry></feed>
+&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry></feed>

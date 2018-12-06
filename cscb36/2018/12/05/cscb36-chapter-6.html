@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB36 Theory of Computation - Chapter 6 Predicate Logic - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=953f4d1_20181206_124505" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=953f4d1_20181206_124505" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB36 Theory of Computation - Chapter 6 Predicate Logic</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb36</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.</p>
+
+<!--more-->
+
+<h2 id="overview">Overview</h2>
+
+<p>Predicate logic is a generalisation of propositional logic.</p>
+
+<p>A predicate is a boolean-valued function. The set $D$ of possible values for a predicate’s arguments is called its domain of discourse. The number $n$ of a predicate’s arguments is called it arity. So a n-ary predicate with domain of discourse $D$ is the function: $P: D \times D \times … \times D \to \{0,1\}$.</p>
+
+<h2 id="combining-predicates">Combining Predicates</h2>
+
+<h3 id="using-propositional-connectives">Using Propositional Connectives</h3>
+
+<p>We can use propositional connectives to combine predicates, for example:</p>
+
+<ul>
+  <li>$S(x)$ - $x$ loves watching TV shows.</li>
+  <li>$A(x)$ - $x$ loves watching anime.</li>
+</ul>
+
+<p>We can then conveniently connect them to form new predicates:</p>
+
+<ul>
+  <li>$S(x) \wedge \neg A(x)$ - $x$ loves watching TV shows but not anime.</li>
+  <li>$A(x) \to S(x)$ - If $x$ loves anime, then $x$ must also like TV shows.</li>
+</ul>
+
+<h3 id="using-quantifiers">Using Quantifiers</h3>
+
+<p>We can also use quantifiers, there are 2 main ones:</p>
+
+<ul>
+  <li>$\exists x A$ - This is true if there is at least one $x$ so that $A$ holds. (existential quantifier)</li>
+  <li>$\forall x A$ - This is true if for all possible value of $x$, $A$ holds. (universal quantifier)</li>
+</ul>
+
+<p>Take from above example, we can construct the following predicates:</p>
+
+<ul>
+  <li>$\exists x (S(x) \wedge A(x))$ - There exists $x$ who likes TV shows and anime.</li>
+  <li>$\forall x (A(x) \to S(x))$ - For all $x$, if $x$ likes anime, then $x$ must also like TV shows.</li>
+</ul>
+
+<h2 id="syntax-of-predicate-logic">Syntax of Predicate Logic</h2>
+
+<h3 id="first-order-languages">First-order Languages</h3>
+
+<p>A first-order lanauge contains:</p>
+
+<ul>
+  <li>Infinite set of variables.</li>
+  <li>Set of predicate symbols.</li>
+  <li>Set of constant symbols.</li>
+</ul>
+
+<p>All symbols within the language, alongside with connectives, quantifiers, parentheses and comma constitute the basic vocabulary of first-order formulas.</p>
+
+<blockquote>
+  <p>First-order language with equality is just the language that includes $\approx$ predicate symbol.</p>
+</blockquote>
+
+<h2 id="formulas">Formulas</h2>
+
+<ul>
+  <li>A term of $L$ is a variable or a constant symbol.</li>
+  <li>An atomic formula of $L$ is an expression of the form $A(t_1, t_2,…)$ ($A$ is a predicate symbol).</li>
+</ul>
+
+<p><strong>Definition</strong>: The set of first-order formulate of $L$ is the smallest set such that:</p>
+
+<p>Basis: Any atomic formula is in the set.</p>
+
+<p>Induction Step: If $F_1$ and $F_2$ are in the set, and $x$ is a variable of $L$ then the following are also in the set:</p>
+
+<ul>
+  <li>$\neg F_1$</li>
+  <li>$(F_1 \wedge F_2)$</li>
+  <li>$(F_1 \vee F_2)$</li>
+  <li>$(F_1 \to F_2)$</li>
+  <li>$(F_1 \iff F_2)$</li>
+  <li>$\forall x F_1$</li>
+  <li>$\exists x F_1$</li>
+</ul>
+
+<h3 id="note-when-omitting-parentheses">Note When Omitting Parentheses</h3>
+
+<p>When omitting parentheses for quantifiers, they only apply to the formula right after it.</p>
+
+<p>For example: $\exists x A \wedge B$ is the same as $(\exists A) \wedge B$.</p>
+
+<h2 id="free-variables">Free Variables</h2>
+
+<p>Free variables are all the variables that is not immidiately followed by a quantifier. Say $\exists y A(x, y)$, in this case $x$ is a free variable.</p>
+
+<p>The definition of a function called $free(F)$ to compute all free variables in a formula is the following.</p>
+
+<p><strong>Definition</strong>:</p>
+
+<p>Basis: $F$ is an atomic formula, say $A(t_1, t_2,…)$, $A$ is an n-ary connective. In this case, $free(F)$ is the set of terms $t_1, 1 \leq i \leq n$.</p>
+
+<p>Induction Step: $F$ is not an atomic formula. Then $F$ must be constructed from one or two formulas $F_1, F_2$ using a propositional connective or a quantifier. Assume that we have determined the set of free variables of $F_1$ and $F_2$. The set of free variables of $F$ are as follows:</p>
+
+<ul>
+  <li>$F = \neg F_1$. Then $free(F) = free(F_1)$.</li>
+  <li>Connected using other propositonal connectives, then $free(F) = free(F_1) \cup free(F_2)$.</li>
+  <li>$F = \exists x F_1$ or $F = \forall x F_1$. Then $free(F) = free(F_1) - \{x\}$.</li>
+</ul>
+
+<p><strong>Definition</strong>: An occurrence of variable $x$ is free in $F$ iff it does not occur within a subformula of $F$ of the form $\forall x E$ or $\exists x E$.</p>
+
+<p>If a formula $F$ has no free variables, then it is called a sentence.</p>
+
+<blockquote>
+  <p>If we write out the tree representation, occurrence of variable $x$ is only free if the path to the root contains no $\forall x$ or $\exists x$.</p>
+</blockquote>
+
+<h2 id="predicate-logic-semantics">Predicate Logic Semantics</h2>
+
+<p>For propositional logic, we cannot determine the truth value of a formula unless we did truth assignment. However it is more complicated for predicate logic (first-order formulas).</p>
+
+<p>Note that if we are just given a first-order formula, it doesn’t really have a meaning. For example $\exists y (A(x,y) \wedge B(c, y) \wedge C(y))$ where $c$ is a constant.</p>
+
+<p>We must know the domain, meaning of each predicate and the contant to parse the meaning of this formula.</p>
+
+<h3 id="structures-valuations-and-interpretations">Structures, Valuations and Interpretations</h3>
+
+<p><strong>Definition</strong>: Let $L$ be a first-order language. A structure $S$ for $L$ contains:</p>
+
+<ul>
+  <li>A nonempty set $D$, called the domain of $S$.</li>
+  <li>For each n-ary predicate symbol $A$ of $L$, an n-ary relation $A^S \subseteq D \times … \times D$.</li>
+  <li>For each constant symbol $c$ of $L$, an element $c^S \in D$.</li>
+</ul>
+
+<p><strong>Definition</strong>: Given a structure $S$ for $L$, a valuation of $S$ is a function that maps each variable of $L$ to some element of the structure’s domain $D$.</p>
+
+<p><strong>Definition</strong>: An interpretation $I$ of $L$ is a pair $(S, e)$, where $S$ is the structure and $e$ is the valuation.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 953f4d1_20181206_124505</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=953f4d1_20181206_124505"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
