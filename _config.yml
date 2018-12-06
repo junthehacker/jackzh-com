@@ -28,6 +28,8 @@ collections:
   - _pages
 include: 
   - '_pages'
+exclude:
+  - 'assets/js/src'
 # Build settings
 markdown: kramdown
 theme: minima

@@ -1,0 +1,19 @@
+.contact-list {
+    margin: 0;
+    padding: 0;
+    li {
+        list-style: none;
+        font-size: 20px;
+        padding-bottom: 20px;
+        i {
+            font-size: 30px;
+            opacity: 0.5;
+            padding-right: 20px;
+        }
+        a:link,
+        a:visited {
+            color: black;
+            text-decoration: none;
+        }
+    }
+}

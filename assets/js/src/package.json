@@ -1,0 +1,14 @@
+{
+  "name": "src",
+  "version": "1.0.0",
+  "description": "Not really a package, just doing npm init to use npm.",
+  "main": "index.js",
+  "scripts": {
+    "build": "node build.js"
+  },
+  "author": "Jun Zheng",
+  "license": "WTFPL",
+  "devDependencies": {
+    "browserify": "^16.2.3"
+  }
+}
