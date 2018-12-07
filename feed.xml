@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-06T12:45:06-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 6 Predicate Logic</title><link href="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 6 Predicate Logic" /><published>2018-12-05T00:00:00-05:00</published><updated>2018-12-05T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-07T01:44:01-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 6 Predicate Logic</title><link href="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 6 Predicate Logic" /><published>2018-12-05T00:00:00-05:00</published><updated>2018-12-05T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -135,7 +135,75 @@
 
 &lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Given a structure $S$ for $L$, a valuation of $S$ is a function that maps each variable of $L$ to some element of the structure’s domain $D$.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: An interpretation $I$ of $L$ is a pair $(S, e)$, where $S$ is the structure and $e$ is the valuation.&lt;/p&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 5 Propositional Logic</title><link href="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5 Propositional Logic" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: An interpretation $I$ of $L$ is a pair $(S, e)$, where $S$ is the structure and $e$ is the valuation.&lt;/p&gt;
+
+&lt;h3 id=&quot;truth-value-of-a-formula&quot;&gt;Truth Value of a Formula&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Let $L$ be a first-order language and $S$ be a structure for $L$. The truth value of a formula $F$ in $L$ in interpretation $I = (S, e)$, for any valuation $e$ of $S$ is defined as follows.&lt;/p&gt;
+
+&lt;p&gt;Basis: $F$ is an atomic formula, say $F = A(t_1, …., t_n)$, where $A$ is an n-ary predicate symbol of $L$ and each $t_i$ is a term of $L$. In this case, $F$ is true in $(S, e)$ if $(t^I_i,… t^I_n) \in A^S$ and is false otherwise.&lt;/p&gt;
+
+&lt;p&gt;Induction Step: $F$ is not an atomic formula. Then $F$ is constructed from one or two formulas $F_1, F_2$, using propositional connective or a quantifier. Assume, by induction, that we have determined the truth value for $F_1$ and $F_2$.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$F = \neg F_1$ - $F$ is true if $F_1$ is false in $I$, false otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = (F_1 \wedge F_2)$ - $F$ is true if $F_1$ and $F_2$ are both true in $I$, false otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = (F_1 \vee F_2)$ - $F$ is true if at $F_1$ or $F_2$ is true in $I$, false otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = (F_1 \to F_2)$ - $F$ is false if $F_1$ is true and $F_2$ is false, true otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = (F_1 \iff F_2)$ - $F$ is true if $F_1$ and $F_2$ have the same truth value in $I$, false otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = \forall x F_1$ - $F$ is true if $F_1$ is true in $(S, e|^x_v)$ for all $v$ in domain, false otherwise.&lt;/li&gt;
+  &lt;li&gt;$F = \exists x F_1$ - $F$ is true in $(S, e|^x_v)$ for some $v$ in domain, false otherwise.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Variables not free in a formula does not affect its truth value.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;validity-and-satisfiability&quot;&gt;Validity and Satisfiability&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: Let $F$ be a formula of the first-order language $L$. $F$ is&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;valid iff it is satisfied by every interpretation of $L$;&lt;/li&gt;
+  &lt;li&gt;satisfiable iff it is satisfied by some interpretation of $L$; and&lt;/li&gt;
+  &lt;li&gt;unsatisfiable iff it is not satisfied by any interpretation of $L$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;logical-implication-and-logical-equivalence&quot;&gt;Logical Implication and Logical Equivalence&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: A formula $F$ logically implies formula $F’$ iff every interpretation that satisfies $F$ also satisfied $F’$.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Definition&lt;/strong&gt;: A formula $F$ is logically equivalent to formula $F’$ iff each interpretation either satisfies both or falsifies both.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Theorm&lt;/strong&gt;: Note that&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$F$ logically implies $F’$ iff $F \to F’$ is valid.&lt;/li&gt;
+  &lt;li&gt;$F$ is logically equivalent to $F’$ iff $F \iff F’$ is valid.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;important-logical-equivalences&quot;&gt;Important Logical Equivalences&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$\neg \forall x F \equiv \exists x \neg F$&lt;/li&gt;
+  &lt;li&gt;$\neg \exists x F \equiv \forall x \neg F$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$Q$ is just generic quantifier, $Q’$ is the other one.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$E \wedge QxF \equiv Qx(E \wedge F)$, for any formulas $E, F$ and any variable $x$ that is not free in $E$.&lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;$E \vee QxF \equiv Qx(E \vee F)$, for any formulas $E, F$ and any variable $x$ that is not free in $E$.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;$QxE \to F \equiv Q’x(E \to F)$, for any formulas $E, F$ and any variable $x$ that is not free in $F$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;For all other connectives, you can also do similar things, but do not change $Q$ to $Q’$.&lt;/p&gt;
+&lt;/blockquote&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 5 Propositional Logic</title><link href="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 5 Propositional Logic" /><published>2018-12-04T00:00:00-05:00</published><updated>2018-12-04T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/04/cscb36-chapter-5.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
