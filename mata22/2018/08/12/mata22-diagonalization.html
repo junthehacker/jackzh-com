@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CSCB36 Theory of Computation - Chapter 0 - Jun Zheng</title>
+        <title>MATA22 Linear Algebra - Diagonalization - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=9cdc4e1_20181211_013527" rel="stylesheet" />
@@ -14,7 +14,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>CSCB36 Theory of Computation - Chapter 0</small></h1>
+        <h1>Jun Zheng <small>MATA22 Linear Algebra - Diagonalization</small></h1>
     </div>
 </header>
 
@@ -35,68 +35,30 @@
     <div class="js-toc"></div>
     <br/>
     
-        <span class="post-tag">cscb36</span>
+        <span class="post-tag">mata22</span>
     
         <span class="post-tag">course-notes</span>
     
     <div class="post-content">
-        <p>Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</p>
+        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.2. For course MATA22 at UTSC.</p>
 
 <!--more-->
 
-<h2 id="sets">Sets</h2>
+<p>A square matrix is called diagonal if all entries not on the main diagonal are zero.</p>
 
-<p>If an object is $a$ in $A$, then we write $a \in A$, if not, we write $a \notin A$.</p>
+<p>We will show that if \(A\) has \(n\) distinct eigenvalues, then the computation of \(A^k\) can be replaced by \(D^k\), where \(D\) is a diagonal matrix with the eigenvalues of \(A\) as entries.</p>
 
-<p>If a set has 0 elements, we call that an <em>empty set</em>, or $\emptyset$.</p>
+<h3 id="matrix-summary-of-eigenvalues-of-a">Matrix Summary of Eigenvalues of \(A\)</h3>
 
-<p>Number of elements within a set $A$ is called its size or cardinality, denoted by $|A|$.</p>
+<p>Let \(A\) be an \(n \times n\) matrix and let \(\lambda_1, \lambda_2, …., \lambda_n\) be scalars and \(\vec v_1, \vec v_2, … , \vec v_n \) be nonzero vectors in n-space. Let \(C\) be the \(n \times n\) matrix having \(\vec v_j\) as \(j\)th column vector, and let \(D\) be the diagonal matrix with entries of all lambda scalars.</p>
 
-<ul>
-  <li>For infinite set $A$, $|A| = \infty$</li>
-  <li>For empty set $\emptyset$, $|\emptyset| = 0$</li>
-</ul>
+<p>Then \(AC = CD\) if and only if all \(\lambda\) are eigenvalues of \(A\) and \(\vec v_j\) is an eigenvector of \(A\) corresponding to \(\lambda_j\)</p>
 
-<h3 id="describing-sets">Describing Sets</h3>
+<p>\(C\) is invertible if and only if \(rank(C) = n\). That case, we can write the equation as \(D = C^{-1}AC\).</p>
 
-<p>There are 2 ways to describe sets.</p>
+<h3 id="diagonalizable-matrix">Diagonalizable Matrix</h3>
 
-<ul>
-  <li>Extensional: List all elements within a set. For example $\{1,2,3\}$.</li>
-  <li>Intensional: Describle the set with format $\{x: \text{x is odd number}\}$.</li>
-</ul>
-
-<h3 id="relationship-between-sets">Relationship Between Sets</h3>
-
-<ul>
-  <li>$A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$.</li>
-  <li>$B \supseteq A$: If $A \subseteq B$ then this holds.</li>
-  <li>$A \subseteq B$ and $B \subseteq A$ then $A = B$.</li>
-  <li>$A \subseteq B$ and $A \neq B$ then $A$ is a proper subset of $B$, or $A \subset B$.</li>
-  <li>$B \supset A$ if $A \subset B$.</li>
-</ul>
-
-<p>Interesting properties:</p>
-
-<p>$\emptyset \subseteq A$ for all set $A$.</p>
-
-<p>$\emptyset \subset A$ for all set $A \neq \emptyset$.</p>
-
-<h3 id="set-operations">Set Operations</h3>
-
-<ul>
-  <li>
-    <p>Union of $A$ and $B$ or $A \cup B$, is the set of elements that belongs to $A$ or $B$.</p>
-  </li>
-  <li>
-    <p>Intersection of $A$ and $B$ or $A \cap B$, is the set of element that belongs to $A$ and $B$. If $A \cap B = \emptyset$, then $A$ and $B$ are disjoint.</p>
-  </li>
-  <li>
-    <p>Difference of $A$ and $B$ or $A - B$, is the set of elements that belong to $A$ but not to $B$.</p>
-  </li>
-</ul>
-
-<h4 id="arbitrary-number-of-operations">Arbitrary Number of Operations</h4>
+<p>An \(n \times n\) matrix \(A\) is diagonalizable if there exists an invertible matrix \(C\) such that \(C^{-1}AC = D\), a diagonal matrix.</p>
 
 
     </div>

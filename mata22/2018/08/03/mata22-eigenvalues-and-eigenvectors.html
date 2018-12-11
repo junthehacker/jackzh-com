@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MATA22 Linear Algebra - Eigenvalues and Eigenvectors - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=9cdc4e1_20181211_013527" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=9cdc4e1_20181211_013527" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>MATA22 Linear Algebra - Eigenvalues and Eigenvectors</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">mata22</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.1. For course MATA22 at UTSC.</p>
+
+<!--more-->
+
+<h2 id="fibonaccis-rabbits">Fibonacci’s Rabbits</h2>
+
+<p>We introduce the idea of eigenvalues and eigenvectors by exploring Fibonacci’s rabbits.</p>
+
+<p>Suppose that newly born rabbits produce no offsprings during the first month of their lives, but each pair will produce another pair each subsequent month. Starting with \(F_1 = 1\) newly born pair in the first month, find the number \(F_k\) of pairs in the kth month. Suppose no rabbit dies.</p>
+
+<p>So in the kth month, the total rabbits will be the number of rabbits from proceeding month, and the newly born rabbits in kth month.</p>
+
+<p>Since our rabbits do not produce offspring during the first month of their lives, number of newly born pairs would simply be \(F_{k-2}\). Therefore, we have</p>
+
+<p>\[
+    F_k = F_{k-1} + F_{k-2}
+\]</p>
+
+<p>We set \(F_0\) to be 0, it is just easier to compute.</p>
+
+<p>The sequence will be</p>
+
+<p>\[
+    0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ….
+\]</p>
+
+<p>Our relation can be written in matrix form, which is</p>
+
+<p>\[
+\left[\begin{matrix}
+  F_k \cr
+  F_{k-1}
+\end{matrix}\right]
+=
+\left[\begin{matrix}
+  1 &amp; 1 \cr
+  1 &amp; 0
+\end{matrix}\right]
+\left[\begin{matrix}
+  F_{k-1} \cr
+  F_{k-2}
+\end{matrix}\right]
+=
+\left[\begin{matrix}
+  F_{k-1} + F_{k-2} \cr
+  F_{k-1}
+\end{matrix}\right]
+\]</p>
+
+<p>Therefore, if we set</p>
+
+<p>\[
+x_k = 
+\left[\begin{matrix}
+  F_k \cr
+  F_{k-1}
+\end{matrix}\right]
+\text{and} \space
+A = 
+\left[\begin{matrix}
+  1 &amp; 1 \cr
+  1 &amp; 0
+\end{matrix}\right]
+\]</p>
+
+<p>We can obtain that</p>
+
+<p>\[ x_k = Ax_{k-1}\]</p>
+
+<p>If we apply this equation repeatly, we can see</p>
+
+<p>\[ x_2 = Ax_1\]
+\[ x_3 = Ax_2 = A^2x_1\]
+\[ x_4 = Ax_3 = A^3x_1\]</p>
+
+<p>So the relation can also be rewritten as</p>
+
+<p>\[ x_k = A^{k-1}x_1\]</p>
+
+<p>Use following code in MATLAB to compute fib rabbits</p>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">function</span> <span class="n">y</span> <span class="o">=</span> <span class="n">fib_rabbit</span><span class="p">(</span><span class="n">k</span><span class="p">)</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span> <span class="mi">1</span><span class="p">;</span> <span class="mi">1</span> <span class="mi">0</span><span class="p">];</span>
+    <span class="n">xk</span> <span class="o">=</span> <span class="n">A</span><span class="o">^</span><span class="p">(</span><span class="n">k</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">*</span><span class="p">[</span><span class="mi">1</span><span class="p">;</span><span class="mi">0</span><span class="p">];</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">xk</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h2 id="eigenvalues-and-eigenvectors">Eigenvalues and Eigenvectors</h2>
+
+<h3 id="definition">Definition</h3>
+
+<p>Let \(A\) be an \(n \times n\) matrix. A scalar \(\lambda\) is an eigenvalue of \(A\) if there is a nonzero column vector \(\vec v\) in \(R^n\) such that \(A\vec v = \lambda \vec v\). The vector \(\vec v\) is then an eigenvector of \(A\) corresponding to \(\lambda\).</p>
+
+<h3 id="compute-akvec-x">Compute \(A^k\vec x\)</h3>
+
+<p>For many matrices \(A\), the computation of \(A^k \vec x\) for a general vector \(\vec x\) can be greatly simplified by first finding all eigenvalues and eigenvectors.</p>
+
+<p>Suppose we found a basis \(\{\vec b_1,\vec  b_2, … ,\vec b_n\}\) for \(R^n\) consisting of eigenvectors of \(A\), then we have.</p>
+
+<p>\[
+  A \vec b_i = \lambda_i \vec b_i
+\]</p>
+
+<p>To compute \(A^k \vec x\), we first exporess \(\vec x\) as a linear combination of the basis.</p>
+
+<p>\[
+  \vec x = d_1\vec b_1 + d_2\vec b_2 + … + d_n \vec b_n
+\]</p>
+
+<p>Since we know \(A^k\vec b_i = {\lambda_i}^k \vec b_i\)</p>
+
+<p>\[
+  A^k\vec x = {\lambda_1}^kd_1\vec b_1 + {\lambda_2}^kd_2\vec b_2 + … + {\lambda_n}^kd_n\vec b_n
+\]</p>
+
+<h3 id="stable--unstable-transformation">Stable / Unstable Transformation</h3>
+
+<p>The above equation gives us important information on the effect of repeatedly transforming \(R^n\) using \(A\).</p>
+
+<p>If at least one of the \(\lambda\) is greater than 1, then we can obtain arbitrarily large magnitude vectors. In another word</p>
+
+<p>\[
+  \exists \lambda_i &gt; 1 \to \lim_{k\to \infty} |A^k\vec x| = \infty, i \in \{1,2,3,…, n\}
+\]</p>
+
+<p>This is called an unstable transformation of \(R^n\).</p>
+
+<p>However, if all \(\lambda\) are less than 1, we will eventually get a vector that is close to 0.</p>
+
+<p>\[
+  \forall \lambda_i &lt; 1 \to \lim_{k\to \infty} |A^k\vec x| = 0, i \in \{1,2,3,…, n\}
+\]</p>
+
+<p>This is called a stable transformation.</p>
+
+<p>If the maximum of \(|\lambda_i|\) is 1, then the transformation is neutrally stable.</p>
+
+<h3 id="dominant-terms">Dominant Terms</h3>
+
+<p>Let’s suppose that one of the \(\lambda\) has a greater magnitude of all other \(\lambda\)s. Then that \(\lambda\) dominats the other terms. Therefore, for large values of \(k\), the resulting vector is almost parallel to the eigenvector that \(\lambda\) corresponds to.</p>
+
+<h5 id="matlab-stuff">MATLAB Stuff</h5>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% To compute eigenvalues</span>
+<span class="k">function</span> <span class="n">y</span> <span class="o">=</span> <span class="n">eigenvalues</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<div class="language-matlab highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">% To compute eigenvectors, this will give you a matrix with columns representing eigenvectors</span>
+<span class="k">function</span> <span class="n">y</span> <span class="o">=</span> <span class="n">eigenvectors</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+    <span class="p">[</span><span class="n">V</span><span class="p">,</span> <span class="o">~</span><span class="p">]</span> <span class="o">=</span> <span class="nb">eig</span><span class="p">(</span><span class="n">A</span><span class="p">);</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">V</span><span class="p">;</span>
+<span class="k">end</span>
+</code></pre></div></div>
+
+<h3 id="computing-eigenvalues">Computing Eigenvalues</h3>
+
+<p>We will use determinant to find eigenvalues of an \(n \times n\) matrix. This is only practical only for relatively small matrices.</p>
+
+<p>Since we said \(A\vec v = \lambda \vec v\), we can also say \(A\vec v - \lambda\vec v = 0\), or \(A\vec v - \lambda I\vec v = 0\). Therefore \(\vec v\) must be a solution to the system</p>
+
+<p>\[(A - \lambda I)\vec x = 0\]</p>
+
+<p>Eigenvalue is when the system has a nontrivial solution \(\vec 0\). It has a nontrivial solution when the determinant is zero.</p>
+
+<p>\[det(A - \lambda I) = 0\]</p>
+
+<p>If we expand the determinant, we will get a polynomial, this is called the characteristic polynomial of matrix \(A\). And the eigenvalues are the solutions to \(p(\lambda) = 0\).</p>
+
+<h3 id="computing-eigenvectors">Computing Eigenvectors</h3>
+
+<p>To find the eigenvectors for corresponding eigenvalues, you simply substitute the \(I\) with \(\lambda I\), and solve for the argumented matrix \([A - \lambda I | 0 ]\)</p>
+
+<p>If we found a unknown value, we usually try to factor it out and just drop it.</p>
+
+<h3 id="properties-of-eigenvalues-and-eigenvectors">Properties of Eigenvalues and Eigenvectors</h3>
+
+<p>Let \(A\) be an \(n \times n\) matrix.</p>
+
+<p>If \(\lambda\) is an eigenvalue of \(A\) with \(\vec v\) as a corresponding eigenvector, then \(\lambda^k\) is an eigenvalue of \(A^k\), again with \(\vec v\) as a corresponding eigenvector, for any positive integer \(k\).</p>
+
+<p>If \(\lambda\) is an eigenvalue of an invertible matrix \(A\) with \(\vec v\) as a corresponding eigenvector, then \(\lambda\) not equal to \(0\), and \(1/\lambda\) is an eigenvalue of \(A^{-1}\), again with \(\vec v\) as a corresponding eigenvector.</p>
+
+<p>If \(\lambda\) is an eigenvalue of \(A\), then the set \(E_\lambda\) consisting of the zero vector together with all eigenvectors of \(A\) for this eigenvalue \(\lambda\) is a subspace of n-space, the eigenspace of \(\lambda\).</p>
+
+<h3 id="definition-for-linear-transformations">Definition for Linear Transformations</h3>
+
+<p>This is a stupid ass definition, because \(T\) can be expressed as \(A\).</p>
+
+<p>Let \(T\) be a linear transformation of a vector space \(V\) into itself. A scalar \(\lambda\) is an eigenvalue of \(T\) if there is a nonzero vector \(\vec v\) in \(V\) such that \(T(\vec v) = \lambda \vec v\). The vector \(\vec v\) is then an eigenvector of \(T\) corresponding to \(\lambda\).</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 9cdc4e1_20181211_013527</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=9cdc4e1_20181211_013527"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MATA22 Linear Algebra - Determinants - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=9cdc4e1_20181211_013527" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=9cdc4e1_20181211_013527" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>MATA22 Linear Algebra - Determinants</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">mata22</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 4.1. For course MATA22 at UTSC.</p>
+
+<!--more-->
+
+<h2 id="the-area-of-a-parallelogram">The Area of a Parallelogram</h2>
+
+<p>Area of the parallelogram determined by two nonzero and nonparallel vectors \(a = [a_1, a_2]\) and \(b = [b_1, b_2]\) is:</p>
+
+<p>\[\text{Area} = \left\|{a}\right\| h = \left\|{a}\right\| \left\|{b}\right\|(sin\theta)  = \left\|{a}\right\| \left\|{b}\right\|\sqrt{1-cos^2\theta}\]</p>
+
+<p>Where \(\theta\) is the angle between two vectors.</p>
+
+<blockquote>
+  <p>We obtain the last equation using trig identity \(sin^2x + cos^2x = 1\).</p>
+</blockquote>
+
+<p>Now let’s square the area equation</p>
+
+<p>\[\text{Area}^2 = \left\|{a}\right\|^2 \left\|{b}\right\|^2 (1-cos^2\theta) \]
+\[= \left\|{a}\right\|^2 \left\|{b}\right\|^2 - \left\|{a}\right\|^2 \left\|{b}\right\|^2 cos^2\theta\]
+\[=\left\|{a}\right\|^2 \left\|{b}\right\|^2 - (a \cdot b)^2\]</p>
+<blockquote>
+  <p>This step is because recall \(a \cdot b = \left\|{a}\right\| \left\|{b}\right\|(cos\theta)\)</p>
+</blockquote>
+
+<p>\[=(a_1^2 + a_2^2)(b_1^2 + b_2^2) - (a_1b_1 + a_2b_2)^2\]</p>
+
+<blockquote>
+  <p>And this is in fact the same as following</p>
+</blockquote>
+
+<p>\[=(a_1b_2 - a_2b_1)^2\]</p>
+
+<p>We can now obtain the area equation for our parallelogram</p>
+
+<p>\[\text{Area} = |a_1b_2 - a_2b_1|\]</p>
+
+<p>This equation with absolute value bar is also known as the <strong>determinant</strong> if the matrix</p>
+
+<p>\[ A =
+\left[\begin{matrix}
+  a_1 &amp; a_2 \cr
+  b_1 &amp; b_2
+\end{matrix}\right]
+\]</p>
+
+<p>We denote it with \(det(A)\)</p>
+
+<p>\[ det(A) = 
+\left|\begin{matrix}
+  a_1 &amp; a_2 \cr
+  b_1 &amp; b_2
+\end{matrix}\right| = a_1b_2 - a_2b_1
+\]</p>
+
+<blockquote>
+  <p>This is also known as second-order determinant.</p>
+</blockquote>
+
+<h2 id="the-cross-product">The Cross Product</h2>
+
+<p>Second-order determinants can also be useful when trying to find perpendicular vectors in \(R^3\).</p>
+
+<p>Let’s say we have two vectors in \(R^3\), \(p\) and \(q\). To find a vector \(c\) that is perpendicular to both, we can simply use the following equation:</p>
+
+<p>\[ c = 
+\left|\begin{matrix}
+  b_2 &amp; b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right|i - 
+\left|\begin{matrix}
+  b_1 &amp; b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right|j +
+\left|\begin{matrix}
+  b_1 &amp; b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|k 
+\]</p>
+
+<blockquote>
+  <p>We assume \(i,j,k\) are unit coordinate vectors in \(R^3\).</p>
+</blockquote>
+
+<p>The vector we obtained \(c\), is perpendicular to both \(p\) and \(q\). And \(c\) is called a cross product of \(p\) and \(q\), denoted by \(p \times q\).</p>
+
+<h4 id="the-cross-product-of-2-vectors-in-r3-is-perpendicular-to-both-vectors">The Cross Product of 2 Vectors in \(R^3\) is Perpendicular to Both Vectors</h4>
+
+<p><strong>Proof:</strong></p>
+
+<p>Let \(p\) and \(q\) be vectors in \(R^3\), let \(\vec c = \vec p \times \vec q\).</p>
+
+<p>By defination of cross product, we obtain</p>
+
+<p>\[ \vec c = 
+(p_2q_3 - p_3q_2)i - 
+(p_1q_3 - p_3q_1)j +
+(p_1q_2 - p_2q_1)k
+\]</p>
+
+<p>Which is simply the following vector</p>
+
+<p>\[ \vec c = 
+[p_2q_3 - p_3q_2, -p_1q_3 + p_3q_1, p_1q_2 - p_2q_1]
+\]</p>
+
+<p>1, Verify this vector is perpendicular to \(p\)</p>
+
+<p>\[\vec c \cdot \vec  p = (p_2q_3 - p_3q_2)p_1 + (-p_1q_3 + p_3q_1)p_2 + (p_1q_2 - p_2q_1)p_3\]
+\[= (p_2q_3p_1 - p_3q_2p_1) + (-p_1q_3p_2 + p_3q_1p_2) + (p_1q_2p_3 - p_2q_1p_3)\]
+\[= p_2q_3p_1 - p_3q_2p_1 -p_1q_3p_2 + p_3q_1p_2 + p_1q_2p_3 - p_2q_1p_3\]
+\[=0\]</p>
+
+<p>Therefore \(\vec c\) is perpendicular to \(\vec p\).</p>
+
+<p>2, Verify this vector is perpendicular to \(\vec q\)</p>
+
+<p>\[\vec c \cdot \vec  p = (p_2q_3 - p_3q_2)q_1 + (-p_1q_3 + p_3q_1)q_2 + (p_1q_2 - p_2q_1)q_3\]
+\[= (p_2q_3q_1 - p_3q_2q_1) + (-p_1q_3q_2 + p_3q_1q_2) + (p_1q_2q_3 - p_2q_1q_3)\]
+\[= p_2q_3q_1 - p_3q_2q_1 -p_1q_3q_2 + p_3q_1q_2 + p_1q_2q_3 - p_2q_1q_3\]
+\[=0\]</p>
+
+<p>Therefore \(\vec c\) is perpendicular to \(\vec q\).</p>
+
+<p>Since 1 and 2 both holds, \(\vec c\) is perpendicular to both \(\vec q\) and \(\vec p\).</p>
+
+<p>Q.E.D.</p>
+
+<h4 id="the-area-of-the-parallelogram-determined-by-vec-b-and-vec-c-in-r3-is-vec-b-times-vecc-">The Area of The Parallelogram Determined by \(\vec b\) and \(\vec c\) in \(R^3\) is \(\|\vec b \times \vec{c} \|\)</h4>
+
+<p>The magnitude of this newly created perpendicular vector is in fact the area of the parallelogram determined by \(\vec b\) and \(\vec c\) in \(R^3\).</p>
+
+<p>We show this by repeating the steps we have done for \(R^2\)</p>
+
+<p>\[
+\text{Area}^2 = \|\vec b\|^2\|\vec c\|^2 - (\vec b \cdot \vec c)^2
+\]</p>
+
+<p>\[
+= (b_1^2 + b_2^2 + b_3^2)(c_1^2 + c_2^2 + c_3^2) - (b_1c_1 + b_2c_2 + b_3c_3)^2
+\]</p>
+
+<p>And this is in fact the following</p>
+
+<p>\[
+\left|\begin{matrix}
+  b_2 &amp; b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right|^2 + 
+\left|\begin{matrix}
+  b_1 &amp; b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right|^2 +
+\left|\begin{matrix}
+  b_1 &amp; b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|^2
+\]</p>
+
+<blockquote>
+  <p>Following step is possible because
+\[
+\sqrt{\left|\begin{matrix}
+  b_2 &amp; b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right|^2 + 
+\left|\begin{matrix}
+  b_1 &amp; b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right|^2 +
+\left|\begin{matrix}
+  b_1 &amp; b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|^2}
+\]
+is simply the magnitude of the cross product.</p>
+</blockquote>
+
+<p>By taking the square roots, we obtain \(\|\vec b \times \vec c\|\) = Area.</p>
+
+<h2 id="the-volume-of-a-box">The Volume of a Box</h2>
+
+<p><img src="https://www.evernote.com/l/Aq3XHGlweR1JlYzfgn8ZJIHBbdMmDvhUHjsB/image.png" alt="" /></p>
+<blockquote>
+  <p>Linear Algebra (Addison-Wesley, 1995)</p>
+</blockquote>
+
+<p>The volume of a box determined by \(a, b, c\) in \(R^3\) can be found by</p>
+
+<p>\[
+  h = \|\vec a\| |cos \theta| = \frac{\|\vec b \times \vec c\|\|\vec a\||cos \theta|}{\|\vec b \times \vec c\|} = \frac{(\vec b \times \vec c) \cdot \vec a}{\|\vec b \times \vec c\|}
+\]</p>
+
+<p>\[
+  \text{Volume} = \|\vec b \times \vec c\|h = |(\vec b \times \vec c) \cdot \vec a|
+\]</p>
+
+<p>\[
+  \text{Volume} = |a_1(b_2c_3 - b_3c_2) - a_2(b_1c_3 - b_3c_1) + a_3(b_1c_2 - b_2c_1)|
+\]</p>
+
+<p>We call the number within absolute value signs the third-order determinant.</p>
+
+<p>Which is the determinant of the matrix</p>
+
+<p>\[ A =
+\left[\begin{matrix}
+  a_1 &amp; a_2 &amp; a_3 \cr
+  b_1 &amp; b_2 &amp; b_3 \cr
+  c_1 &amp; c_2 &amp; c_3
+\end{matrix}\right]
+\]</p>
+
+<p>We can compute it using the following formula</p>
+
+<p>\[ det(A) = 
+a_1\left|\begin{matrix}
+  b_2 &amp; b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right| - 
+a_2\left|\begin{matrix}
+  b_1 &amp; b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right| +
+a_3\left|\begin{matrix}
+  b_1 &amp; b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|
+\]</p>
+
+<h2 id="properties-of-the-cross-product-in-r3">Properties of the Cross Product in \(R^3\)</h2>
+
+<h4 id="anticommutativity">Anticommutativity</h4>
+
+<p><strong>Therom:</strong> \(\vec b \times \vec c = -(\vec c \times \vec b)\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Let \(\vec b, \vec c\) be vectors within \(R^3\), then by defination we have</p>
+
+<p>\[\vec b \times \vec c = 
+\vec i \left|\begin{matrix}
+  b_2 &amp; b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right| -
+\vec j \left|\begin{matrix}
+  b_1 &amp; b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right| +
+\vec k \left|\begin{matrix}
+  b_1 &amp; b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|
+\]
+By defination of second-order determinants, we have
+\[
+  = \vec i(b_2c_3 - b_3c_2) - \vec j(b_1c_3 - b_3c_1) + \vec k(b_1c_2 - b_2c_1)
+\]
+\[
+  = [b_2c_3 - b_3c_2, -b_1c_3 + b_3c_1, b_1c_2 - b_2c_1]
+\]
+Take out \(-1\) from the vector we will have
+\[
+  = -[b_3c_2 - b_2c_3, b_1c_3 - b_3c_1, b_2c_1 - b_1c_2]
+\]
+Do some simple reordering, we can conclude
+\[
+  = -[c_2b_3 - c_3b_2, - c_1b_3 + c_3b_1 , c_1b_2 - c_2b_1]
+\]
+\[= 
+-(\vec i \left|\begin{matrix}
+  c_2 &amp; c_3 \cr
+  b_2 &amp; b_3
+\end{matrix}\right| -
+\vec j \left|\begin{matrix}
+  c_1 &amp; c_3 \cr
+  b_1 &amp; b_3
+\end{matrix}\right| +
+\vec k \left|\begin{matrix}
+  c_1 &amp; c_2 \cr
+  b_1 &amp; b_2
+\end{matrix}\right|)
+\]</p>
+
+<p>Which is by defination \(-(\vec c \times \vec b)\).</p>
+
+<p>Q.E.D.</p>
+
+<h4 id="nonassociativity-of-times">Nonassociativity of \(\times\)</h4>
+
+<p><strong>Therom:</strong> \(\vec a \times (\vec b \times \vec c)\) is usually not equal to \((\vec a \times \vec b) \times \vec c\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Since we need to prove that they are generally different, we can simply only look at the first element of the resulting vector, if it is different, then by logic, the whole vector is different.</p>
+
+<p>By defination, \(\vec b \times \vec c\) is</p>
+
+<p>\[
+  [b_2c_3 - b_3c_2, b_1c_3 - b_3c_1, b_1c_2 - b_2c_1]
+\]</p>
+
+<p>By defination, the first element of \(\vec a \times (\vec b \times \vec c)\) is</p>
+
+<p>\[ a_2b_1c_2 - a_2b_2c_1 - a_3b_1c_3 + a_3b_3c_1 \]</p>
+
+<p>By defination, \(\vec a \times \vec b\) is</p>
+
+<p>\[
+  [a_2b_3 - a_3b_2, a_1b_3 - a_3b_1, a_1b_2 - a_2b_1]
+\]</p>
+
+<p>By defination, the first element of \((\vec a \times \vec b) \times \vec c\) is</p>
+
+<p>\[
+  a_1b_3c_3 - a_3b_1c_3 - a_1b_2c_2 + a_2b_1c_2
+\]</p>
+
+<p>Which is clearly different, thus our therom holds.</p>
+
+<p>Q.E.D.</p>
+
+<h4 id="distributive-properties">Distributive Properties</h4>
+
+<p><strong>Therom 1:</strong>
+\(\vec a \times (\vec b + \vec c) = (\vec a \times \vec b) + (\vec a \times \vec c)\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>By defination \(\vec b + \vec c\) is</p>
+
+<p>\[
+  [b_1 + c_1, b_2 + c_2, b_3 + c_3]
+\]</p>
+
+<p>By defination \(\vec a \times (\vec b + \vec c)\) is</p>
+
+<p>\[
+\vec i \left|\begin{matrix}
+  a_2 &amp; a_3 \cr
+  b_2 + c_2 &amp; b_3 + c_3
+\end{matrix}\right| -
+\vec j \left|\begin{matrix}
+  a_1 &amp; a_3 \cr
+  b_1 + c_1 &amp; b_3 + c_3
+\end{matrix}\right| +
+\vec k \left|\begin{matrix}
+  a_1 &amp; a_2 \cr
+  b_1 + c_1 &amp; b_2 + c_2
+\end{matrix}\right|
+\]</p>
+
+<p>Which is</p>
+
+<p>\[
+  [a_2b_3 + a_2c_3 - a_3b_2 - a_3c_2, - a_1b_3 - a_1c_3 + a_3b_1 + a_3c_1, a_1b_2 + a_1c_2 - a_2b_1 - a_2c_1]
+\]</p>
+
+<p>Regroup and we will get</p>
+
+<p>\[
+  [(a_2b_3 - a_3b_2) + (a_2c_3 - a_3c_2), (a_1b_3 - a_3b_1) + (a_1c_3 - a_3c_1), (a_1b_2 - a_2b_1) + (a_1c_2  - a_2c_1)]
+\]</p>
+
+<p>\[
+= (\vec a \times \vec b) + (\vec a \times \vec c)
+\]</p>
+
+<p>Q.E.D.</p>
+
+<p><strong>Therom 2:</strong>
+\((\vec a + \vec b) \times c = (\vec a \times \vec c) + (\vec b \times \vec c)\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>By defination \(\vec a + \vec b\) is</p>
+
+<p>\[
+  [a_1 + b_1, a_2 + b_2, a_3 + b_3]
+\]</p>
+
+<p>By defination \((\vec a + \vec b) \times c\) is</p>
+
+<p>\[
+\vec i \left|\begin{matrix}
+  a_2 + b2 &amp; a_3 + b_3 \cr
+  c_2 &amp; c_3
+\end{matrix}\right| -
+\vec j \left|\begin{matrix}
+  a_1 + b_1 &amp; a_3 + b_3 \cr
+  c_1 &amp; c_3
+\end{matrix}\right| +
+\vec k \left|\begin{matrix}
+  a_1 + b_2 &amp; a_2 + b_2 \cr
+  c_1 &amp; c_2
+\end{matrix}\right|
+\]</p>
+
+<p>Which is</p>
+
+<p>\[
+  [c_3a_2 + c_3b_2 - c_2a_3 - c_2b_3, - c_3a_1 - c_3b_1 + c_1a_3 + c_1b_3, c_2a_1 + c_2b_2 - c_1a_2 - c_1b_2]
+\]</p>
+
+<p>Regroup and we will get</p>
+
+<p>\[
+  [(c_3a_2 - c_2a_3) + (c_3b_2  - c_2b_3), (- c_3a_1 + c_1a_3) + (- c_3b_1 + c_1b_3), (c_2a_1  - c_1a_2)+ (c_2b_2 - c_1b_2)]
+\]</p>
+
+<p>\[
+=(\vec a \times \vec c) + (\vec b \times \vec c)
+\]</p>
+
+<p>Q.E.D.</p>
+
+<h4 id="perpendicularity-of-vec-b-times-vec-c-to-both-vec-b-and-vec-c">Perpendicularity of \(\vec b \times \vec c\) to both \(\vec b\) and \(\vec c\)</h4>
+
+<p><strong>Therom:</strong> \(\vec b \cdot (\vec b \times \vec c) = (\vec b \times \vec c) \cdot \vec c = 0\)</p>
+
+<p>We have already proven this.</p>
+
+<h4 id="area-property">Area property</h4>
+
+<p><strong>Therom:</strong> \(\|\vec b \times \vec c\|\) = Area of the parallelogram determined by \(\vec b\) and \(\vec c\)</p>
+
+<p>We have already shown this.</p>
+
+<h4 id="volume-property">Volume property</h4>
+
+<p><strong>Therom:</strong> \(\vec a \cdot (\vec b \times \vec c) = (\vec a \times \vec b) \cdot c = \pm \) Volume of the box determined by \(\vec a, \vec b\) and \(\vec c\).</p>
+
+<p>We have already shown this.</p>
+
+<h4 id="formula-for-calculation-of-vec-a-times-vec-b-times-vec-c">Formula for calculation of \(\vec a \times (\vec b \times \vec c)\)</h4>
+
+<p><strong>Therom:</strong> \(\vec a \times (\vec b \times \vec c) = (\vec a \cdot \vec c)\vec b - (\vec a \cdot \vec b)\vec c\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>We first find \(\vec b \times \vec c\), which by defination is</p>
+
+<p>\[
+  [b_2c_3 - b_3c_2, -b_1c_3 + b_3c_1, b_1c_2 - b_2c_1]
+\]</p>
+
+<p>Then attempt to find \(\vec a \times (\vec b \times \vec c)\)</p>
+
+<p>\[
+\vec i \left|\begin{matrix}
+  a_2 &amp; a_3 \cr
+  -b_1c_3 + b_3c_1 &amp; b_1c_2 - b_2c_1
+\end{matrix}\right| -
+\vec j \left|\begin{matrix}
+  a_1 &amp; a_3 \cr
+  b_2c_3 - b_3c_2 &amp; b_1c_2 - b_2c_1
+\end{matrix}\right| +
+\vec k \left|\begin{matrix}
+  a_1 &amp; a_2 \cr
+  b_2c_3 - b_3c_2 &amp; -b_1c_3 + b_3c_1
+\end{matrix}\right|
+\]</p>
+
+<p>\[
+  [a_2b_1c_2 - a_2b_2c1 - a_3b_1c_3 + a_3b_3c_1, -a_1b_1c_2 + a_1b_2c_1 + a_3b_2c_3 - a_3b_3c_2, -a_1b_1c_3 + a_1b_3c_1 - a_2b_2c_3 + a_2b_3c_2]
+\]</p>
+
+<p>Now find \((\vec a \cdot \vec c)\vec b - (\vec a \cdot \vec b)\vec c\), which is</p>
+
+<p>\[
+  (a_1c_1 + a_2c_2 + a_3c_3) \vec b - (a_1b_1 + a_2b_2 + a_3b_3) \vec c
+\]</p>
+
+<p>\[
+  = [a_1b_1c_1 + a_2b_1c_2 + a_3b_1c_3, a_1b_2c_1 + a_2b_2c_2 + a_3b_2c_3, a_1b_3c_1 + a_2b_3c_2 + a_3b_3c_3] -
+\]</p>
+
+<p>\[
+  [a_1b_1c_1 + a_2b_2c_1 + a_3b_3c_1, a_1b_1c_2 + a_2b_2c_2 + a_3b_3c_2, a_1b_1c_3 + a_2b_2c_3 + a_3b_3c_3]
+\]</p>
+
+<p>We simplify this expression and will get</p>
+
+<p>\[
+  [a_2b_1c_2 + a_3b_1c_3 - a_2b_2c_1 - a_3b_3c_1, a_1b_2c_1 + a_3b_2c_3 - a_1b_1c_2 - a_3b_3c_2, a_1b_3c_1 + a_2b_3c_2 - a_1b_1c_3 - a_2b_2c_3]
+\]</p>
+
+<p>Which is equvilent to \(\vec a \times (\vec b \times \vec c)\).</p>
+
+<p>\(Q.E.D.\)</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 9cdc4e1_20181211_013527</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=9cdc4e1_20181211_013527"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

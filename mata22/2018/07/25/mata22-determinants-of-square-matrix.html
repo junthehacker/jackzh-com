@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>MATA22 Linear Algebra - Determinants of a Square Matrix - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=9cdc4e1_20181211_013527" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=9cdc4e1_20181211_013527" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>MATA22 Linear Algebra - Determinants of a Square Matrix</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">mata22</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 4.2. For course MATA22 at UTSC.</p>
+
+<!--more-->
+
+<h2 id="minor-matrix-a_ij">Minor Matrix \(A_{ij}\)</h2>
+
+<p>Let’s first define what is a minor matrix.</p>
+
+<p>A minor matrix \(A_{ij}\) is the matrix \(A\) with its \(i\)th row and \(j\)th coloumn crossed out.</p>
+
+<p>With minor matrix notation, we can write the third-order determinant as following:</p>
+
+<p>\[ a_{11} |A_{11}| - a_{12}|A_{12}| + a_{13}|A_{13}| \]</p>
+
+<p>The numbers \(a\prime_{11} = |A_{11}|\), \(a\prime_{12} = |A_{12}|\), and \(a\prime_{13} = |A_{13}|\) are called the cofactors of \(a_{11}\), \(a_{12}\), \(a_{13}\)</p>
+
+<p>We can now define the cofactor of \(a_{ij}\) in matrix \(A\) is</p>
+
+<p>\[a\prime_{ij} = (-1)^{i+j} det(A_{ij})\]</p>
+
+<p>Then the determinant is simply</p>
+
+<p>\[a_{11}a\prime{11} + a_{12}a\prime{12} + … + a_{1n}a\prime{1n}\]</p>
+
+<p>This is called expansion by minors on the first row.</p>
+
+<h4 id="general-expansion-by-minors">General Expansion by Minors</h4>
+
+<p>Let \(A\) be an \(n \times n\) matrix, and let \(r\) and \(s\) be any selections from the list of numbers \(1,2,…,n\). Then</p>
+
+<p>\[det(A) = a_{r1}a\prime_{r1} + a_{r2}a\prime_{r1} + … + a_{rn}a\prime_{rn}\]</p>
+
+<p>also</p>
+
+<p>\[det(A) = a_{1s}a\prime_{1s} + a_{2s}a\prime_{2s} + … + a_{ns}a\prime_{ns}\]</p>
+
+<h2 id="determinant-properties">Determinant Properties</h2>
+
+<h4 id="the-transponse-property">The Transponse Property</h4>
+
+<p><strong>Therom:</strong> For any square matrix \(A\), we have \(det(A) = det(A^T)\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Order 1 determinants:</p>
+
+<p>\(a_{11} = a_{11}\), ╮(╯_╰)╭</p>
+
+<p>Order 2 determinants:</p>
+
+<p>\(b_1c_2 - b_2c_1 = b_1c_2 - c_1b_2\)</p>
+
+<p>Let \(n &gt; 2\), assume property holds for square matrices of size smaller than \(n \times n\).</p>
+
+<p>\[det(A) = a_{11}|A_{11}| - a_{12}|A_{12}| + … + (-1)^{n+1}a_{1n}|A_{1n}|\]</p>
+
+<p>Let \(B = A^T\), we have</p>
+
+<p>\[det(B) = b_{11}|B_{11}| - b_{21}|B_{21}| + … + (-1)^{n+1}b_{n1}|B_{n1}|\]</p>
+
+<p>However, we know \(a_{1j} = b_{j1}\) and \(B_{j1} = {A_{1j}}^T\). Applying our induction hypothesis to \((n-1)\)st-order determinant \(|A_{1j}|\), we have \(|A_{1j}| = |B_{j1}|\).</p>
+
+<p>We conclude \(det(A) = det(B) = det(A^T)\).</p>
+
+<p>\(Q.E.D.\)</p>
+
+<h4 id="the-row-interchange-property">The Row-Interchange Property</h4>
+
+<p><strong>Theorem:</strong> If two different rows of a square matrix \(A\) are interchanged, the determinant of the resulting matrix is \(-det(A)\)</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>The proof for \(n = 2\) is trivial. Assume \(n &gt; 2\), and this holds for all matrices smaller than \(n \times n\).</p>
+
+<p>Let \(B\) be matrix obtained from \(A\) by interchanging \(i\)th and \(r\)th rows. Because \(n &gt; 2\), we can choose another \(k\)th row for expansion. Consider these two cofactors</p>
+
+<p>\[(-1)^{k+j}|A_{kj}| \ \text{and} \ (-1)^{k+j}|B_{kj}|\]</p>
+
+<p>These numbers must have opposite signs by induction, since \(A_{kj}\) and \(B_{kj}\) have size of \((n-1) \times (n-1)\). Therefore we have \(|B_{kj}| = -|A_{kj}|\).</p>
+
+<p>Expanding by minors on \(k\)th row will give us \(det(A) = -det(B)\)</p>
+
+<p>\(Q.E.D.\)</p>
+
+<h4 id="the-equal-rows-property">The Equal-Rows Property</h4>
+
+<p><strong>Theorem:</strong> If two rows of a square matrix \(A\) are equal, then \(det(A) = 0\).</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Let \(B\) be the matrix obtained by interchanging two equal rows of \(A\).</p>
+
+<p>We have \(det(B) = -det(A)\), but \(B = A\), thus \(det(A) = 0\). <code class="highlighter-rouge">_(┐「ε:)_</code></p>
+
+<p>\(Q.E.D.\)</p>
+
+<h4 id="the-scalar-multiplication-property">The Scalar-Multiplication Property</h4>
+
+<p><strong>Theorem:</strong> If a single row of a square matrix \(A\) is multiplied by a scalar \(r\), the determinant of the resulting matrix is \(r \cdot det(A)\).</p>
+
+<p><strong>Proof:</strong></p>
+
+<p>Let \(r\) be any scalar, and let \(B\) be the matrix obtained from \(A\) by replacing the \(k\)th row of \(A\) by scalar multiple \(r\) of it.</p>
+
+<p>Since all rows are equal except \(k\), we know all cofactors are equal. Thus we can conclude \(det(B) = r \cdot det(A)\).</p>
+
+<p>\(Q.E.D.\)</p>
+
+<h4 id="the-row-addition-property">The Row-Addition Property</h4>
+
+<p><strong>Theorem:</strong> If the product of one row of a square matrix \(A\) by a scalar is added to a different row of \(A\), the determinant remain the same.</p>
+
+<p>Same as above, we can see all cofactors are equal since other than \(k\)th row, everything else remains the same.</p>
+
+<p>By expanding by minors on \(k\)th row, we have</p>
+
+<p>\[r \cdot det(C) + det(A)\], and note \(C\) is just matrix \(A\) with two same rows. Thus the final answer is still \(det(A)\).</p>
+
+<p>\(Q.E.D.\)</p>
+
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 9cdc4e1_20181211_013527</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=9cdc4e1_20181211_013527"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

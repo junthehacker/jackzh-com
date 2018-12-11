@@ -1,6 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 <url>
+<loc>https://jackzh.com/mata22/2018/07/22/mata22-determinants.html</loc>
+<lastmod>2018-07-22T23:17:00-04:00</lastmod>
+</url>
+<url>
+<loc>https://jackzh.com/mata22/2018/07/25/mata22-determinants-of-square-matrix.html</loc>
+<lastmod>2018-07-25T05:07:00-04:00</lastmod>
+</url>
+<url>
+<loc>https://jackzh.com/mata22/2018/08/03/mata22-eigenvalues-and-eigenvectors.html</loc>
+<lastmod>2018-08-03T10:46:00-04:00</lastmod>
+</url>
+<url>
 <loc>https://jackzh.com/cscb09/2018/08/04/cscb09-intro-to-unix.html</loc>
 <lastmod>2018-08-04T10:46:00-04:00</lastmod>
 </url>
@@ -39,6 +51,10 @@
 <url>
 <loc>https://jackzh.com/cscb09/2018/08/09/cscb09-advanced-topics.html</loc>
 <lastmod>2018-08-09T10:50:00-04:00</lastmod>
+</url>
+<url>
+<loc>https://jackzh.com/mata22/2018/08/12/mata22-diagonalization.html</loc>
+<lastmod>2018-08-12T10:46:00-04:00</lastmod>
 </url>
 <url>
 <loc>https://jackzh.com/cscb36/2018/12/03/cscb36-chapter-0.html</loc>
