@@ -4,13 +4,13 @@
         <title>CSCB07 Software Design - Intro to Java - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=6e02e3b_20181211_135048" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=15420dc_20181211_144300" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=6e02e3b_20181211_135048" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=15420dc_20181211_144300" />
     </head>
     <body>
 <header>
@@ -43,16 +43,242 @@
     <div class="post-content">
         <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
 
-<p>Introduction to Java programming.</p>
+<p>Introduction to Java programming. This note assumes you are somewhat knows how to program, many obvious details are ignored.</p>
 
 <!--more-->
+
+<h2 id="primitive-types">Primitive Types</h2>
+
+<p>Java has 8 primitive types.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">int</code> - 32 bit signed integer.</li>
+  <li><code class="highlighter-rouge">byte</code> - 8 bit signed integer.</li>
+  <li><code class="highlighter-rouge">short</code> - 16 bit signed integer.</li>
+  <li><code class="highlighter-rouge">long</code> - 64 bit signed integer.</li>
+  <li><code class="highlighter-rouge">float</code> - Single precision 32 bit floating point.</li>
+  <li><code class="highlighter-rouge">double</code> - Double precision 64 bit floating point.</li>
+  <li><code class="highlighter-rouge">boolean</code> - 1 bit value.</li>
+  <li><code class="highlighter-rouge">char</code> - 16 bit unsigned integer.</li>
+</ul>
+
+<h3 id="strings">Strings</h3>
+
+<p><code class="highlighter-rouge">String</code> is a class in Java, and it is immutable.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="s">"hello"</span><span class="o">;</span>
+<span class="c1">// or</span>
+<span class="n">String</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="n">String</span><span class="o">(</span><span class="s">"hello"</span><span class="o">);</span> <span class="c1">// This is less efficient</span>
+</code></pre></div></div>
+
+<h2 id="classes-and-objects">Classes and Objects</h2>
+
+<p>Classes are like our own custom data types, they are blueprints from which objects are created. It models the state and behaviour of a real world object.</p>
+
+<p>Objects are created out of classes. It is a software bundle of related state and behaviour.</p>
+
+<h3 id="student-example"><code class="highlighter-rouge">Student</code> Example</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="cm">/**
+     * private, protected, public are access modifiers.
+     */</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">firstName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">mathMark</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">physicsMark</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">chemistryMark</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kt">int</span> <span class="n">studentNumber</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">numberOfStudents</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="constructor">Constructor</h3>
+
+<p>Constructors are used to create objects.</p>
+
+<p>They have a few interesting properties:</p>
+
+<ul>
+  <li>They use the same name as the class, and have no return type.</li>
+  <li>If you don’t code any constructors, the default one will be created for you.</li>
+  <li>If you do provide any constructors, the default one will not be created for you. (but you can manually create a default constructor).</li>
+</ul>
+
+<p>In our <code class="highlighter-rouge">Student</code> class, constructors might look like the following:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="c1">// ... properties</span>
+
+    <span class="c1">// Default constructor</span>
+    <span class="n">Student</span><span class="o">()</span> <span class="o">{</span>
+        
+    <span class="o">}</span>
+
+    <span class="c1">// Constructor to set names</span>
+    <span class="n">Student</span><span class="o">(</span><span class="n">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="c1">// Constructor to set names and marks</span>
+    <span class="n">Student</span><span class="o">(</span><span class="n">String</span> <span class="n">firstName</span><span class="o">,</span> <span class="n">String</span> <span class="n">lastName</span><span class="o">,</span> <span class="kt">int</span> <span class="n">mathMark</span><span class="o">,</span> <span class="kt">int</span> <span class="n">physicsMark</span><span class="o">,</span> <span class="kt">int</span> <span class="n">chemistryMark</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">firstName</span> <span class="o">=</span> <span class="n">firstName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">lastName</span> <span class="o">=</span> <span class="n">lastName</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mathMark</span> <span class="o">=</span> <span class="n">mathMark</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">physicsMark</span> <span class="o">=</span> <span class="n">physicsMark</span><span class="o">;</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">chemistryMark</span> <span class="o">=</span> <span class="n">chemistryMark</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="create-objects">Create Objects</h3>
+
+<p>Now we have the <code class="highlighter-rouge">Student</code> class, we can create 3 students by running the following code:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Student</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="s">"Jack"</span><span class="o">,</span> <span class="s">"Wilson"</span><span class="o">);</span>
+<span class="n">Student</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="s">"Matt"</span><span class="o">,</span> <span class="s">"Milley"</span><span class="o">);</span>
+<span class="n">Student</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">(</span><span class="s">"Pill"</span><span class="o">,</span> <span class="s">"Zack"</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">a,b,c</code> are references with type of <code class="highlighter-rouge">Student</code>.</p>
+
+<p>We now encounter a problem, we can’t set the marks! Since constructors can’t be invoked more than once.</p>
+
+<h2 id="setters-and-getters">Setters and Getters</h2>
+
+<p>Setters also called mutator methods are used to control changes to an instance variable.</p>
+
+<p>Getters also called accessor methods, they return the value of the instance variable.</p>
+
+<p>For our student class, we can add the following getters and setters:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="c1">// ... properties</span>
+    <span class="c1">// ... constructors</span>
+
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">getMathMark</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">mathMark</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">setMathMark</span><span class="o">(</span><span class="kt">int</span> <span class="n">mathMark</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">mathMark</span> <span class="o">=</span> <span class="n">mathMark</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="c1">// physics, chemistry ignored</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="instance-methods">Instance Methods</h3>
+
+<blockquote>
+  <p>Getters and setters are instance methods that depends on an instance of a class. You can create other instance methods if you wish.</p>
+</blockquote>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="c1">// ... properties</span>
+    <span class="c1">// ... constructors</span>
+    <span class="c1">// ... getters/setters</span>
+
+    <span class="c1">// An instance method</span>
+    <span class="kd">public</span> <span class="kt">float</span> <span class="nf">calculateAverage</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">mathMark</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">physicsMark</span> <span class="o">+</span> <span class="k">this</span><span class="o">.</span><span class="na">chemistryMark</span><span class="o">)</span> <span class="o">/</span> <span class="mf">3.0f</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="public-and-private">Public and Private</h2>
+
+<p><code class="highlighter-rouge">public</code> and <code class="highlighter-rouge">private</code> are called access modifiers, there is another one called <code class="highlighter-rouge">protected</code>.</p>
+
+<p>All <code class="highlighter-rouge">private</code> properties and methods are not accessable outside of the class, and it is meant to be used to hide implementation details.</p>
+
+<p><code class="highlighter-rouge">public</code> properties and methods are accessable outside of the class, they are used to describe behaviours.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Student.java</span>
+<span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kt">void</span> <span class="nf">someMethod</span><span class="o">()</span> <span class="o">{}</span>
+<span class="o">}</span>
+
+<span class="c1">// Main.java</span>
+<span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">Student</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+        <span class="n">student</span><span class="o">.</span><span class="na">someMethod</span><span class="o">();</span> <span class="c1">// Error</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="static-fields-and-methods">Static Fields and Methods</h2>
+
+<p>Static fields and methods do not depend on an instance.</p>
+
+<p>In our student class, we have <code class="highlighter-rouge">numberOfStudents</code> as a static field.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="n">numberOfStudents</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">getNumberOfStudents</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">Student</span><span class="o">.</span><span class="na">numberOfStudents</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="factory-methods">Factory Methods</h2>
+
+<p>Consider the following class:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SmartPhone</span> <span class="o">{</span>
+    <span class="c1">// Construct with name</span>
+    <span class="kd">public</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="n">String</span> <span class="n">n</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="c1">// Construct with serial number</span>
+    <span class="kd">public</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">){}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>When I use the class, it gets confusing, what is <code class="highlighter-rouge">String n</code> and what is <code class="highlighter-rouge">int n</code>? Since constructors have the same name, I can’t really tell.</p>
+
+<p>Factory methods provides abstraction on top of constructors, and they can have names.</p>
+
+<p>We can refactor our code to the following:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">SmartPhone</span> <span class="o">{</span>
+    <span class="c1">// Construct with name</span>
+    <span class="kd">private</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="n">String</span> <span class="n">n</span><span class="o">)</span> <span class="o">{}</span>
+    <span class="c1">// Construct with serial number</span>
+    <span class="kd">private</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">){}</span>
+
+    <span class="c1">// Factory methods</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">SmartPhone</span> <span class="nf">createWithName</span><span class="o">(</span><span class="n">String</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">SmartPhone</span> <span class="nf">createWithSerialNumber</span><span class="o">(</span><span class="kt">int</span> <span class="n">n</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">SmartPhone</span><span class="o">(</span><span class="n">n</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>Note we changed both constructors to <code class="highlighter-rouge">private</code>.</p>
+</blockquote>
+
+<p>We can now use the class like the following:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Main</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+        <span class="n">SmartPhone</span> <span class="n">lgg7</span> <span class="o">=</span> <span class="n">SmartPhone</span><span class="o">.</span><span class="na">createWithName</span><span class="o">(</span><span class="s">"LG G7 ThinQ"</span><span class="o">);</span>
+        <span class="n">SmartPhone</span> <span class="n">generic</span> <span class="o">=</span> <span class="n">SmartPhone</span><span class="o">.</span><span class="na">createWithSerialNumber</span><span class="o">(</span><span class="mi">123</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
 
     </div>
 </div>
 
 <footer>
     <div class="container">
-        <div class="build">[production] 6e02e3b_20181211_135048</div>
+        <div class="build">[production] 15420dc_20181211_144300</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         <a href="/opensource.html">Open Source</a>
     </div>
@@ -68,7 +294,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=6e02e3b_20181211_135048"></script>
+<script src="/assets/js/app.js?v=15420dc_20181211_144300"></script>
 </body>
 </html>
 
