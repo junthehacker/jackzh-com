@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - SVN - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=6118cf6_20181211_024111" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=6118cf6_20181211_024111" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - SVN</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Basic introduction to version control and how to use SVN.</p>
+
+<!--more-->
+
+<h2 id="overview">Overview</h2>
+
+<p><strong>Why not email code to each other?</strong></p>
+
+<ul>
+  <li>Someone is responsible for merging different source files together into one, which is painful.</li>
+  <li>No way to track what file got changed what time by which developer.</li>
+</ul>
+
+<p><strong>What is version control?</strong></p>
+
+<p>Version control tracks files over a period of time (who wrote what and what your file looked like an hour ago etc.). It also automatically merges contributions.</p>
+
+<p>It creates revisions, which keep track of the changing states of files over time and merge contributions of multiple developers.</p>
+
+<h3 id="benifits-of-version-control">Benifits of Version Control</h3>
+
+<ul>
+  <li>Data integrity
+    <ul>
+      <li>Nothing is every deleted or lost.</li>
+    </ul>
+  </li>
+  <li>Productivity
+    <ul>
+      <li>Automatically integrates work from different developers into a central repository.</li>
+      <li>If a revision introduces errors, you can easily go back to a previous version.</li>
+    </ul>
+  </li>
+  <li>Accountability
+    <ul>
+      <li>Can track who wrote which part of the code.</li>
+      <li>Track when the change is added.</li>
+      <li>Track subsequent changes made by other developers.</li>
+    </ul>
+  </li>
+  <li>Record Keeping</li>
+  <li>Rapid Development</li>
+</ul>
+
+<h3 id="some-popular-version-control-systems">Some Popular Version Control Systems</h3>
+
+<ul>
+  <li>Git</li>
+</ul>
+
+<p>Git was created by Linus Torvalds in 2005 for development of the Linux kernel, with other kernel developers contributing to its initial development. Its current maintainer since 2005 is Junio Hamano.</p>
+
+<p>As with most other distributed version-control systems, and unlike most client–server systems, <strong>every Git directory on every computer is a full-fledged repository</strong> with complete history and full version-tracking abilities, independent of network access or a central server. (Wikipedia)</p>
+
+<ul>
+  <li>Perforce</li>
+</ul>
+
+<p>Enterprise version control, seems like it is used by gaming companies.</p>
+
+<ul>
+  <li>Microsoft Visual SourceSafe</li>
+</ul>
+
+<p>Targets towards small teams, this software is not supported by Microsoft anymore.</p>
+
+<ul>
+  <li>Subversion (SVN)</li>
+</ul>
+
+<p>Quite widely used, built by Apache Foundation.</p>
+
+<h2 id="client-server-architecture">Client-Server Architecture</h2>
+
+<p>SVN uses client-server architecture. This architecture is very common among many programs.</p>
+
+<blockquote>
+  <p>Note Git is not client-server, it does not have a centralized server at all.</p>
+</blockquote>
+
+<p><img src="https://www.evernote.com/l/Aq30awzYd1dGMrjsxjx30DDBHe70DB6sbNkB/image.png" alt="SVN client server" /></p>
+
+<h2 id="use-subversion">Use Subversion</h2>
+
+<p>Before doing anything, you must first checkout the repository:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn checkout https://lecture1207.googlecode.com/svn/trunk/ lecture1207 --username xyzM@gmail.com
+</code></pre></div></div>
+
+<p>Above command will checkout repository <code class="highlighter-rouge">https://lecture1207.googlecode.com/svn/trunk/</code> to a folder called <code class="highlighter-rouge">lecture1207</code> as user <code class="highlighter-rouge">xyzM@gmail.com</code>.</p>
+
+<p>After creating a new file, you must add it to SVN tracking tree:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>touch newfile.txt
+svn add newfile.txt
+</code></pre></div></div>
+
+<p>Then you can commit using the following command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn commit -m "Add newfile.txt" newfile.txt
+</code></pre></div></div>
+
+<p>To fetch updates from server, use the command:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn update
+</code></pre></div></div>
+
+<h3 id="svn-status">svn status</h3>
+
+<p><code class="highlighter-rouge">svn status</code> command is used to check current repository status, it will give you the following output:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>STATUS_CODE file_name1
+...
+</code></pre></div></div>
+
+<p>STATUS_CODE can be one of the following:</p>
+
+<ul>
+  <li><code class="highlighter-rouge"> </code> - Nothing has changed.</li>
+  <li><code class="highlighter-rouge">A</code> - Marked for addition.</li>
+  <li><code class="highlighter-rouge">D</code> - Marked for deletion.</li>
+  <li><code class="highlighter-rouge">M</code> - Item modified.</li>
+  <li><code class="highlighter-rouge">R</code> - Item replaced (was removed, but then a new file with same name is added).</li>
+  <li><code class="highlighter-rouge">C</code> - Contents of the file conflicts with the update from repository.</li>
+  <li><code class="highlighter-rouge">X</code> - Item is present because of an externals definition.</li>
+  <li><code class="highlighter-rouge">I</code> - Ignored by <code class="highlighter-rouge">svn:ignore</code>.</li>
+  <li><code class="highlighter-rouge">?</code> - Not under version control.</li>
+  <li><code class="highlighter-rouge">!</code> - Item is missing from working copy.</li>
+  <li><code class="highlighter-rouge">~</code> - Was version as one kind of object (for example file), but then replaced with another type (for example directory).</li>
+</ul>
+
+<h3 id="svn-log">svn log</h3>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn log [PATH]
+
+svn log URL[@REV] [PATH...]
+</code></pre></div></div>
+
+<p>Shows log messages from the repository. If no arguments are supplied, svn log shows the log messages for all files and directories inside (and including) the current working directory of your working copy. You can refine the results by specifying a path, one or more revisions, or any combination of the two. The default revision range for a local path is BASE:1.</p>
+
+<h2 id="resolve-conflicts">Resolve Conflicts</h2>
+
+<p>Following are the instructions provided by the instructor, however it is outdated.</p>
+
+<p>To discard my own change:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>svn revert
+</code></pre></div></div>
+
+<p>To discard other person’s change:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>cp someFile.mine.java someFile.java
+svn resolved
+svn commit -m “I accepted mine changes”
+</code></pre></div></div>
+
+<p>However, there is a new instruction: <a href="http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html">http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html</a></p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 6118cf6_20181211_024111</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=6118cf6_20181211_024111"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

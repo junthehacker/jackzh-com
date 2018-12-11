@@ -1,4 +1,162 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-11T01:35:28-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB36 Theory of Computation - Chapter 6 Predicate Logic</title><link href="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 6 Predicate Logic" /><published>2018-12-05T00:00:00-05:00</published><updated>2018-12-05T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-11T02:41:12-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - SVN</title><link href="https://jackzh.com/cscb07/2018/12/11/cscb07-svn.html" rel="alternate" type="text/html" title="CSCB07 Software Design - SVN" /><published>2018-12-11T01:40:00-05:00</published><updated>2018-12-11T01:40:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/11/cscb07-svn</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/11/cscb07-svn.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Basic introduction to version control and how to use SVN.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Why not email code to each other?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Someone is responsible for merging different source files together into one, which is painful.&lt;/li&gt;
+  &lt;li&gt;No way to track what file got changed what time by which developer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;What is version control?&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;Version control tracks files over a period of time (who wrote what and what your file looked like an hour ago etc.). It also automatically merges contributions.&lt;/p&gt;
+
+&lt;p&gt;It creates revisions, which keep track of the changing states of files over time and merge contributions of multiple developers.&lt;/p&gt;
+
+&lt;h3 id=&quot;benifits-of-version-control&quot;&gt;Benifits of Version Control&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Data integrity
+    &lt;ul&gt;
+      &lt;li&gt;Nothing is every deleted or lost.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Productivity
+    &lt;ul&gt;
+      &lt;li&gt;Automatically integrates work from different developers into a central repository.&lt;/li&gt;
+      &lt;li&gt;If a revision introduces errors, you can easily go back to a previous version.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Accountability
+    &lt;ul&gt;
+      &lt;li&gt;Can track who wrote which part of the code.&lt;/li&gt;
+      &lt;li&gt;Track when the change is added.&lt;/li&gt;
+      &lt;li&gt;Track subsequent changes made by other developers.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Record Keeping&lt;/li&gt;
+  &lt;li&gt;Rapid Development&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;some-popular-version-control-systems&quot;&gt;Some Popular Version Control Systems&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Git&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Git was created by Linus Torvalds in 2005 for development of the Linux kernel, with other kernel developers contributing to its initial development. Its current maintainer since 2005 is Junio Hamano.&lt;/p&gt;
+
+&lt;p&gt;As with most other distributed version-control systems, and unlike most client–server systems, &lt;strong&gt;every Git directory on every computer is a full-fledged repository&lt;/strong&gt; with complete history and full version-tracking abilities, independent of network access or a central server. (Wikipedia)&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Perforce&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Enterprise version control, seems like it is used by gaming companies.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Microsoft Visual SourceSafe&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Targets towards small teams, this software is not supported by Microsoft anymore.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Subversion (SVN)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Quite widely used, built by Apache Foundation.&lt;/p&gt;
+
+&lt;h2 id=&quot;client-server-architecture&quot;&gt;Client-Server Architecture&lt;/h2&gt;
+
+&lt;p&gt;SVN uses client-server architecture. This architecture is very common among many programs.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note Git is not client-server, it does not have a centralized server at all.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq30awzYd1dGMrjsxjx30DDBHe70DB6sbNkB/image.png&quot; alt=&quot;SVN client server&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;use-subversion&quot;&gt;Use Subversion&lt;/h2&gt;
+
+&lt;p&gt;Before doing anything, you must first checkout the repository:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn checkout https://lecture1207.googlecode.com/svn/trunk/ lecture1207 --username xyzM@gmail.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Above command will checkout repository &lt;code class=&quot;highlighter-rouge&quot;&gt;https://lecture1207.googlecode.com/svn/trunk/&lt;/code&gt; to a folder called &lt;code class=&quot;highlighter-rouge&quot;&gt;lecture1207&lt;/code&gt; as user &lt;code class=&quot;highlighter-rouge&quot;&gt;xyzM@gmail.com&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;After creating a new file, you must add it to SVN tracking tree:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;touch newfile.txt
+svn add newfile.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then you can commit using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn commit -m &quot;Add newfile.txt&quot; newfile.txt
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To fetch updates from server, use the command:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;svn-status&quot;&gt;svn status&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;svn status&lt;/code&gt; command is used to check current repository status, it will give you the following output:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;STATUS_CODE file_name1
+...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;STATUS_CODE can be one of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &lt;/code&gt; - Nothing has changed.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; - Marked for addition.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt; - Marked for deletion.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;M&lt;/code&gt; - Item modified.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; - Item replaced (was removed, but then a new file with same name is added).&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;C&lt;/code&gt; - Contents of the file conflicts with the update from repository.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; - Item is present because of an externals definition.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;I&lt;/code&gt; - Ignored by &lt;code class=&quot;highlighter-rouge&quot;&gt;svn:ignore&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; - Not under version control.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt; - Item is missing from working copy.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; - Was version as one kind of object (for example file), but then replaced with another type (for example directory).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;svn-log&quot;&gt;svn log&lt;/h3&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn log [PATH]
+
+svn log URL[@REV] [PATH...]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Shows log messages from the repository. If no arguments are supplied, svn log shows the log messages for all files and directories inside (and including) the current working directory of your working copy. You can refine the results by specifying a path, one or more revisions, or any combination of the two. The default revision range for a local path is BASE:1.&lt;/p&gt;
+
+&lt;h2 id=&quot;resolve-conflicts&quot;&gt;Resolve Conflicts&lt;/h2&gt;
+
+&lt;p&gt;Following are the instructions provided by the instructor, however it is outdated.&lt;/p&gt;
+
+&lt;p&gt;To discard my own change:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn revert
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To discard other person’s change:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp someFile.mine.java someFile.java
+svn resolved
+svn commit -m “I accepted mine changes”
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;However, there is a new instruction: &lt;a href=&quot;http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html&quot;&gt;http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Basic introduction to version control and how to use SVN.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 6 Predicate Logic</title><link href="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 6 Predicate Logic" /><published>2018-12-05T00:00:00-05:00</published><updated>2018-12-05T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/05/cscb36-chapter-6.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 6, Predicate Logic.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1145,191 +1303,4 @@
 
 &lt;p&gt;The only way to create new process is to fork, and only way to run new program is exec.&lt;/p&gt;
 
-&lt;p&gt;Therefore all processes have ancestor of pid 1.&lt;/p&gt;</content><author><name></name></author><category term="cscb09" /><category term="course-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry><entry><title type="html">CSCB09 Software Tools and Systems Programming - Misc IO</title><link href="https://jackzh.com/cscb09/2018/08/09/cscb09-misc-io.html" rel="alternate" type="text/html" title="CSCB09 Software Tools and Systems Programming - Misc IO" /><published>2018-08-09T00:00:00-04:00</published><updated>2018-08-09T00:00:00-04:00</updated><id>https://jackzh.com/cscb09/2018/08/09/cscb09-misc-io</id><content type="html" xml:base="https://jackzh.com/cscb09/2018/08/09/cscb09-misc-io.html">&lt;p&gt;This article is mainly notes I have taken for CSCB09/CSC209 at UofT.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;pointers-to-pointers&quot;&gt;Pointers to Pointers&lt;/h2&gt;
-
-&lt;p&gt;You can have pointers to pointers, which is very common, let’s say changing original string.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chage_str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;src&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This will be a pointer to string, which is another pointer&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;command-line-arguments&quot;&gt;Command Line Arguments&lt;/h2&gt;
-
-&lt;p&gt;Command line arguemnts are passed to main using two parameters:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[])&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;argc&lt;/code&gt; is the number of arguments, &lt;code class=&quot;highlighter-rouge&quot;&gt;argv&lt;/code&gt; is a list of arguments in string, 0th element is the name of the program.&lt;/p&gt;
-
-&lt;p&gt;You can also do&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;main&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Reason is simple, I won’t go into detail here.&lt;/p&gt;
-
-&lt;h2 id=&quot;typedef&quot;&gt;typedef&lt;/h2&gt;
-
-&lt;p&gt;Remember when we did structs, you have to do &lt;code class=&quot;highlighter-rouge&quot;&gt;struct student&lt;/code&gt; each time?&lt;/p&gt;
-
-&lt;p&gt;Use typedef to create a shorthand:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;student&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Def here&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now you can simply use &lt;code class=&quot;highlighter-rouge&quot;&gt;Student&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Another shorthand would be&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;typedef&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;student&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Def here&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;program-organization&quot;&gt;Program Organization&lt;/h2&gt;
-
-&lt;h3 id=&quot;h-files&quot;&gt;.h Files&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;.h&lt;/code&gt; files’ purpose is so the compiler knows how to use each function without look into function definations.&lt;/p&gt;
-
-&lt;h3 id=&quot;gcc&quot;&gt;gcc&lt;/h3&gt;
-
-&lt;p&gt;When you run &lt;code class=&quot;highlighter-rouge&quot;&gt;gcc main.c list.c -o program&lt;/code&gt;&lt;/p&gt;
-
-&lt;p&gt;What happends are:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;First it will look for all &lt;code class=&quot;highlighter-rouge&quot;&gt;#include&lt;/code&gt; and includes the &lt;code class=&quot;highlighter-rouge&quot;&gt;.h&lt;/code&gt; files.&lt;/li&gt;
-  &lt;li&gt;Then compiler will compile each &lt;code class=&quot;highlighter-rouge&quot;&gt;.c&lt;/code&gt; file, which will produce object code &lt;code class=&quot;highlighter-rouge&quot;&gt;.o&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Finally the linker will combine all object files into one program.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;makefile&quot;&gt;Makefile&lt;/h2&gt;
-
-&lt;p&gt;Makefiles are processed by a program called &lt;code class=&quot;highlighter-rouge&quot;&gt;make&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;The syntax is very simple:&lt;/p&gt;
-
-&lt;div class=&quot;language-makefile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nl&quot;&gt;target&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;dependencies.c&lt;/span&gt;
-	gcc &lt;span class=&quot;nt&quot;&gt;-Wall&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; main dependencies.c &lt;span class=&quot;c&quot;&gt;# Commands&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Makefile only accepts tab, do not use spaces!!!!&lt;/p&gt;
-
-&lt;div class=&quot;language-makefile highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;CC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; gcc
-&lt;span class=&quot;nv&quot;&gt;CFLAGS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Wall&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-g&lt;/span&gt;
-&lt;span class=&quot;nl&quot;&gt;buxfer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buxfer.o lists.o lists.h&lt;/span&gt;
-	&lt;span class=&quot;nv&quot;&gt;$(CC)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$(CFLAGS)&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; buxfer buxfer.o lists.o
-&lt;span class=&quot;nl&quot;&gt;buxfer.o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;buxfer.c lists.h&lt;/span&gt;
-	&lt;span class=&quot;nv&quot;&gt;$(CC)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$(CFLAGS)&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; buxfer.c
-&lt;span class=&quot;nl&quot;&gt;lists.o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;lists.c lists.h&lt;/span&gt;
-	&lt;span class=&quot;nv&quot;&gt;$(CC)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$(CFLAGS)&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; lists.c
-&lt;span class=&quot;nl&quot;&gt;clean&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;:&lt;/span&gt;
-	&lt;span class=&quot;nb&quot;&gt;rm &lt;/span&gt;buxfer &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;.o
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;pre-processer-directives&quot;&gt;Pre-processer Directives&lt;/h2&gt;
-
-&lt;p&gt;You can use some directives to make your life easier.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#define MAX 100 // Define macros
-#ifndef LISTS_H // Conditionals
-&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;..&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;#endif
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;error-handling&quot;&gt;Error Handling&lt;/h2&gt;
-
-&lt;p&gt;Include &lt;code class=&quot;highlighter-rouge&quot;&gt;errno.h&lt;/code&gt; to do error handling.&lt;/p&gt;
-
-&lt;p&gt;By default, &lt;code class=&quot;highlighter-rouge&quot;&gt;errno&lt;/code&gt; is zero, but once an error occurs, it is set.&lt;/p&gt;
-
-&lt;p&gt;You can use &lt;code class=&quot;highlighter-rouge&quot;&gt;man errno&lt;/code&gt; for all possible values. For example: &lt;code class=&quot;highlighter-rouge&quot;&gt;EACCESS&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;perror&quot;&gt;perror&lt;/h3&gt;
-
-&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;perror&lt;/code&gt; to print error message on screen.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;cm&quot;&gt;/* bad things happen here */&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;ERROR&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;file-io&quot;&gt;File I/O&lt;/h2&gt;
-
-&lt;p&gt;We have already seen inputs and outputs, using printf.&lt;/p&gt;
-
-&lt;p&gt;But how about a file?&lt;/p&gt;
-
-&lt;p&gt;Coorisponding file functions are:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fprintf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;...)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;putchar&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fputc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fputs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;There are two main machanisms for managing files&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;File descriptors, which is a small int.&lt;/li&gt;
-  &lt;li&gt;File pointers, &lt;code class=&quot;highlighter-rouge&quot;&gt;FILE *&lt;/code&gt; that contains a file descriptor and a buffer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;standard-streams&quot;&gt;Standard Streams&lt;/h3&gt;
-
-&lt;p&gt;All programs have three files open by default&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 0&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdout&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 1&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stderr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// 2&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;If you do &lt;code class=&quot;highlighter-rouge&quot;&gt;fprintf(stdout, ...)&lt;/code&gt;, this is identical to &lt;code class=&quot;highlighter-rouge&quot;&gt;printf&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;regular-files&quot;&gt;Regular Files&lt;/h3&gt;
-
-&lt;p&gt;If you want to operate on regular files, you must open them.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;mode&lt;/code&gt; can be &lt;code class=&quot;highlighter-rouge&quot;&gt;r&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;w&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;a&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;To close a file, use &lt;code class=&quot;highlighter-rouge&quot;&gt;fclose(FILE *stream)&lt;/code&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;reading-from-files&quot;&gt;Reading From Files&lt;/h3&gt;
-
-&lt;p&gt;To read from a file, use&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It will read until &lt;code class=&quot;highlighter-rouge&quot;&gt;\n&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;size-1&lt;/code&gt; characters.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#define MAX 50
-&lt;/span&gt;&lt;span class=&quot;c1&quot;&gt;// ...&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fopen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;file.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;r&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%s&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fclose&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;binary-io&quot;&gt;Binary I/O&lt;/h3&gt;
-
-&lt;p&gt;Use &lt;code class=&quot;highlighter-rouge&quot;&gt;fread&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;fwrite&lt;/code&gt; to operate on a binary level.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fread&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nmemb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fwrite&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ptr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;nmemb&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;FILE&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Both will return number of items written/read.&lt;/p&gt;</content><author><name></name></author><category term="cscb09" /><category term="cscb09" /><category term="course-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry></feed>
+&lt;p&gt;Therefore all processes have ancestor of pid 1.&lt;/p&gt;</content><author><name></name></author><category term="cscb09" /><category term="course-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry></feed>
