@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Sockets - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Sockets</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="tcpip">TCP/IP</h2>
+
+<ul>
+  <li>Transmission Control Protocol</li>
+  <li>It tells us how to package up the data</li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq3pZW8_29dAvrU4mV4d0ZhMT0UF3PBUxXEB/image.png" alt="" /></p>
+
+<h3 id="three-way-handshake">Three-Way Handshake</h3>
+
+<ul>
+  <li>Client request connection</li>
+  <li>Server return with ack</li>
+  <li>Client sends ack</li>
+  <li>Server gets ack, connection established</li>
+</ul>
+
+<p>Following graph is the whole process, three-way handshake happends at client connect.</p>
+
+<p><img src="https://www.evernote.com/l/Aq27o7vPDAtKEJv7fy233DdwMdE8Bj8C2gAB/image.png" alt="" /></p>
+
+<h3 id="tcp-congestion-control">TCP Congestion Control</h3>
+
+<p>TCP control congestion using two methods:</p>
+
+<ul>
+  <li>Slow-start
+    <ul>
+      <li>Connection won’t reach full speed right away</li>
+    </ul>
+  </li>
+  <li>Window-based
+    <ul>
+      <li>Some packets are allowed to be sent without ack’d</li>
+      <li>If ack’d, grow window</li>
+      <li>If packet loss, cut window</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="sockets">Sockets</h2>
+
+<p>Another form of communication between processes.</p>
+
+<p>Very similar to pipes, but on different machines, file descriptors are used to refer to sockets, it is an interface between application and network.</p>
+
+<h3 id="types-of-sockets">Types of Sockets</h3>
+
+<p>There are two main categories</p>
+
+<ul>
+  <li>UNIX domain: Both processes on same machine</li>
+  <li>INET domain: on different machines</li>
+</ul>
+
+<p>There three main types</p>
+
+<ul>
+  <li>SOCK_STREAM - TCP Sockets</li>
+  <li>SOCK_DGRAM - UDP Sockets</li>
+  <li>SOCK_RAW</li>
+</ul>
+
+<h3 id="addresses-and-ports">Addresses and Ports</h3>
+
+<p>Socket pair is the two endpoints of the connection, which is identified by an IP address and a port.</p>
+
+<p>IPv4 are 4 8-bit numbers, ports can range from 0-65535 (2^16)</p>
+
+<p>Port categories:</p>
+
+<ul>
+  <li>Well-known ports: 0-1023</li>
+  <li>Registered ports: 1024-49151</li>
+  <li>Dynamic ports: 49152-65535</li>
+</ul>
+
+<h3 id="server-setup">Server Setup</h3>
+
+<p>To start a socket server, use the following function</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">socket</span><span class="p">(</span><span class="kt">int</span> <span class="n">family</span><span class="p">,</span> <span class="kt">int</span> <span class="n">type</span><span class="p">,</span> <span class="kt">int</span> <span class="n">protocol</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Family can be <code class="highlighter-rouge">PF_INET</code> or <code class="highlighter-rouge">PF_LOCAL</code>.</p>
+
+<p>Type can be <code class="highlighter-rouge">SOCK_STREAM</code>, <code class="highlighter-rouge">SOCK_DGRAM</code> or <code class="highlighter-rouge">SOCK_RAW</code>.</p>
+
+<p>Protocal should be 0 other than RAW.</p>
+
+<p>Returns a socket descriptor, which is just like a file descriptor.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;ctype.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">sockfd</span><span class="o">=</span><span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span><span class="o">==-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"socket call failed"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="c1">//*** bind the server address to the end point,</span>
+    <span class="n">listen</span> <span class="k">for</span> <span class="n">connections</span><span class="p">,</span> <span class="n">accept</span> <span class="n">a</span> <span class="n">connection</span> <span class="o">**</span><span class="err">*/</span><span class="o">/</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Then we need to bind to a name</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">bind</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">servaddr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">addrlen</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>sockfd is the descriptor returned by <code class="highlighter-rouge">socket()</code></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="p">{</span>
+    <span class="kt">short</span> <span class="n">sin_family</span><span class="p">;</span>
+    <span class="n">u_short</span> <span class="n">sin_port</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">in_addr</span> <span class="n">sin_addr</span><span class="p">;</span>
+    <span class="kt">char</span> <span class="n">sin_zero</span><span class="p">[</span><span class="mi">8</span><span class="p">];</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">sin_addr</code> can be set to <code class="highlighter-rouge">INADDR_ANY</code> to communicate on any network interface.</p>
+
+<p>After binding, we need to setup the queue in kernel.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">listen</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="kt">int</span> <span class="n">backlog</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>After listening, socket is ready to accept connections.</p>
+
+<p><code class="highlighter-rouge">backlog</code> is the max number of partially completed connections that kernal should queue.</p>
+
+<p>Finally, we can complete the connection.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">accept</span><span class="p">(</span><span class="kt">int</span> <span class="n">sockfd</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">cliaddr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="o">*</span><span class="n">addrlen</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>This function will block while waiting for connection.</p>
+
+<p>Returns a new descriptor which refers to the TCP connection for client.</p>
+
+<p><code class="highlighter-rouge">sockfd</code> is the listening socket.</p>
+
+<p><code class="highlighter-rouge">cliaddr</code> is the client address.</p>
+
+<p>Read / Write on the socket returned.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;ctype.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+#define SIZE sizeof(struct sockaddr_in)
+</span><span class="kt">int</span> <span class="n">newsockfd</span><span class="p">;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server</span><span class="o">=</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="mi">7000</span><span class="p">,</span> <span class="n">INADDR_ANY</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">sockfd</span><span class="o">=</span><span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"socket call failed"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">bind</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"bind call failed"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">listem</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"listen call failed"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(;;)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">((</span><span class="n">newsockfd</span><span class="o">=</span><span class="n">accept</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+            <span class="n">perror</span><span class="p">(</span><span class="s">"accept call failed"</span><span class="p">);</span>
+            <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="p">}</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+
+</code></pre></div></div>
+
+<h3 id="client-setup">Client Setup</h3>
+
+<p><code class="highlighter-rouge">socket()</code> is the same as server.</p>
+
+<p>To establish a connection, use <code class="highlighter-rouge">connect</code> function</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">connect</span><span class="p">(</span><span class="kt">int</span> <span class="n">socketfd</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sockaddr</span> <span class="o">*</span><span class="n">servaddr</span><span class="p">,</span> <span class="n">socklen_t</span> <span class="n">addrlen</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Kernel will choose a dynamic port and source address.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include&lt;ctype.h&gt;
+#include&lt;sys/types.h&gt;
+#include&lt;sys/socket.h&gt;
+#include&lt;netinet/in.h&gt;
+#define SIZE sizeof(struct sockaddr_in)
+</span><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">sockfd</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">sockaddr_in</span> <span class="n">server</span> <span class="o">=</span> <span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="mi">7000</span><span class="p">);</span>
+    <span class="n">server</span><span class="p">.</span><span class="n">sin_addr</span><span class="p">.</span><span class="n">s_addr</span><span class="o">=</span><span class="n">inet_addr</span><span class="p">(</span><span class="s">"206.45.10.2"</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">((</span><span class="n">sockfd</span><span class="o">=</span><span class="n">socket</span><span class="p">(</span><span class="n">AF_INET</span><span class="p">,</span> <span class="n">SOCK_STREAM</span><span class="p">,</span> <span class="mi">0</span><span class="p">))</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"socket call failed"</span><span class="p">);</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">connect</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="p">(</span><span class="k">struct</span> <span class="n">sockadr</span> <span class="o">*</span><span class="p">)</span><span class="o">&amp;</span><span class="n">server</span><span class="p">,</span> <span class="n">SIZE</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">){</span>
+        <span class="n">perror</span><span class="p">(</span><span class="s">"connect call failed"</span><span class="p">);</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="network-byte-order">Network Byte Order</h3>
+
+<p>Before sending numbers, convert them to network byte order first.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">htonl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span>
+<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">htons</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">)</span>
+<span class="kt">unsigned</span> <span class="kt">long</span> <span class="n">ntohl</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span>
+<span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">ntohs</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="sending-and-receiving-data">Sending and Receiving Data</h3>
+
+<p>You can use <code class="highlighter-rouge">read</code> and <code class="highlighter-rouge">write</code>, but sometimes if you want more control, you can use <code class="highlighter-rouge">send</code> and <code class="highlighter-rouge">recv</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">ssize_t</span> <span class="n">send</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Same as <code class="highlighter-rouge">write</code> if flags is 0, you can use other flags like <code class="highlighter-rouge">MSG_OOB</code>, <code class="highlighter-rouge">MSG_DONTROUTE</code>, <code class="highlighter-rouge">MSG_DONTWAIT</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">ssize_t</span> <span class="n">recv</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">len</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Flags: <code class="highlighter-rouge">MSG_OOB</code>, <code class="highlighter-rouge">MSG_WAITALL</code>, <code class="highlighter-rouge">MSG_PEEK</code>.</p>
+
+<p>After you are finished with the socket, simply call <code class="highlighter-rouge">close(s)</code>.</p>
+
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Structs, Memory, Strings - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Structs, Memory, Strings</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="strings">Strings</h2>
+
+<p>In C, strings are not a built-in data type. It is basically an array of characters terminated with a null character <code class="highlighter-rouge">\0</code>.</p>
+
+<p>To initialize a string, you use the following code:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="sc">'j'</span><span class="p">,</span> <span class="sc">'u'</span><span class="p">,</span> <span class="sc">'n'</span><span class="p">,</span> <span class="sc">'\0'</span><span class="p">};</span>
+<span class="c1">// or</span>
+<span class="kt">char</span> <span class="n">name</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span> <span class="o">=</span> <span class="s">"jun"</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h3 id="operations">Operations</h3>
+
+<p>A lot of common string operations can be found within <code class="highlighter-rouge">string.h</code>.</p>
+
+<p>To find the length of a string, use following code:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">strlen</span><span class="p">(</span><span class="n">your_string</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>To copy a string, you can use two functions</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">strcpy</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">);</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">strncpy</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span> <span class="c1">// Copy most n characters</span>
+</code></pre></div></div>
+
+<p>Usually if we are not sure about the source size, we would use <code class="highlighter-rouge">strncpy</code> to make sure we never overflow. The correct usage is like the following</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strncpy</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="n">s2</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="n">s1</span><span class="p">[</span><span class="k">sizeof</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="sc">'\0'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>To concatenating a string, there are also two functions</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">strcat</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">);</span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">strncat</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">dest</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">src</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span> <span class="c1">// Concat most n characters </span>
+</code></pre></div></div>
+
+<p>We usually use <code class="highlighter-rouge">strncat</code>, the correct usage is following</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">strncat</span><span class="p">(</span><span class="n">s1</span><span class="p">,</span> <span class="s">"test"</span><span class="p">,</span> <span class="k">sizeof</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">-</span> <span class="mi">1</span><span class="p">);</span>
+<span class="c1">// Don't have to pad \0, since strncat will pad \0 for us.</span>
+</code></pre></div></div>
+
+<p>To compare two strings, you can use the following functions</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">strcmp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s2</span><span class="p">);</span>
+<span class="kt">int</span> <span class="n">strncmp</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s2</span><span class="p">,</span> <span class="kt">int</span> <span class="n">n</span><span class="p">);</span> <span class="c1">// Compares most n characters</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">strcmp</code> is safe, so you can use any of the above.</p>
+
+<p>If the return value is 0, then strings are equal, if &lt;0, first unmatch has less value, if &gt;0, first unmatch has greater value.</p>
+
+<p>To search for a character within the string, use following functions</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">strchr</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">);</span> <span class="c1">// First </span>
+<span class="kt">char</span> <span class="o">*</span><span class="n">strrchar</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">c</span><span class="p">);</span> <span class="c1">// Last</span>
+</code></pre></div></div>
+
+<h2 id="dynamic-memory">Dynamic Memory</h2>
+
+<p>There are many reasons for us to use dynamic memory, for example:</p>
+
+<ul>
+  <li>We don’t know the data size</li>
+  <li>Need a bigger array later</li>
+  <li>We need to keep a variable from function</li>
+</ul>
+
+<p>Within our memory model, dynamic data (heap) will never be auto released by the system (unless the program terminated).</p>
+
+<h3 id="malloc">malloc</h3>
+
+<p>To allocate memory, we use a function called <code class="highlighter-rouge">malloc()</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">malloc</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">size</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It will return a pointer to the newly allocated memory, or <code class="highlighter-rouge">NULL</code> upon failure.</p>
+
+<p>For example</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">3</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">p</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="c1">// Error</span>
+</code></pre></div></div>
+
+<p>We can use <code class="highlighter-rouge">malloc()</code> to create a <code class="highlighter-rouge">concat</code> function that concat two strings.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="nf">concat</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s1</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s2</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="o">*</span><span class="n">result</span><span class="p">;</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="n">strlen</span><span class="p">(</span><span class="n">s1</span><span class="p">)</span> <span class="o">+</span> <span class="n">strlen</span><span class="p">(</span><span class="n">s2</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span><span class="p">);</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">result</span> <span class="o">==</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">exit</span><span class="p">(</span><span class="n">EXIT_FAILURE</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="n">strcpy</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">s1</span><span class="p">);</span>
+    <span class="n">strcat</span><span class="p">(</span><span class="n">result</span><span class="p">,</span> <span class="n">s2</span><span class="p">);</span>
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Memory allocated using <code class="highlighter-rouge">malloc</code> must be manually freed, use <code class="highlighter-rouge">free(p)</code> to free the memory.</p>
+
+<h3 id="memory-leak">Memory Leak</h3>
+
+<p>Memory can leak when you lost access to a block of dynamic memory. Consider the following program</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">q</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">q</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>We now lost access to <code class="highlighter-rouge">p</code>, and unable to free it. This is called a memory leak.</p>
+
+<h3 id="dangling-pointers">Dangling Pointers</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">p</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="n">free</span><span class="p">(</span><span class="n">p</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>At this point, <code class="highlighter-rouge">p</code> points to a memory location it does not own, it is dangerous to use it.</p>
+
+<h3 id="sizeof">sizeof</h3>
+
+<p>To allocate space for other datatypes, we take advantage of a function called <code class="highlighter-rouge">sizeof</code>, which will return the bytes that a data structure will need.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="o">*</span><span class="n">a</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">4</span> <span class="o">*</span> <span class="k">sizeof</span><span class="p">(</span><span class="kt">int</span><span class="p">));</span> <span class="c1">// This will allocate space for 4 integers</span>
+</code></pre></div></div>
+
+<h3 id="calloc">calloc</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">calloc</span><span class="p">(</span><span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">);</span> <span class="c1">// First argument is how many elements, second is size of element</span>
+</code></pre></div></div>
+
+<p>Similar to malloc, but zeros all memory.</p>
+
+<h3 id="realloc">realloc</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="o">*</span><span class="n">realloc</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Change size of memory block pointed by <code class="highlighter-rouge">ptr</code> to <code class="highlighter-rouge">size</code>.</p>
+
+<h2 id="structs">Structs</h2>
+
+<p>Struct is a collection of related data items.</p>
+
+<p>For example, you might have a struct called student</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">student</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">firstName</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+    <span class="kt">char</span> <span class="n">lastName</span><span class="p">[</span><span class="mi">20</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">year</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Once we declared a struct, we can use it just like any other datatype.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">student</span> <span class="n">my_student</span><span class="p">;</span>
+<span class="n">my_student</span><span class="p">.</span><span class="n">year</span> <span class="o">=</span> <span class="mi">4</span><span class="p">;</span>
+<span class="c1">// etc...</span>
+</code></pre></div></div>
+
+<h3 id="pointer-to-structs">Pointer to Structs</h3>
+
+<p>Let’s say instead of struct, we have a pointer to struct.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">student</span> <span class="n">my_student</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">student</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">my_student</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>To access using <code class="highlighter-rouge">p</code>, you can do one of the following:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">(</span><span class="o">*</span><span class="n">p</span><span class="p">).</span><span class="n">year</span><span class="p">;</span> <span class="c1">// Dereferencing then access struct</span>
+<span class="n">p</span><span class="o">-&gt;</span><span class="n">year</span><span class="p">;</span> <span class="c1">// Shorthand</span>
+</code></pre></div></div>
+
+<p>You can use <code class="highlighter-rouge">malloc</code> with structs just like any other type.</p>
+
+<p>Functions can take structs as parameters.</p>
+
+<h2 id="linked-list">Linked List</h2>
+
+<p>Linked list in C is very easy to implement using struct</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">node</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">data</span><span class="p">;</span>
+    <span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">next</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="c1">// Initialize the list</span>
+<span class="k">struct</span> <span class="n">node</span> <span class="n">first</span><span class="p">;</span>
+<span class="n">first</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span>
+<span class="k">struct</span> <span class="n">node</span> <span class="n">second</span><span class="p">;</span>
+<span class="n">second</span><span class="p">.</span><span class="n">data</span> <span class="o">=</span> <span class="mi">2</span><span class="p">;</span>
+<span class="n">first</span><span class="p">.</span><span class="n">next</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">second</span><span class="p">;</span>
+
+<span class="c1">// Loop though list</span>
+<span class="k">struct</span> <span class="n">node</span> <span class="o">*</span><span class="n">head</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">first</span><span class="p">;</span>
+<span class="k">while</span> <span class="p">(</span><span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">data</span><span class="p">);</span>
+    <span class="n">head</span> <span class="o">=</span> <span class="n">head</span><span class="o">-&gt;</span><span class="n">next</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

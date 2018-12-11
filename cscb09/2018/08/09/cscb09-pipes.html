@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Pipes / IPC - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Pipes / IPC</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="pipes">Pipes</h2>
+
+<p>Pipes are one-way communication channel, they are buffers managed by the OS.</p>
+
+<p>Pipes use file descriptors for pipe operations.</p>
+
+<h3 id="file-descriptors">File Descriptors</h3>
+
+<p>There are four main operations: <code class="highlighter-rouge">open</code>, <code class="highlighter-rouge">close</code>, <code class="highlighter-rouge">read</code> and <code class="highlighter-rouge">write</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">open</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">pathname</span><span class="p">,</span> <span class="kt">int</span> <span class="n">flags</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Flags can be <code class="highlighter-rouge">O_RDONLY</code>, <code class="highlighter-rouge">O_WRONLY</code> or <code class="highlighter-rouge">O_RDWR</code>.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">ssize_t</span> <span class="n">read</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Return number of bytes read, 0 EOF, -1 error.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">ssize_t</span> <span class="n">write</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">,</span> <span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">buf</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">count</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Return number of bytes written, -1 error</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">close</span><span class="p">(</span><span class="kt">int</span> <span class="n">fd</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>0 success, -1 error</p>
+
+<p>You can use <code class="highlighter-rouge">fileno</code> to get the file descriptor for a <code class="highlighter-rouge">FILE</code> object.</p>
+
+<p>On fork, children gets a copy of parent’s file table.</p>
+
+<h3 id="create-pipes">Create Pipes</h3>
+
+<p>To create a pipe, you call <code class="highlighter-rouge">pipe</code>, which will set two integers, one for read, one for write.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">fds</span><span class="p">[</span><span class="mi">2</span><span class="p">];</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">fds</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>fds[0] is now for reading, fds[1] is now for writing.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="mi">4</span><span class="p">];</span>
+    <span class="kt">int</span> <span class="n">p</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">nbytes</span><span class="p">;</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">pipe</span><span class="p">(</span><span class="n">p</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Error</span>
+        <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+    <span class="p">}</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">fork</span><span class="p">()){</span>
+       <span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+       <span class="k">while</span><span class="p">((</span><span class="n">nbytes</span> <span class="o">=</span> <span class="n">read</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">buf</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span>
+           <span class="n">write</span> <span class="p">(</span><span class="n">STDOUT_FILENO</span><span class="p">,</span> <span class="n">buf</span><span class="p">,</span> <span class="n">nbytes</span><span class="p">);</span>
+    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="n">close</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+        <span class="n">write</span><span class="p">(</span><span class="n">p</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="s">"hi"</span><span class="p">,</span> <span class="mi">3</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>Write to pipe that no one can read, will get SIGPIPE.</li>
+  <li>
+    <p>Write to pipe and the buffer is full, it blocks.</p>
+  </li>
+  <li>Read from pipe that no one can write, will get EOF.</li>
+  <li>Read from pipe and there is no data, blocks.</li>
+</ul>
+
+<h2 id="dup2">dup2</h2>
+
+<p><code class="highlighter-rouge">dup2()</code> function can be used to set one FD to be copy of another.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">dup2</span><span class="p">(</span><span class="n">fd</span><span class="p">,</span> <span class="n">fileno</span><span class="p">(</span><span class="n">stdin</span><span class="p">));</span>
+<span class="c1">// This will make stdin fd instead.</span>
+</code></pre></div></div>
+
+<p>Example:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/* equivalent to “sort &lt; file1 | uniq” */</span>
+<span class="kt">int</span> <span class="n">fd</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span> <span class="n">pid</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">filedes</span> <span class="o">=</span> <span class="n">open</span><span class="p">(</span><span class="s">"file1"</span><span class="p">,</span> <span class="n">O_RDONLY</span><span class="p">);</span>
+<span class="n">dup2</span><span class="p">(</span><span class="n">filedes</span><span class="p">,</span> <span class="n">fileno</span><span class="p">(</span><span class="n">stdin</span><span class="p">));</span>
+<span class="n">close</span><span class="p">(</span><span class="n">filedes</span><span class="p">);</span>
+<span class="n">pipe</span><span class="p">(</span><span class="n">fd</span><span class="p">);</span>
+
+<span class="k">if</span><span class="p">((</span><span class="n">pid</span> <span class="o">=</span> <span class="n">fork</span><span class="p">())</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span><span class="cm">/* child */</span>
+    <span class="n">dup2</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">fileno</span><span class="p">(</span><span class="n">stdout</span><span class="p">));</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span> <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span>
+    <span class="n">execl</span><span class="p">(</span><span class="s">"/usr/bin/sort"</span><span class="p">,</span> <span class="s">"sort"</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="k">if</span><span class="p">(</span><span class="n">pid</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">){</span> <span class="cm">/* parent */</span>
+    <span class="n">dup2</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">fileno</span><span class="p">(</span><span class="n">stdin</span><span class="p">));</span>
+    <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">1</span><span class="p">]);</span> <span class="n">close</span><span class="p">(</span><span class="n">fd</span><span class="p">[</span><span class="mi">0</span><span class="p">]);</span>
+    <span class="n">execl</span><span class="p">(</span><span class="s">"/usr/bin/uniq"</span><span class="p">,</span> <span class="s">"uniq"</span><span class="p">,</span> <span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)</span> <span class="mi">0</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+    <span class="n">perror</span><span class="p">(</span><span class="s">"fork"</span><span class="p">);</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Advanced Topics - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Advanced Topics</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">coures-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="io-multiplexing">I/O Multiplexing</h2>
+
+<p>We use <code class="highlighter-rouge">select</code> to achieve I/O multiplexing.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">select</span><span class="p">(</span><span class="kt">int</span> <span class="n">maxfdp1</span><span class="p">,</span>
+           <span class="n">fd_set</span> <span class="o">*</span><span class="n">readset</span><span class="p">,</span>
+           <span class="n">fd_set</span> <span class="o">*</span><span class="n">writeset</span><span class="p">,</span>
+           <span class="n">fd_set</span> <span class="o">*</span><span class="n">exceptset</span><span class="p">,</span>
+           <span class="k">const</span> <span class="k">struct</span> <span class="n">timeval</span> <span class="o">*</span><span class="n">timeout</span><span class="p">);</span>
+</code></pre></div></div>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">timeval</span> <span class="p">{</span>
+    <span class="kt">long</span> <span class="n">tv_sec</span><span class="p">;</span>
+    <span class="kt">long</span> <span class="n">tv_usec</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Sets are hidden within fd_set type, but usually is just a list of integers.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span><span class="p">(;;)</span> <span class="p">{</span>
+    <span class="n">rset</span> <span class="o">=</span> <span class="n">allset</span><span class="p">;</span>
+    <span class="n">nready</span> <span class="o">=</span> <span class="n">select</span><span class="p">(</span><span class="n">maxfd</span><span class="o">+</span><span class="mi">1</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rset</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span>
+    <span class="k">if</span><span class="p">(</span><span class="n">FD_ISSET</span><span class="p">(</span><span class="n">listenfd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rset</span><span class="p">))</span> <span class="p">{</span>
+        <span class="n">connfd</span> <span class="o">=</span> <span class="n">accept</span><span class="p">(</span><span class="n">listenfd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">caddr</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">clen</span><span class="p">);</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">FD_SETSIZE</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+            <span class="k">if</span><span class="p">(</span><span class="n">client</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">client</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">connfd</span><span class="p">;</span> <span class="k">break</span><span class="p">;</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+        <span class="n">FD_SET</span><span class="p">(</span><span class="n">connfd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">allset</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">connfd</span> <span class="o">&gt;</span> <span class="n">maxfd</span><span class="p">)</span> <span class="n">maxfd</span> <span class="o">=</span> <span class="n">connfd</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="n">maxi</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">sockfd</span> <span class="o">=</span> <span class="n">client</span><span class="p">[</span><span class="n">i</span><span class="p">])</span> <span class="o">&lt;</span> <span class="mi">0</span><span class="p">)</span> <span class="k">continue</span><span class="p">;</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">FD_ISSET</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">rset</span><span class="p">))</span>
+            <span class="n">read</span><span class="p">(</span><span class="n">sockfd</span><span class="p">,</span> <span class="n">line</span><span class="p">,</span> <span class="n">MAXLINE</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="bit-strings">Bit Strings</h2>
+
+<p>Bitwise operators</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;&lt;</span> <span class="c1">// left shift</span>
+<span class="o">&gt;&gt;</span> <span class="c1">// right shift</span>
+<span class="o">~</span> <span class="c1">// Not</span>
+<span class="o">&amp;</span> <span class="c1">// And</span>
+<span class="o">^</span> <span class="c1">// Xor</span>
+<span class="o">|</span> <span class="c1">// Or</span>
+</code></pre></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

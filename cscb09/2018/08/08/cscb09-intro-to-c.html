@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Intro to C - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Intro to C</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="why-c">Why C?</h2>
+
+<p>C is extremely powerful, in some sense, it is much powerful than any other modern programming language.</p>
+
+<p>Everything you use today is mostly written in C.</p>
+
+<h3 id="c-based-languages">C-Based Languages</h3>
+
+<ul>
+  <li><code class="highlighter-rouge">C++</code>, has all features of C, but adds OOP support.</li>
+  <li><code class="highlighter-rouge">Java</code>, is based on C++.</li>
+  <li><code class="highlighter-rouge">C#</code>, is derived from C++ and Java.</li>
+  <li><code class="highlighter-rouge">Perl</code>, has adopted many features of C.</li>
+</ul>
+
+<h2 id="first-program">First Program</h2>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+</span>
+<span class="kt">int</span> <span class="n">gcd</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">);</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+    <span class="k">for</span><span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">20</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">printf</span><span class="p">(</span><span class="s">"gcd of 12 and %d is %d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="n">i</span><span class="p">,</span> <span class="n">gcd</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span> <span class="n">i</span><span class="p">));</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">gcd</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">t</span><span class="p">;</span>
+    <span class="k">while</span> <span class="p">(</span><span class="n">y</span><span class="p">)</span> <span class="p">{</span>
+        <span class="n">t</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">y</span><span class="p">;</span>
+        <span class="n">y</span> <span class="o">=</span> <span class="n">t</span> <span class="o">%</span> <span class="n">y</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">return</span> <span class="n">x</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="functions">Functions</h2>
+
+<p>Every C program needs a function called <code class="highlighter-rouge">main()</code>, returns <code class="highlighter-rouge">int</code>, which is the exit status.</p>
+
+<p>All functions must be declared before first use (header files), and defined.</p>
+
+<p><code class="highlighter-rouge">#include</code> are used to import external functions.</p>
+
+<h2 id="control-structures">Control Structures</h2>
+
+<p>Same as any other language, <code class="highlighter-rouge">for</code>, <code class="highlighter-rouge">while</code> and <code class="highlighter-rouge">if</code>. Won’t go in detail here.</p>
+
+<h2 id="variables">Variables</h2>
+
+<p>All variables must be declared, and have no default value.</p>
+
+<p>Variables are only visible within the block they are declared in, if you wish to declare global variable, declare it outside of <code class="highlighter-rouge">main()</code>.</p>
+
+<p>All variables are local.</p>
+
+<h3 id="data-types">Data Types</h3>
+
+<p>Basic data types</p>
+
+<p><strong>Integers</strong></p>
+<ul>
+  <li>char</li>
+  <li>int</li>
+  <li>long</li>
+</ul>
+
+<p><strong>Real Numbers</strong></p>
+<ul>
+  <li>float</li>
+  <li>double</li>
+</ul>
+
+<p><strong>Remember, <code class="highlighter-rouge">char</code> is a integer.</strong>. There are also arrays, pointers and structs.</p>
+
+<h2 id="compile">Compile</h2>
+
+<p>To compile a C program, use the following command</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>gcc <span class="nt">-Wall</span> <span class="nt">-o</span> gcd gcd.c
+</code></pre></div></div>
+
+<h2 id="memory-model">Memory Model</h2>
+
+<p>Memory for a process is called it’s address space, it is just a sequence of bytes.</p>
+
+<p>A location (byte) is identified by an address.</p>
+
+<p>This is how a program’s memory is structured.</p>
+
+<p><img src="https://www.evernote.com/l/Aq0AJX3WD_NLLahrjoicZYX5z1LSpbfWpHAB/image.png" alt="" /></p>
+
+<p>Stack will grow up as we call functions, heap will grow down as we allocate dynamic memories.</p>
+
+<p>If they collide, you may get a stack overflow error, which basically means you ran out of memory to use.</p>
+
+<p>Example:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+<span class="kt">int</span> <span class="n">y</span><span class="p">;</span>
+<span class="kt">int</span> <span class="nf">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">p</span><span class="p">,</span> <span class="kt">int</span> <span class="n">q</span><span class="p">)</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">j</span> <span class="o">=</span> <span class="mi">5</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">p</span> <span class="o">*</span> <span class="n">q</span> <span class="o">+</span> <span class="n">j</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="n">i</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Above program will have x, y in static space, i, p, q, j in stack.</p>
+
+<p>Once a function finishes, <em>the variable in stack is freed automatically.</em> To keep a variable alive, you have to use heap, or dynamic memory space.</p>
+
+<h2 id="arrays">Arrays</h2>
+
+<p>Arrays in C are basically just a chunk of memory that contains a list of items of the same type.</p>
+
+<p>You cannot determine the array size, C will also not care if you accessed index that is out of bound.</p>
+
+<p>To define an array, use the following syntax</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>There is no runtime checking, so you can do this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">x</span><span class="p">[</span><span class="mi">100</span><span class="p">]</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>It might work, it might crash, or do something random.</p>
+
+<h3 id="initialization">Initialization</h3>
+
+<p>To declare an array, just do <code class="highlighter-rouge">int x[5]</code>, it will create a 5 element arrary that contains integers.</p>
+
+<p>You can use a for loop to initialize an array, or use static initializaiton</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">x</span><span class="p">[</span><span class="mi">5</span><span class="p">]</span> <span class="o">=</span> <span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="pointers">Pointers</h2>
+
+<p>Pointer is a higher-level version of an address, to declare a pointer:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">cptr</span><span class="p">;</span> <span class="c1">// Create a pointer to char</span>
+</code></pre></div></div>
+
+<p>To assign a value to pointer</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="sc">'a'</span><span class="p">;</span>
+<span class="n">cptr</span> <span class="o">=</span> <span class="o">&amp;</span><span class="n">c</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>To dereference a pointer</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">*</span><span class="n">cptr</span> <span class="o">=</span> <span class="sc">'b'</span><span class="p">;</span>
+<span class="kt">char</span> <span class="n">d</span> <span class="o">=</span> <span class="o">*</span><span class="n">cptr</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>When you do <code class="highlighter-rouge">int *p</code>, memory is only allocated to store the pointer, to make it useful, you still need memory for an actual int.</p>
+
+<p>For example</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="o">*</span><span class="n">p</span><span class="p">;</span>
+<span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span> <span class="c1">// This is not valid</span>
+</code></pre></div></div>
+
+<h3 id="arrays-vs-pointers">Arrays vs Pointers</h3>
+
+<p>Array’s name in expression context will decay into a pointer to 0th element.</p>
+
+<p>But they are different things.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">];</span>
+<span class="kt">int</span> <span class="o">*</span><span class="n">p</span> <span class="o">=</span> <span class="n">a</span><span class="p">;</span> <span class="c1">// Same as p = &amp;a[0]</span>
+</code></pre></div></div>
+
+<h3 id="pointer-arithmetic">Pointer Arithmetic</h3>
+
+<p>You can do arithmetic on pointers, to jump to a specific memory location.</p>
+
+<p>For example</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">a</span><span class="p">[</span><span class="n">i</span><span class="p">];</span> <span class="c1">// Is same as...</span>
+<span class="o">*</span><span class="p">(</span><span class="n">a</span> <span class="o">+</span> <span class="n">i</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Pointer arithmetic respects the type, so you don’t have to worry about how many bytes to add.</p>
+
+<h2 id="array-as-parameter">Array as Parameter</h2>
+
+<p>There are two syntaxes you can use:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="o">*</span><span class="n">a</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span>
+<span class="kt">int</span> <span class="n">f</span><span class="p">(</span><span class="kt">int</span> <span class="n">a</span><span class="p">[],</span> <span class="kt">int</span> <span class="n">size</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Second one is not advised to use, since you are really just passing a pointer.</p>
+
+<h2 id="multi-dimensional-arrays">Multi-Dimensional Arrays</h2>
+
+<p>You can also have multi-dimensional arrays in C, use the following syntax:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">a</span><span class="p">[</span><span class="mi">3</span><span class="p">][</span><span class="mi">3</span><span class="p">];</span>
+</code></pre></div></div>
+
+<p>C stores array in row-major order, therefore <code class="highlighter-rouge">a[i][j]</code> is the same as <code class="highlighter-rouge">*(x + i * n +j)</code> where <code class="highlighter-rouge">n</code> is the row size of <code class="highlighter-rouge">a</code>.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

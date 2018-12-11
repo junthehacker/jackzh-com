@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Signals and Sockets - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Signals and Sockets</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="signals">Signals</h2>
+
+<p>Signals is another form of IPC, signals can be sent at anytime, they are asynchronous events.</p>
+
+<p>Events are called interrupts.</p>
+
+<h3 id="signal-types">Signal Types</h3>
+
+<p>You can send signals from shell, for example:</p>
+
+<ul>
+  <li>SIGINT - Ctrl+C</li>
+  <li>SIGSTEP - Ctrl+Z</li>
+</ul>
+
+<p>You can find a list of interrupts from <code class="highlighter-rouge">sys/signal.h</code>.</p>
+
+<h3 id="signal-handlers">Signal Handlers</h3>
+
+<p>When C program receives a signal, control is passed to a function called a signal handler. It can execute some C statements, and can exit in 3 ways:</p>
+
+<ul>
+  <li>Return control to the point where signal is received.</li>
+  <li>Return control to some other point within the program.</li>
+  <li>Exit the program</li>
+</ul>
+
+<h3 id="catching-a-signal">Catching a Signal</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#include &lt;stdio.h&gt;
+#include &lt;signal.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;stdlib.h&gt;
+</span>
+<span class="kt">void</span> <span class="nf">sig_handler</span><span class="p">(</span><span class="kt">int</span> <span class="n">signo</span><span class="p">)</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">signo</span> <span class="o">==</span> <span class="n">SIGINT</span><span class="p">)</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Received SIGINT</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">signo</span> <span class="o">==</span> <span class="n">SIGFPE</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"You cannot divide by zero</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+                <span class="n">exit</span><span class="p">(</span><span class="n">SIGFPE</span><span class="p">);</span>
+        <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">sig_handler</span><span class="p">)</span> <span class="o">==</span> <span class="n">SIG_ERR</span><span class="p">)</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Unable to catch SIGINT</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="k">if</span><span class="p">(</span><span class="n">signal</span><span class="p">(</span><span class="n">SIGFPE</span><span class="p">,</span> <span class="n">sig_handler</span><span class="p">)</span> <span class="o">==</span> <span class="n">SIG_ERR</span><span class="p">)</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"Unable to catch SIGFPE</span><span class="se">\n</span><span class="s">"</span><span class="p">);</span>
+        <span class="kt">int</span> <span class="n">i</span><span class="p">;</span>
+        <span class="k">for</span><span class="p">(</span><span class="n">i</span><span class="o">=-</span><span class="mi">3</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;=</span> <span class="mi">3</span><span class="p">;</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span> <span class="p">{</span>
+                <span class="n">printf</span><span class="p">(</span><span class="s">"%d</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span> <span class="mi">12</span><span class="o">/</span><span class="n">i</span><span class="p">);</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">5000</span><span class="p">);</span>
+        <span class="p">}</span>
+        <span class="k">while</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+                <span class="n">sleep</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+        <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="ignore-a-signal">Ignore a Signal</h3>
+
+<p>To ignore a signal, use <code class="highlighter-rouge">SIG_IGN</code></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">SIG_IGN</span><span class="p">);</span> <span class="c1">// This will ignore all SIGINT.</span>
+</code></pre></div></div>
+
+<h3 id="use-default-action">Use Default Action</h3>
+
+<p>To use a default action for a signal, use <code class="highlighter-rouge">SIG_DFL</code></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">signal</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="n">SIG_DFL</span><span class="p">);</span> <span class="c1">// Terminate upon SIGINT.</span>
+</code></pre></div></div>
+
+<h2 id="signal-table">Signal Table</h2>
+
+<p>For each process, UNIX maintains a table of actions for each signal. Most of them you can change the action, exceptions are SIGKILL and SIGSTOP.</p>
+
+<h3 id="sigaction">sigaction</h3>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">sigaction</span><span class="p">(</span><span class="kt">int</span> <span class="n">sig</span><span class="p">,</span> <span class="k">const</span> <span class="k">struct</span> <span class="n">sigaction</span> <span class="o">*</span><span class="n">act</span><span class="p">,</span> <span class="k">struct</span> <span class="n">sigaction</span> <span class="o">*</span><span class="n">oldact</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">sigaction</code> function will install a signal handler <code class="highlighter-rouge">act</code>.</p>
+
+<p>It will also populate <code class="highlighter-rouge">oldact</code> with the old handler.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">sigaction</span> <span class="p">{</span>
+    <span class="kt">void</span> <span class="p">(</span><span class="o">*</span><span class="n">sa_handler</span><span class="p">)(</span><span class="kt">int</span><span class="p">);</span>
+    <span class="n">sigset_t</span> <span class="n">sa_mask</span><span class="p">;</span>
+    <span class="kt">int</span> <span class="n">sa_flags</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>When a new signal is receeived when a handler is running, then the first signal handler is suspended and the newly invoked handler will run.</p>
+
+<blockquote>
+  <p>This only applies to different signals.</p>
+</blockquote>
+
+<h2 id="block-signals">Block Signals</h2>
+
+<p>Signals can arrive at anytime, we can block signals using masks.</p>
+
+<p>To block signals within <code class="highlighter-rouge">act</code></p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">newact</span><span class="p">.</span><span class="n">sa_handler</span> <span class="o">=</span> <span class="n">hand</span><span class="p">;</span>
+<span class="n">newact</span><span class="p">.</span><span class="n">sa_flags</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="c1">// We block all SIGTERMS</span>
+<span class="n">sigaddset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newact</span><span class="p">.</span><span class="n">sa_mask</span><span class="p">,</span> <span class="n">SIGTERM</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">sigaction</span><span class="p">(</span><span class="n">SIGINT</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">newact</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="k">if</span><span class="p">(</span><span class="n">sigaction</span><span class="p">(</span><span class="n">SIGTERM</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">newact</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">)</span> <span class="o">==</span> <span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Above code will block SIGTERM when hand is running.</p>
+
+<p>You can also use <code class="highlighter-rouge">sigprocmask</code> to directly block signals within the program</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">sigprocmask</span><span class="p">(</span><span class="kt">int</span> <span class="n">how</span><span class="p">,</span> <span class="k">const</span> <span class="n">sigset_t</span> <span class="o">*</span><span class="n">set</span><span class="p">,</span> <span class="n">sigset_t</span> <span class="o">*</span><span class="n">oset</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">oset</code> is the old set of blocked signals, you can use it to reset blocked signals later.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sigset_t</span> <span class="n">newmask</span><span class="p">,</span> <span class="n">oldmask</span><span class="p">;</span>
+<span class="n">sigemptyset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newmask</span><span class="p">);</span>
+<span class="n">sigaddset</span><span class="p">(</span><span class="o">&amp;</span><span class="n">newmask</span><span class="p">,</span> <span class="n">SIGINT</span><span class="p">);</span>
+<span class="c1">//block SIGINT and save oldmask</span>
+<span class="n">sigprocmask</span><span class="p">(</span><span class="n">SIG_BLOCK</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">newmask</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">oldmask</span><span class="p">);</span>
+<span class="cm">/*critical section of the code*/</span>
+<span class="c1">//reset mask which unblocks SIGINT</span>
+<span class="n">sigprocmask</span><span class="p">(</span><span class="n">SIG_SETMASK</span><span class="p">,</span> <span class="o">&amp;</span><span class="n">oldmask</span><span class="p">,</span> <span class="nb">NULL</span><span class="p">);</span> 
+</code></pre></div></div>
+
+<h2 id="sending-signals">Sending Signals</h2>
+
+<p>You can send signals to different processes using <code class="highlighter-rouge">kill</code> function</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">kill</span><span class="p">(</span><span class="kt">int</span> <span class="n">pid</span><span class="p">,</span> <span class="kt">int</span> <span class="n">sig</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="timer-signals">Timer Signals</h2>
+
+<p>Three timers are maintained for each process:</p>
+
+<ul>
+  <li>SIGALRM</li>
+  <li>SIGVTALRM</li>
+  <li>SIGPROF</li>
+</ul>
+
+<p>You can use following functions to do stuff with timers</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sleep(), usleep(), alarm(), pause(), setitimer(), getitimer()
+</code></pre></div></div>
+
+<p>sleep() and usleep() can be interrupted by other signals.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

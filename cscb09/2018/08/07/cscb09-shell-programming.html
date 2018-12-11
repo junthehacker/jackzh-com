@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Shell Programming - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Shell Programming</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="file-expansion">File Expansion</h2>
+
+<p>This is like a lite version of Regex.</p>
+
+<ul>
+  <li><code class="highlighter-rouge">*</code> means zero or more characters.</li>
+  <li><code class="highlighter-rouge">?</code> means “exactly one character”.</li>
+  <li><code class="highlighter-rouge">[x-y]</code> means range from x to y.</li>
+  <li><code class="highlighter-rouge">[^oa]</code> means any char but o or a.</li>
+  <li><code class="highlighter-rouge">~</code> home directory</li>
+  <li><code class="highlighter-rouge">~user</code> home dir for user</li>
+</ul>
+
+<h2 id="program-structure">Program Structure</h2>
+
+<p>Scripts usually start with <code class="highlighter-rouge"><span class="c">#!/bin/bash</span></code> or <code class="highlighter-rouge"><span class="c">#!/bin/sh</span></code>.</p>
+
+<p>Basically, <code class="highlighter-rouge">#!</code> followed by your script interpreter, not the same on every machine. This will tell the machine how to execute the script.</p>
+
+<p>It is followed by shell commands, anything you can do with the interactive version of it, you can put it into the file.</p>
+
+<p>Note: You must mark the file as executable, use chmod.</p>
+
+<p>Run the program by typing <code class="highlighter-rouge">./script.sh</code>. The file does not have to end in <code class="highlighter-rouge">.sh</code>.</p>
+
+<h2 id="variables">Variables</h2>
+
+<p>To assign a variable, use the following syntax</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">VAR</span><span class="o">=</span>value <span class="c"># No space before/after =</span>
+</code></pre></div></div>
+
+<p>To get a value, use the following syntax</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$VAR</span>
+</code></pre></div></div>
+
+<p>You don’t need to declare type, if you try to access a variable that is not assigned, it will just give you an empty string.</p>
+
+<p>For example:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zhengj69@mathlab:~$ FOO=test
+zhengj69@mathlab:~$ echo $FOO
+test
+zhengj69@mathlab:~$ echo $bar
+
+zhengj69@mathlab:~$
+</code></pre></div></div>
+
+<h3 id="built-in-variables">Built-in Variables</h3>
+
+<p>Use <code class="highlighter-rouge">printenv</code> to see a list of variables that is built-in to your system.</p>
+
+<p>One of the very useful one is <code class="highlighter-rouge">$PATH</code>. I won’t go to details here, since you should know how to use <code class="highlighter-rouge">$PATH</code>.</p>
+
+<h3 id="scopes">Scopes</h3>
+
+<p>Variables defined in script are lost when it ends.</p>
+
+<p>Subshell does not have access to parent shell’s variables.</p>
+
+<p>To let subshell access parent shell’s variables, you have to <code class="highlighter-rouge">export</code> it.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ export FOO="test"
+$ ./script.sh # script.sh now have access to $FOO
+</code></pre></div></div>
+
+<p>To maintain variables after running a script, you have to <code class="highlighter-rouge">source</code> it.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>$ source script.sh
+$ # parent shell now have access to variables within script.sh
+</code></pre></div></div>
+
+<h2 id="quotes">Quotes</h2>
+
+<p>Quotes are essential to shell programming. There are three types of quotes:</p>
+
+<h3 id="-single-quote"><code class="highlighter-rouge">'</code> Single Quote</h3>
+
+<p>Everything within a single quote are literal, for example, if you type <code class="highlighter-rouge">echo '$FOO'</code>, it will literally output <code class="highlighter-rouge">$FOO</code>.</p>
+
+<h3 id="-double-quote"><code class="highlighter-rouge">"</code> Double Quote</h3>
+
+<p>Double quote will expand variables within it, for example the following script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nv">FOO</span><span class="o">=</span><span class="s2">"test"</span>
+<span class="nb">echo</span> <span class="s2">"FOO's value is </span><span class="nv">$FOO</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>It will expand <code class="highlighter-rouge">$FOO</code> and output <code class="highlighter-rouge">FOO's value is test</code>.</p>
+
+<h3 id="-backtick"><code class="highlighter-rouge">`</code> Backtick</h3>
+
+<p>Backtick will create a new shell process, run the command within it, and store the output value.</p>
+
+<p>For example the following script:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nv">FOO</span><span class="o">=</span><span class="sb">`</span><span class="nb">ls</span> <span class="nt">-a</span> | <span class="nb">grep</span> <span class="k">*</span>.c<span class="sb">`</span>
+<span class="nb">echo</span> <span class="s2">"FOO's value is </span><span class="nv">$FOO</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>It should output all <code class="highlighter-rouge">.c</code> files within the current directory.</p>
+
+<blockquote>
+  <p>Note: Since backtick will create a new shell process, avoid it if you can.</p>
+</blockquote>
+
+<h2 id="reading-from-stdin">Reading From STDIN</h2>
+
+<p>To read from STDIN, we use <code class="highlighter-rouge">read</code> command.</p>
+
+<ul>
+  <li>It will read 1 line from standard input (keyboard).</li>
+  <li>Assign words to specified variables.</li>
+  <li>Leftovers will all be assigned to last variable.</li>
+</ul>
+
+<p>Consider the following script</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nb">echo</span> <span class="s2">"Please enter two words:"</span>
+<span class="nb">read </span>FOO BAR
+<span class="nb">echo</span> <span class="s2">"</span><span class="nv">$FOO</span><span class="s2">, </span><span class="nv">$BAR</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>When you run it and enter <code class="highlighter-rouge">hello world</code>, you should get the following output</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zhengj69@mathlab:~$ ./test.sh
+Please enter two words:
+hello world
+hello, world
+</code></pre></div></div>
+
+<p>If you enter <code class="highlighter-rouge">hi my name is jun</code>, you will get the following output</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>zhengj69@mathlab:~$ ./test.sh
+Please enter two words:
+hi my name is jun
+hi, my name is jun
+</code></pre></div></div>
+
+<h2 id="commandline-arguments">Commandline Arguments</h2>
+
+<p>All commandline arguments are placed in <code class="highlighter-rouge">positional paramaters</code>.</p>
+
+<p>Basically it just means, <code class="highlighter-rouge">$1</code> is the first argument, <code class="highlighter-rouge">$2</code> is the second, and so on.</p>
+
+<blockquote>
+  <p>After <code class="highlighter-rouge">$9</code>, use curly brackets to wrap the number <code class="highlighter-rouge">${10}</code>
+<code class="highlighter-rouge">sh</code> only allows 9 positional arguments, <code class="highlighter-rouge">bash</code> allows more.</p>
+</blockquote>
+
+<ul>
+  <li><code class="highlighter-rouge">$0</code> is the script name</li>
+  <li><code class="highlighter-rouge">$#</code> is the number of arguments</li>
+  <li><code class="highlighter-rouge">$*</code> <code class="highlighter-rouge">$@</code> will list all arguments</li>
+</ul>
+
+<p>Consider the following script</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c">#!/bin/sh</span>
+<span class="nb">echo</span> <span class="s2">"The script is called: </span><span class="nv">$0</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"First argument is: </span><span class="nv">$1</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"Second argument is: </span><span class="nv">$2</span><span class="s2">"</span>
+<span class="nb">echo</span> <span class="s2">"We have </span><span class="nv">$# </span><span class="s2">arguments in total"</span>
+<span class="nb">echo</span> <span class="s2">"All arguments </span><span class="nv">$@</span><span class="s2">"</span>
+</code></pre></div></div>
+
+<p>Running it with <code class="highlighter-rouge">./test.sh hello world my name is jun</code> will have the following output</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>The script is called: ./test.sh
+First argument is: hello
+Second argument is: world
+We have 6 arguments in total
+All arguments hello world my name is jun
+</code></pre></div></div>
+
+<h3 id="arrays">Arrays</h3>
+
+<p>There is only one “array” within bourne shell, which is the positional parameters.</p>
+
+<p>Use the <code class="highlighter-rouge">set</code> command to assign parameters to positional parameters.</p>
+
+<p>For example:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>hello world
+</code></pre></div></div>
+
+<p>Will set <code class="highlighter-rouge">$1</code> to <code class="highlighter-rouge">hello</code>, and <code class="highlighter-rouge">$2</code> to <code class="highlighter-rouge">world</code>.</p>
+
+<p>The previous arguments will be lost!</p>
+
+<p>It is very useful to get command outputs, for example <code class="highlighter-rouge">set `date`</code></p>
+
+<h3 id="shifting-arguments">Shifting Arguments</h3>
+
+<p><code class="highlighter-rouge">shift</code> command will shift all positional arguments to the left.</p>
+
+<p>For example</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">set </span>hello world
+<span class="nb">shift</span>
+</code></pre></div></div>
+
+<p>It will result in <code class="highlighter-rouge">hello</code> being lost, and <code class="highlighter-rouge">world</code> become <code class="highlighter-rouge">$1</code>. It is useful to loop through all arguments.</p>
+
+<h2 id="if-statement">If Statement</h2>
+
+<p>In bash, if statement will proceed only if the command returns 0, otherwise it will run else.</p>
+
+<p>Return value of a command is not the output of the command.</p>
+
+<p>UNIX returns 0 if a command runs successfully, other numbers for failure.</p>
+
+<p>You can check the last process’ return value with <code class="highlighter-rouge">$?</code>.</p>
+
+<p>For example, the following scripts</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if </span><span class="nb">ls
+</span><span class="k">then
+    </span><span class="nb">echo </span>Exit code is <span class="nv">$?</span>
+<span class="k">else
+    </span><span class="nb">echo </span>Failure, <span class="nb">exit </span>code is <span class="nv">$?</span>
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>It will print <code class="highlighter-rouge">Exit code is 0</code> if <code class="highlighter-rouge">ls</code> runs successfully.</p>
+
+<h3 id="test-command">Test Command</h3>
+
+<p><code class="highlighter-rouge">test</code> is a command you can use to test stuff, it will return 0 if true, 1 if false.</p>
+
+<p>For example you can do this:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if </span><span class="nb">test</span> <span class="nv">$FOO</span> <span class="o">=</span> <span class="nv">$BAR</span>
+<span class="k">then
+    </span><span class="nb">echo </span>Strings are identical
+<span class="k">else
+    </span><span class="nb">echo </span>Strings are different
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>Short form of <code class="highlighter-rouge">test</code> is <code class="highlighter-rouge">[]</code></p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span> <span class="o">[</span> <span class="nv">$FOO</span> <span class="o">=</span> <span class="nv">$BAR</span> <span class="o">]</span>
+<span class="k">then
+    </span><span class="nb">echo </span>Strings are identical
+<span class="k">else
+    </span><span class="nb">echo </span>Strings are different
+<span class="k">fi</span>
+</code></pre></div></div>
+
+<p>There are many things you can test on, following is some of them</p>
+
+<ul>
+  <li><code class="highlighter-rouge">-z string</code> - Empty string?</li>
+  <li><code class="highlighter-rouge">str1 = str2</code> - Identical string?</li>
+  <li><code class="highlighter-rouge">str1 != str2</code> - Different string?</li>
+  <li><code class="highlighter-rouge">int1 -eq int2</code> - Identical number?</li>
+  <li><code class="highlighter-rouge">-ne, -gt, -lt, -e</code> - Also for numbers</li>
+  <li><code class="highlighter-rouge">-a, -o</code>, - And, Or</li>
+  <li><code class="highlighter-rouge">-d name</code> - Exists a directory</li>
+  <li><code class="highlighter-rouge">-f name</code> - Exists a file</li>
+  <li><code class="highlighter-rouge">-r name</code> - Exists a readable file</li>
+  <li><code class="highlighter-rouge">-w name</code> - Exists a writable file</li>
+  <li><code class="highlighter-rouge">-x name</code> - Exists an executable file</li>
+</ul>
+
+<h2 id="expr">Expr</h2>
+
+<p><code class="highlighter-rouge">expr</code> is used to do integer arithmetics. It can also be used for strings, but we usually don’t do that.</p>
+
+<p>For example</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">x</span><span class="o">=</span>1
+<span class="nv">x</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$x</span> + 1<span class="sb">`</span>
+<span class="c"># If you want to do multiplication, you have to escape</span>
+<span class="nv">x</span><span class="o">=</span><span class="sb">`</span><span class="nb">expr</span> <span class="nv">$x</span> <span class="se">\*</span> 5<span class="sb">`</span>
+</code></pre></div></div>
+
+<h2 id="while-loop">While Loop</h2>
+
+<p>While loop will keep running as long as the command returns 0.</p>
+
+<p>The basic structure is</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">while </span><span class="nb">command
+</span><span class="k">do
+    </span>more commands
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>You can use while to read from a file, line by line</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">file</span><span class="o">=</span><span class="s2">"myfile"</span>
+
+<span class="k">while </span><span class="nb">read </span>line
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$line</span>
+<span class="k">done</span> &lt; <span class="nv">$file</span>
+</code></pre></div></div>
+
+<h2 id="for-loop">For Loop</h2>
+
+<p>For loop will loop though all provided values</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in </span>1 2 <span class="s2">"test"</span> <span class="nv">$FOO</span>
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$i</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>One example for for loop would be to rename all files within a directory to <code class="highlighter-rouge">filename.txt</code>.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>i <span class="k">in</span> <span class="sb">`</span><span class="nb">ls</span><span class="sb">`</span>
+<span class="k">do
+    </span><span class="nb">mv</span> <span class="nv">$i</span> <span class="nv">$i</span>.txt
+<span class="k">done</span>
+</code></pre></div></div>
+
+<p>You can also use for loop to loop through all positional arguments</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for </span>word <span class="k">in</span> <span class="nv">$*</span>
+<span class="k">do
+    </span><span class="nb">echo</span> <span class="nv">$word</span>
+<span class="k">done</span>
+</code></pre></div></div>
+
+<h2 id="subroutines">Subroutines</h2>
+
+<p>You can also create your own functions like this</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>func<span class="o">()</span> <span class="o">{</span>
+    <span class="nv">arg1</span><span class="o">=</span><span class="nv">$1</span>
+    <span class="nv">arg2</span><span class="o">=</span><span class="nv">$2</span>
+    <span class="nb">echo</span> <span class="nv">$arg1</span> <span class="nv">$arg2</span>
+    <span class="k">return </span>1
+<span class="o">}</span>
+func hello world
+</code></pre></div></div>
+
+<p>Arguements are passed as positional parameters. There is no variable scope, you can access variables inside or outside of the subroutine.</p>
+
+<p>Return value is in <code class="highlighter-rouge">$?</code>, since subroutine is just a command.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

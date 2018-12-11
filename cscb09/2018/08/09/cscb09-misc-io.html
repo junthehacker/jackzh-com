@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB09 Software Tools and Systems Programming - Misc IO - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=777d0ee_20181211_012530" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=777d0ee_20181211_012530" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB09 Software Tools and Systems Programming - Misc IO</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb09</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</p>
+
+<!--more-->
+
+<h2 id="pointers-to-pointers">Pointers to Pointers</h2>
+
+<p>You can have pointers to pointers, which is very common, let’s say changing original string.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="n">chage_str</span><span class="p">(</span><span class="kt">char</span> <span class="o">**</span><span class="n">src</span><span class="p">);</span> <span class="c1">// This will be a pointer to string, which is another pointer</span>
+</code></pre></div></div>
+
+<h2 id="command-line-arguments">Command Line Arguments</h2>
+
+<p>Command line arguemnts are passed to main using two parameters:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">*</span><span class="n">argv</span><span class="p">[])</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">argc</code> is the number of arguments, <code class="highlighter-rouge">argv</code> is a list of arguments in string, 0th element is the name of the program.</p>
+
+<p>You can also do</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">main</span> <span class="p">(</span><span class="kt">int</span> <span class="n">argc</span><span class="p">,</span> <span class="kt">char</span> <span class="o">**</span><span class="n">argv</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Reason is simple, I won’t go into detail here.</p>
+
+<h2 id="typedef">typedef</h2>
+
+<p>Remember when we did structs, you have to do <code class="highlighter-rouge">struct student</code> each time?</p>
+
+<p>Use typedef to create a shorthand:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">student</span> <span class="p">{</span>
+    <span class="c1">// Def here</span>
+<span class="p">};</span>
+<span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span> <span class="n">Student</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Now you can simply use <code class="highlighter-rouge">Student</code>.</p>
+
+<p>Another shorthand would be</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">typedef</span> <span class="k">struct</span> <span class="n">student</span> <span class="p">{</span>
+    <span class="c1">// Def here</span>
+<span class="p">}</span> <span class="n">Student</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="program-organization">Program Organization</h2>
+
+<h3 id="h-files">.h Files</h3>
+
+<p><code class="highlighter-rouge">.h</code> files’ purpose is so the compiler knows how to use each function without look into function definations.</p>
+
+<h3 id="gcc">gcc</h3>
+
+<p>When you run <code class="highlighter-rouge">gcc main.c list.c -o program</code></p>
+
+<p>What happends are:</p>
+
+<ul>
+  <li>First it will look for all <code class="highlighter-rouge">#include</code> and includes the <code class="highlighter-rouge">.h</code> files.</li>
+  <li>Then compiler will compile each <code class="highlighter-rouge">.c</code> file, which will produce object code <code class="highlighter-rouge">.o</code>.</li>
+  <li>Finally the linker will combine all object files into one program.</li>
+</ul>
+
+<h2 id="makefile">Makefile</h2>
+
+<p>Makefiles are processed by a program called <code class="highlighter-rouge">make</code>.</p>
+
+<p>The syntax is very simple:</p>
+
+<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nl">target</span><span class="o">:</span> <span class="nf">dependencies.c</span>
+	gcc <span class="nt">-Wall</span> <span class="nt">-o</span> main dependencies.c <span class="c"># Commands</span>
+</code></pre></div></div>
+
+<p>Makefile only accepts tab, do not use spaces!!!!</p>
+
+<div class="language-makefile highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">CC</span> <span class="o">=</span> gcc
+<span class="nv">CFLAGS</span> <span class="o">=</span> <span class="nt">-Wall</span> <span class="nt">-g</span>
+<span class="nl">buxfer</span><span class="o">:</span> <span class="nf">buxfer.o lists.o lists.h</span>
+	<span class="nv">$(CC)</span> <span class="nv">$(CFLAGS)</span> <span class="nt">-o</span> buxfer buxfer.o lists.o
+<span class="nl">buxfer.o</span><span class="o">:</span> <span class="nf">buxfer.c lists.h</span>
+	<span class="nv">$(CC)</span> <span class="nv">$(CFLAGS)</span> <span class="nt">-c</span> buxfer.c
+<span class="nl">lists.o</span><span class="o">:</span> <span class="nf">lists.c lists.h</span>
+	<span class="nv">$(CC)</span> <span class="nv">$(CFLAGS)</span> <span class="nt">-c</span> lists.c
+<span class="nl">clean</span><span class="o">:</span>
+	<span class="nb">rm </span>buxfer <span class="k">*</span>.o
+</code></pre></div></div>
+
+<h2 id="pre-processer-directives">Pre-processer Directives</h2>
+
+<p>You can use some directives to make your life easier.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MAX 100 // Define macros
+#ifndef LISTS_H // Conditionals
+</span><span class="p">..</span>
+<span class="cp">#endif
+</span></code></pre></div></div>
+
+<h2 id="error-handling">Error Handling</h2>
+
+<p>Include <code class="highlighter-rouge">errno.h</code> to do error handling.</p>
+
+<p>By default, <code class="highlighter-rouge">errno</code> is zero, but once an error occurs, it is set.</p>
+
+<p>You can use <code class="highlighter-rouge">man errno</code> for all possible values. For example: <code class="highlighter-rouge">EACCESS</code>.</p>
+
+<h3 id="perror">perror</h3>
+
+<p>Use <code class="highlighter-rouge">perror</code> to print error message on screen.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="p">(</span><span class="cm">/* bad things happen here */</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">perror</span><span class="p">(</span><span class="s">"ERROR"</span><span class="p">);</span>
+    <span class="n">exit</span><span class="p">(</span><span class="mi">1</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="file-io">File I/O</h2>
+
+<p>We have already seen inputs and outputs, using printf.</p>
+
+<p>But how about a file?</p>
+
+<p>Coorisponding file functions are:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">printf</span> <span class="o">-&gt;</span> <span class="n">fprintf</span><span class="p">(</span><span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">,</span> <span class="p">...)</span>
+<span class="n">putchar</span> <span class="o">-&gt;</span> <span class="n">fputc</span><span class="p">(</span><span class="kt">int</span> <span class="n">c</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">)</span>
+<span class="n">puts</span> <span class="o">-&gt;</span> <span class="n">fputs</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>There are two main machanisms for managing files</p>
+
+<ul>
+  <li>File descriptors, which is a small int.</li>
+  <li>File pointers, <code class="highlighter-rouge">FILE *</code> that contains a file descriptor and a buffer.</li>
+</ul>
+
+<h3 id="standard-streams">Standard Streams</h3>
+
+<p>All programs have three files open by default</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">FILE</span> <span class="o">*</span><span class="n">stdin</span><span class="p">;</span> <span class="c1">// 0</span>
+<span class="kt">FILE</span> <span class="o">*</span><span class="n">stdout</span><span class="p">;</span> <span class="c1">// 1</span>
+<span class="kt">FILE</span> <span class="o">*</span><span class="n">stderr</span><span class="p">;</span> <span class="c1">// 2</span>
+</code></pre></div></div>
+
+<p>If you do <code class="highlighter-rouge">fprintf(stdout, ...)</code>, this is identical to <code class="highlighter-rouge">printf</code>.</p>
+
+<h3 id="regular-files">Regular Files</h3>
+
+<p>If you want to operate on regular files, you must open them.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">FILE</span> <span class="o">*</span><span class="n">fopen</span><span class="p">(</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">filename</span><span class="p">,</span> <span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="n">mode</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">mode</code> can be <code class="highlighter-rouge">r</code>, <code class="highlighter-rouge">w</code> or <code class="highlighter-rouge">a</code>.</p>
+
+<p>To close a file, use <code class="highlighter-rouge">fclose(FILE *stream)</code>.</p>
+
+<h3 id="reading-from-files">Reading From Files</h3>
+
+<p>To read from a file, use</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">char</span> <span class="o">*</span><span class="n">fgets</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="n">s</span><span class="p">,</span> <span class="kt">int</span> <span class="n">size</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>It will read until <code class="highlighter-rouge">\n</code> or <code class="highlighter-rouge">size-1</code> characters.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">#define MAX 50
+</span><span class="c1">// ...</span>
+<span class="kt">char</span> <span class="n">buf</span><span class="p">[</span><span class="n">MAX</span><span class="p">];</span>
+<span class="kt">FILE</span> <span class="o">*</span><span class="n">f</span> <span class="o">=</span> <span class="n">fopen</span><span class="p">(</span><span class="s">"file.txt"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">);</span>
+<span class="k">while</span><span class="p">(</span><span class="n">fgets</span><span class="p">(</span><span class="n">buf</span><span class="p">,</span> <span class="n">MAX</span><span class="p">,</span> <span class="n">f</span><span class="p">)</span> <span class="o">!=</span> <span class="nb">NULL</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"%s"</span><span class="p">,</span> <span class="n">buf</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="n">fclose</span><span class="p">(</span><span class="n">f</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h3 id="binary-io">Binary I/O</h3>
+
+<p>Use <code class="highlighter-rouge">fread</code> and <code class="highlighter-rouge">fwrite</code> to operate on a binary level.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">size_t</span> <span class="n">fread</span><span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">);</span>
+<span class="kt">size_t</span> <span class="n">fwrite</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="n">ptr</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">size</span><span class="p">,</span> <span class="kt">size_t</span> <span class="n">nmemb</span><span class="p">,</span> <span class="kt">FILE</span> <span class="o">*</span><span class="n">stream</span><span class="p">);</span>
+</code></pre></div></div>
+
+<p>Both will return number of items written/read.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 777d0ee_20181211_012530</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="/assets/js/app.js?v=777d0ee_20181211_012530"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
