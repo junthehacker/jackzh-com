@@ -17,3 +17,16 @@ permalink: /posts.html
         {% endfor %}
     </div>
 </section>
+
+<script>
+    {%- comment -%} let posts = [
+        {% for post in site.posts %}
+            {
+                "title": "{{ post.title }}",
+                "category": "{{ post.category }}",
+                "url": "{{ post.url }}"
+            }
+        {% unless forloop.last %},{% endunless %}
+        {% endfor %}
+    ] {%- endcomment -%}
+</script>
