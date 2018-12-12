@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - Java Memory Model & CRC - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=42b0423_20181212_101801" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=42b0423_20181212_101801" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - Java Memory Model & CRC</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Java memory model and some CRC.</p>
+
+<!--more-->
+
+<p>I have already covered memory model in more depth here: <a href="/cscb09/2018/08/08/cscb09-intro-to-c.html#memory-model">CSCB09 - Intro to C</a>, therefore this note won’t cover too much detail.</p>
+
+<h2 id="stack-and-heap">Stack and Heap</h2>
+
+<p>Stack:</p>
+
+<ul>
+  <li>Local variables are stored within the stack, and will be freed if the variable goes out of scope.</li>
+  <li>Faster than heap.</li>
+  <li>Stores local data, return addresses, used for function parameter passing.</li>
+  <li>Can have overflow if too much stack is used.</li>
+</ul>
+
+<p>Heap:</p>
+
+<ul>
+  <li>In Java, objects are allocated on the heap using <code class="highlighter-rouge">new</code>.</li>
+  <li>Slower than stack.</li>
+  <li>Variables must be destroyed manually, in Java, there is a “garbage collector” to do this.</li>
+  <li>Responsible for memory leaks.</li>
+</ul>
+
+<p>Informally, following code in memory would look like:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="n">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="o">{</span>
+    <span class="n">Student</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+    <span class="n">Student</span> <span class="n">b</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+    <span class="n">Student</span> <span class="n">c</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Student</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><img src="https://www.evernote.com/l/Aq2lf1PZXYVJepxAH6KDXMs_sZJ0H3SrPRsB/image.png" alt="" /></p>
+
+<blockquote>
+  <p>All primitive types are stored within stack.</p>
+</blockquote>
+
+<h2 id="inheritance">Inheritance</h2>
+
+<p>You can create a general class and let other sub-classes extend it.</p>
+
+<p>Class that is inherited is called super class, class that is inheriting is called sub class.</p>
+
+<blockquote>
+  <p>Class DO NOT inherit static fields / methods. No do it inherit private and no modifier (package protected) fields / methods.</p>
+</blockquote>
+
+<p>Sub classes can call <code class="highlighter-rouge">super()</code> to access super class’ constructor, and this should be the first thing you call in sub-class constructor.</p>
+
+<h3 id="why-encapsulation">Why Encapsulation?</h3>
+
+<p>It seperates implementation details from behaviour.</p>
+
+<p>Steve McConnell in his book, ‘Code Complete’ uses the analogy of an ice berg.</p>
+
+<p>Only a small portion of iceberg is visible on the surface, most of it is hidden underwater.</p>
+
+<p>Similarly, in our software design the visible parts of our modules/classes constitute their public interface and this is exposed to the outside world. The rest of it should be hidden to the naked eye.</p>
+
+<h3 id="overriding">Overriding</h3>
+
+<p>When methods have the same name and signature, the method is overridden.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nf">Super</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Sub</span> <span class="kd">extends</span> <span class="n">Super</span> <span class="o">{</span>
+    <span class="c1">// Overrides Super.myMethod</span>
+    <span class="kt">int</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="overloading">Overloading</h3>
+
+<p>When methods have the same name, but different signature (input types, not including return types), the method is overloaded.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nf">Super</span><span class="o">()</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">int</span> <span class="n">a</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">a</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Sub</span> <span class="kd">extends</span> <span class="n">Super</span> <span class="o">{</span>
+    <span class="c1">// Overloads Super.myMethod</span>
+    <span class="kt">int</span> <span class="nf">myMethod</span><span class="o">(</span><span class="kt">float</span> <span class="n">b</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mi">2</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<blockquote>
+  <p>In Java, everything inherits from Object class.</p>
+</blockquote>
+
+<h3 id="is-a-relationship">IS-A Relationship</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Car</span> <span class="o">{}</span>
+<span class="kd">class</span> <span class="nc">Sportscar</span> <span class="kd">extends</span> <span class="n">Car</span> <span class="o">{}</span>
+</code></pre></div></div>
+
+<p>Then we call Sportscar is a Car, which is an Object.</p>
+
+<h3 id="has-a-relationship">HAS-A Relationship</h3>
+
+<p>Also called composition or aggregation.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Engine</span> <span class="o">{}</span>
+<span class="kd">class</span> <span class="nc">Car</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="n">Engine</span> <span class="n">e</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Then we call Car has an Engine. We can also say Car is collaborating with Engine.</p>
+
+<h2 id="single-responsibility-principle">Single Responsibility Principle</h2>
+
+<p>In OOP, SRP states that:</p>
+
+<ul>
+  <li>Every class should have a single responsibility.</li>
+  <li>the responsibility should be entirely encapsulated by the class.</li>
+</ul>
+
+<p><a href="https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html">https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html</a></p>
+
+<blockquote>
+  <p>A class should have one and only one reason to change.</p>
+</blockquote>
+
+<h2 id="crc-cards">CRC Cards</h2>
+
+<p>A CRC card looks like the following:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>------------------------------------------------
+| Class: InputAudioDevice                      |
+| Super-classes: AudioDevice                   |
+| Sub-classes: Microphone                      |
+| Responsibility:                              |
+|     - Passes audio signal to computer.       |
+| Collaborators:                               |
+|     - StreamWriter                           |
+------------------------------------------------
+</code></pre></div></div>
+
+<p>Personally I think CRC cards are stupid and hard to read for large scale projects. As it is impossible to comprehend if you have say 200 cards (where is the entry point?), how do I cross reference?</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 42b0423_20181212_101801</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=42b0423_20181212_101801"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
