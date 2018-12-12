@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>How I Redesigned IFCAT
+ - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=0904d8f_20181212_104912" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=0904d8f_20181212_104912" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>How I Redesigned IFCAT
+</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">software-design</span>
+    
+        <span class="post-tag">draft</span>
+    
+    <div class="post-content">
+        <p>A good piece of code should look clean, concise and does what it is supposed to do.</p>
+
+<p>I am not an expert in software engineering, but during my time contributing to IFCAT project, I did find some design flaws, and this is how I fixed them.</p>
+
+<p>This post mainly serves as my personal reference in the future when I try to code Node.js systems. But also is a good read for anyone who is new to programming.</p>
+
+<!--more-->
+
+<h2 id="controllers">Controllers</h2>
+
+<p>In the original code, controllers are single JavaScript files that use <code class="highlighter-rouge">module.exports</code> to export simple functions.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Save groups for tutorial</span>
+<span class="nx">exports</span><span class="p">.</span><span class="nx">saveGroups</span> <span class="o">=</span> <span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="c1">// Logic here</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This is all good and functional, but what if I need to store state variables? Say I need to keep track of how many users are logged in. It is impossible to do so without another program such as Redis.</p>
+
+<p>I decided to create a Controller super-class that exposes a <code class="highlighter-rouge">getInstance()</code> static method (yes in JavaScript static methods gets inherited), so I can have all controllers as singletons.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">StudentController</span> <span class="kd">extends</span> <span class="nx">Controller</span> <span class="p">{</span>
+    <span class="k">async</span> <span class="nx">getStudent</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="p">{</span>
+        <span class="c1">// Do stuff here.</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now I can do cool stuff like this:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">studentController</span> <span class="o">=</span> <span class="nx">StudentController</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">();</span>
+<span class="kr">await</span> <span class="nx">studentController</span><span class="p">.</span><span class="nx">getStudent</span><span class="p">();</span>
+</code></pre></div></div>
+
+<p>Which is much more readable and robust.</p>
+
+<h2 id="routers">Routers</h2>
+
+<p>Old code routing files contained actual controller and middleware logic, which is a big no-no.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// non-authenticated routes</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/login'</span><span class="p">,</span> <span class="nx">passport</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="s1">'local-login'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">successRedirect</span><span class="p">:</span> <span class="s1">'/student/courses'</span><span class="p">,</span>
+    <span class="na">failureRedirect</span><span class="p">:</span> <span class="s1">'/login'</span><span class="p">,</span>
+    <span class="na">failureFlash</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}));</span>
+
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/uteach-login'</span><span class="p">,</span> <span class="nx">passport</span><span class="p">.</span><span class="nx">authenticate</span><span class="p">(</span><span class="s1">'auth0'</span><span class="p">,</span> <span class="p">{</span>
+    <span class="na">successRedirect</span><span class="p">:</span> <span class="s1">'/student/courses'</span><span class="p">,</span>
+    <span class="na">failureRedirect</span><span class="p">:</span> <span class="s1">'/login'</span><span class="p">,</span>
+    <span class="na">failureFlash</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">}),</span> <span class="kd">function</span><span class="p">(</span><span class="nx">req</span><span class="p">,</span><span class="nx">res</span><span class="p">)</span> <span class="p">{</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/student/courses'</span><span class="p">);</span>
+<span class="p">});</span>
+
+<span class="c1">// check if user is authenticated</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">use</span><span class="p">((</span><span class="nx">req</span><span class="p">,</span> <span class="nx">res</span><span class="p">,</span> <span class="nx">next</span><span class="p">)</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">req</span><span class="p">.</span><span class="nx">isAuthenticated</span><span class="p">())</span>
+        <span class="k">return</span> <span class="nx">next</span><span class="p">();</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">redirect</span><span class="p">(</span><span class="s1">'/login'</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>The new design encapsulates all logic within their own classes, router only serves as a mounting point.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">controllers</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Controllers/Student'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">router</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'express'</span><span class="p">).</span><span class="nx">Router</span><span class="p">();</span>
+
+<span class="kd">const</span> <span class="nx">GetCourseByParameterMiddleware</span>       <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Middlewares/ParameterMiddlewares/GetCourseByParameterMiddleware'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">GetQuestionByParameterMiddleware</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Middlewares/ParameterMiddlewares/GetQuestionByParameterMiddleware'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">GetTutorialQuizByParameterMiddleware</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Middlewares/ParameterMiddlewares/GetTutorialQuizByParameterMiddleware'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">EnsureAuthenticatedMiddleware</span>        <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Middlewares/EnsureAuthenticatedMiddleware'</span><span class="p">);</span>
+
+<span class="c1">// Mount all middlewares</span>
+<span class="nx">GetCourseByParameterMiddleware</span><span class="p">.</span><span class="nx">applyToRouter</span><span class="p">(</span><span class="s1">'course'</span><span class="p">,</span> <span class="nx">router</span><span class="p">);</span>
+<span class="nx">GetQuestionByParameterMiddleware</span><span class="p">.</span><span class="nx">applyToRouter</span><span class="p">(</span><span class="s1">'question'</span><span class="p">,</span> <span class="nx">router</span><span class="p">);</span>
+<span class="nx">GetTutorialQuizByParameterMiddleware</span><span class="p">.</span><span class="nx">applyToRouter</span><span class="p">(</span><span class="s1">'tutorialQuiz'</span><span class="p">,</span> <span class="nx">router</span><span class="p">);</span>
+<span class="nx">EnsureAuthenticatedMiddleware</span><span class="p">.</span><span class="nx">applyToRouter</span><span class="p">(</span><span class="nx">router</span><span class="p">);</span>
+
+<span class="kd">const</span> <span class="nx">StudentController</span>  <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Controllers/Student/StudentController'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">FileController</span>     <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Controllers/Student/FileController'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">QuestionController</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="s1">'../Controllers/Student/QuestionController'</span><span class="p">);</span>
+
+<span class="kd">let</span> <span class="nx">studentController</span>  <span class="o">=</span> <span class="nx">StudentController</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">fileController</span>     <span class="o">=</span> <span class="nx">FileController</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">();</span>
+<span class="kd">let</span> <span class="nx">questionController</span> <span class="o">=</span> <span class="nx">QuestionController</span><span class="p">.</span><span class="nx">getInstance</span><span class="p">();</span>
+
+<span class="c1">// authenticated routes</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/courses'</span><span class="p">,</span> <span class="nx">studentController</span><span class="p">.</span><span class="nx">getCourses</span><span class="p">);</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/courses/:course/quizzes'</span><span class="p">,</span> <span class="nx">studentController</span><span class="p">.</span><span class="nx">getQuizzes</span><span class="p">);</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/courses/:course/quizzes/:tutorialQuiz/start'</span><span class="p">,</span> <span class="nx">controllers</span><span class="p">.</span><span class="nx">TutorialQuiz</span><span class="p">.</span><span class="nx">startQuiz</span><span class="p">);</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/courses/:course/quizzes/:tutorialQuiz/submit-question'</span><span class="p">,</span> <span class="nx">questionController</span><span class="p">.</span><span class="nx">getQuestionForm</span><span class="p">);</span>
+<span class="nx">router</span><span class="p">.</span><span class="nx">post</span><span class="p">(</span><span class="s1">'/courses/:course/quizzes/:tutorialQuiz/submit-question'</span><span class="p">,</span> <span class="nx">questionController</span><span class="p">.</span><span class="nx">addQuestion</span><span class="p">);</span>
+<span class="nx">router</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="s1">'/file/:id'</span><span class="p">,</span> <span class="nx">fileController</span><span class="p">.</span><span class="nx">getFileLinkById</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">router</span><span class="p">;</span>
+</code></pre></div></div>
+
+<h2 id="inconsistant-naming-schemes">Inconsistant Naming Schemes</h2>
+
+<p>This is an obvious one, if you look into socket.io folder, you can find events that are called <code class="highlighter-rouge">REQUEST_QUIZ</code> and <code class="highlighter-rouge">quizData</code>, which just looks weird.</p>
+
+<p>I decided to go with <code class="highlighter-rouge">REQUEST_QUIZ</code> style.</p>
+
+<h2 id="ancient-async-practice">Ancient Async Practice</h2>
+
+<p>This is not really a design flaw, but more of a technical restrictions.</p>
+
+<p>For example the following code:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">req</span><span class="p">.</span><span class="nx">course</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span> <span class="na">$addToSet</span><span class="p">:</span> <span class="p">{</span> <span class="na">instructors</span><span class="p">:</span> <span class="p">{</span> <span class="na">$each</span><span class="p">:</span> <span class="nx">users</span> <span class="p">}}},</span> <span class="nx">err</span> <span class="o">=&gt;</span> <span class="p">{</span>
+    <span class="k">if</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">flash</span><span class="p">(</span><span class="s1">'success'</span><span class="p">,</span> <span class="s1">'The list of instructors has been updated for the course.'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+<span class="p">});</span>
+</code></pre></div></div>
+
+<p>It is more readable if written in the following way:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">try</span> <span class="p">{</span>
+    <span class="kr">await</span> <span class="nx">req</span><span class="p">.</span><span class="nx">course</span><span class="p">.</span><span class="nx">update</span><span class="p">({</span> <span class="na">$addToSet</span><span class="p">:</span> <span class="p">{</span> <span class="na">instructors</span><span class="p">:</span> <span class="p">{</span> <span class="na">$each</span><span class="p">:</span> <span class="nx">users</span> <span class="p">}}});</span>
+    <span class="nx">req</span><span class="p">.</span><span class="nx">flash</span><span class="p">(</span><span class="s1">'success'</span><span class="p">,</span> <span class="s1">'The list of instructors has been updated for the course.'</span><span class="p">);</span>
+    <span class="nx">res</span><span class="p">.</span><span class="nx">sendStatus</span><span class="p">(</span><span class="mi">200</span><span class="p">);</span>
+<span class="p">}</span> <span class="k">catch</span> <span class="p">(</span><span class="nx">err</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="nx">next</span><span class="p">(</span><span class="nx">err</span><span class="p">);</span>
+<span class="p">}</span>       
+</code></pre></div></div>
+
+<h2 id="lacking-newlines">Lacking Newlines</h2>
+
+<p>It is not good to have excessive newlines, but also bad to not have them at all. In the old code, there is no blank line between methods.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Populate files</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">withFiles</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">populate</span><span class="p">({</span> <span class="na">path</span><span class="p">:</span> <span class="s1">'files'</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">sort</span><span class="p">:</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}}});</span>
+<span class="p">};</span>
+<span class="c1">// Check if question is a multiple choice question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isMultipleChoice</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'multiple choice'</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="c1">// Check if question is a multiple select question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isMultipleSelect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'multiple select'</span><span class="p">;</span>
+<span class="p">};</span>
+<span class="c1">// Check if question is a short answer question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isShortAnswer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'short answer'</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Much nicer this way:</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// Populate files</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">withFiles</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">populate</span><span class="p">({</span> <span class="na">path</span><span class="p">:</span> <span class="s1">'files'</span><span class="p">,</span> <span class="na">options</span><span class="p">:</span> <span class="p">{</span> <span class="na">sort</span><span class="p">:</span> <span class="p">{</span> <span class="na">name</span><span class="p">:</span> <span class="mi">1</span> <span class="p">}}});</span>
+<span class="p">};</span>
+
+<span class="c1">// Check if question is a multiple choice question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isMultipleChoice</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'multiple choice'</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Check if question is a multiple select question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isMultipleSelect</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'multiple select'</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="c1">// Check if question is a short answer question</span>
+<span class="nx">QuestionSchema</span><span class="p">.</span><span class="nx">methods</span><span class="p">.</span><span class="nx">isShortAnswer</span> <span class="o">=</span> <span class="kd">function</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="p">.</span><span class="nx">type</span> <span class="o">===</span> <span class="s1">'short answer'</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>There are more design problems that I haven’t noticed yet, I will update this post as I code.</p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 0904d8f_20181212_104912</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=0904d8f_20181212_104912"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
