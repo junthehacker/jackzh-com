@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - Iterator and Builder Pattern - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=c44757f_20181214_162548" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=c44757f_20181214_162548" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - Iterator and Builder Pattern</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Iterator and Builder design pattern.</p>
+
+<!--more-->
+
+<h2 id="iterator-pattern">Iterator Pattern</h2>
+
+<p>Iterator pattern allows traversal of the elements of a collection without exposing the underlying implementation.</p>
+
+<p>To use iterator pattern, we can utilize Java’s <code class="highlighter-rouge">Iterator</code> interface.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">MyIterator</span> <span class="kd">implements</span> <span class="n">Iterator</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">Object</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasNext</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Then we simply construct this iterator within the actual class.</p>
+
+<p>There is also <code class="highlighter-rouge">Iterable</code> interface</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">vector</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">java.util.Iterator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">util.NumberFormatter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">vector.exceptions.IncompatibleVectorTypeException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">vector.exceptions.InvalidIndexException</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">vector.exceptions.InvalidVectorSizeException</span><span class="o">;</span>
+
+<span class="cm">/**
+ * An vector contains real numbers.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">RealVector</span> <span class="kd">implements</span> <span class="n">IVector</span><span class="o">,</span> <span class="n">Iterable</span><span class="o">&lt;</span><span class="n">Number</span><span class="o">&gt;</span> <span class="o">{</span>
+
+  <span class="cm">/**
+   * Stores all data.
+   */</span>
+  <span class="kd">private</span> <span class="n">Number</span><span class="o">[]</span> <span class="n">data</span><span class="o">;</span>
+
+  <span class="cm">/**
+   * Get the iterator.
+   *
+   * @return The number iterator.
+   */</span>
+  <span class="nd">@Override</span>
+  <span class="kd">public</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Number</span><span class="o">&gt;</span> <span class="nf">iterator</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">new</span> <span class="n">Iterator</span><span class="o">&lt;</span><span class="n">Number</span><span class="o">&gt;()</span> <span class="o">{</span>
+
+      <span class="cm">/**
+       * Current iterator index.
+       */</span>
+      <span class="kd">private</span> <span class="kt">int</span> <span class="n">currentIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+
+      <span class="cm">/**
+       * If iterator has next item.
+       * @return True if has next item.
+       */</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasNext</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">currentIndex</span> <span class="o">!=</span> <span class="n">data</span><span class="o">.</span><span class="na">length</span><span class="o">;</span>
+      <span class="o">}</span>
+
+      <span class="cm">/**
+       * Get iterator next item.
+       * @return Next item.
+       */</span>
+      <span class="nd">@Override</span>
+      <span class="kd">public</span> <span class="n">Number</span> <span class="nf">next</span><span class="o">()</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">tmp</span> <span class="o">=</span> <span class="n">currentIndex</span><span class="o">;</span>
+        <span class="n">currentIndex</span><span class="o">++;</span>
+        <span class="k">return</span> <span class="n">data</span><span class="o">[</span><span class="n">tmp</span><span class="o">];</span>
+      <span class="o">}</span>
+    <span class="o">};</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="nested-classes">Nested Classes</h2>
+
+<p>It is a good way to group classes that are only used in one place.</p>
+
+<p>Nesting helper classes can make package more streamlined.</p>
+
+<p>It also increases encapsulation and creates more readable and maintainable code.</p>
+
+<h3 id="static--non-static">Static / Non-Static</h3>
+
+<p>Nested classes that are declared static are called static nested classes.</p>
+
+<p>Non-static nested classes are called inner classes.</p>
+
+<p>Static nested class is really just a class, but for package organizing convinence.</p>
+
+<h2 id="builder-pattern">Builder Pattern</h2>
+
+<p>Consider builder when have a lot of constructor parameters.</p>
+
+<p>Static factories and constructors have problems:</p>
+<ul>
+  <li>Does not work well with large number of optional parameters.</li>
+</ul>
+
+<p>Advantage of builder:</p>
+<ul>
+  <li>Very easy to read and write.</li>
+  <li>Can simulate named optional params in python.</li>
+  <li>The class is immutable!</li>
+</ul>
+
+<p>Sample builder directly taken from A3</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">cfiltering</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">io.IOutputIO</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">io.StreamOutputIO</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">matrix.RealMatrix</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">matrix.RealSquareMatrix</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">matrix.comparator.ComparisonType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">matrix.comparator.DistanceComparator</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">parser.IParser</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">util.NumberFormatter</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">util.SimilarityScore</span><span class="o">;</span>
+
+<span class="cm">/**
+ * Filtering instance, calculates all scores.
+ */</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CFilter</span> <span class="o">{</span>
+
+  <span class="cm">/**
+   * Used to parse files to matrix.
+   */</span>
+  <span class="kd">private</span> <span class="kd">final</span> <span class="n">IParser</span> <span class="n">matrixParser</span><span class="o">;</span>
+
+  <span class="cm">/**
+   * Used to write output content.
+   */</span>
+  <span class="kd">private</span> <span class="n">IOutputIO</span> <span class="n">outputStream</span><span class="o">;</span>
+
+  <span class="cm">/**
+   * User movie rating matrix.
+   */</span>
+  <span class="kd">private</span> <span class="n">RealMatrix</span> <span class="n">userMovieMatrix</span><span class="o">;</span>
+
+  <span class="cm">/**
+   * Similarity score matrix.
+   */</span>
+  <span class="kd">private</span> <span class="n">RealSquareMatrix</span> <span class="n">userUserMatrix</span><span class="o">;</span>
+
+  <span class="cm">/**
+   * Create a new filter instance.
+   *
+   * @param b Builder instance.
+   * @throws Exception When fatal error.
+   */</span>
+  <span class="kd">private</span> <span class="nf">CFilter</span><span class="o">(</span><span class="n">Builder</span> <span class="n">b</span><span class="o">)</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">matrixParser</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">matrixParser</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span> <span class="o">=</span> <span class="n">b</span><span class="o">.</span><span class="na">outputStream</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">userMovieMatrix</span> <span class="o">=</span> <span class="o">(</span><span class="n">RealMatrix</span><span class="o">)</span> <span class="n">matrixParser</span><span class="o">.</span><span class="na">parse</span><span class="o">();</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">userUserMatrix</span> <span class="o">=</span> <span class="n">SimilarityScore</span>
+        <span class="o">.</span><span class="na">calculateSimilarityMatrix</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">userMovieMatrix</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**
+   * Print the result of this filtering.
+   *
+   * @throws Exception When fatal error.
+   */</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">print</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+    <span class="c1">// Print userUserMatrix</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">userUserMatrix</span><span class="o">.</span><span class="na">toString</span><span class="o">()</span> <span class="o">+</span> <span class="s">"\n\n"</span><span class="o">);</span>
+
+    <span class="c1">// Print most similar pairs</span>
+    <span class="kt">int</span><span class="o">[][]</span> <span class="n">pairs</span> <span class="o">=</span> <span class="n">DistanceComparator</span>
+        <span class="o">.</span><span class="na">findPairs</span><span class="o">(</span><span class="n">userUserMatrix</span><span class="o">,</span> <span class="n">ComparisonType</span><span class="o">.</span><span class="na">MAX</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span><span class="o">.</span><span class="na">writeLine</span><span class="o">(</span><span class="s">"The most similar pairs of users from "</span>
+        <span class="o">+</span> <span class="s">"above userUserMatrix are:"</span><span class="o">);</span>
+    <span class="n">String</span> <span class="n">result</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">pair</span> <span class="o">:</span> <span class="n">pairs</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">UserPair</span> <span class="n">userPair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserPair</span><span class="o">(</span><span class="n">pair</span><span class="o">);</span>
+      <span class="n">result</span> <span class="o">+=</span> <span class="n">userPair</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">result</span> <span class="o">=</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="s">"\nwith similarity score of "</span>
+            <span class="o">+</span>
+            <span class="n">NumberFormatter</span><span class="o">.</span><span class="na">formatFloatForPrinting</span><span class="o">(</span>
+                <span class="o">(</span><span class="kt">float</span><span class="o">)</span> <span class="n">userUserMatrix</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="n">pairs</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">],</span> <span class="n">pairs</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">1</span><span class="o">]))</span>
+            <span class="o">+</span> <span class="s">"\n\n\n"</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+
+    <span class="c1">// Print most dissimilar pairs</span>
+    <span class="n">pairs</span> <span class="o">=</span> <span class="n">DistanceComparator</span><span class="o">.</span><span class="na">findPairs</span><span class="o">(</span><span class="n">userUserMatrix</span><span class="o">,</span> <span class="n">ComparisonType</span><span class="o">.</span><span class="na">MIN</span><span class="o">);</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span><span class="o">.</span><span class="na">writeLine</span><span class="o">(</span><span class="s">"The most dissimilar pairs of users from "</span>
+        <span class="o">+</span> <span class="s">"above userUserMatrix are:"</span><span class="o">);</span>
+    <span class="n">result</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+    <span class="k">for</span> <span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">pair</span> <span class="o">:</span> <span class="n">pairs</span><span class="o">)</span> <span class="o">{</span>
+      <span class="n">UserPair</span> <span class="n">userPair</span> <span class="o">=</span> <span class="k">new</span> <span class="n">UserPair</span><span class="o">(</span><span class="n">pair</span><span class="o">);</span>
+      <span class="n">result</span> <span class="o">+=</span> <span class="n">userPair</span><span class="o">.</span><span class="na">toString</span><span class="o">();</span>
+    <span class="o">}</span>
+    <span class="n">result</span> <span class="o">=</span>
+        <span class="n">result</span><span class="o">.</span><span class="na">substring</span><span class="o">(</span><span class="mi">0</span><span class="o">,</span> <span class="n">result</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">-</span> <span class="mi">2</span><span class="o">)</span> <span class="o">+</span> <span class="s">"\nwith similarity score of "</span>
+            <span class="o">+</span>
+            <span class="n">NumberFormatter</span><span class="o">.</span><span class="na">formatFloatForPrinting</span><span class="o">(</span>
+                <span class="o">(</span><span class="kt">float</span><span class="o">)</span> <span class="n">userUserMatrix</span><span class="o">.</span><span class="na">getValue</span><span class="o">(</span><span class="n">pairs</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">0</span><span class="o">],</span> <span class="n">pairs</span><span class="o">[</span><span class="mi">0</span><span class="o">][</span><span class="mi">1</span><span class="o">]))</span>
+            <span class="o">+</span> <span class="s">"\n\n\n"</span><span class="o">;</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span><span class="o">.</span><span class="na">write</span><span class="o">(</span><span class="n">result</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="cm">/**
+   * Builder class.
+   */</span>
+  <span class="kd">public</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Builder</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * Used to parse file to matrix.
+     */</span>
+    <span class="kd">private</span> <span class="kd">final</span> <span class="n">IParser</span> <span class="n">matrixParser</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * Used to write outputs.
+     */</span>
+    <span class="kd">private</span> <span class="n">IOutputIO</span> <span class="n">outputStream</span><span class="o">;</span>
+
+    <span class="cm">/**
+     * Create a new builder instance.
+     *
+     * @param matrixParser Parser instance to use.
+     */</span>
+    <span class="kd">public</span> <span class="nf">Builder</span><span class="o">(</span><span class="n">IParser</span> <span class="n">matrixParser</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">matrixParser</span> <span class="o">=</span> <span class="n">matrixParser</span><span class="o">;</span>
+      <span class="c1">// Default values.</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span> <span class="o">=</span> <span class="n">StreamOutputIO</span><span class="o">.</span><span class="na">createWithStdOut</span><span class="o">();</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Set output stream.
+     *
+     * @param outputStream Stream to use.
+     * @return The builder.
+     */</span>
+    <span class="kd">public</span> <span class="n">Builder</span> <span class="nf">outputStream</span><span class="o">(</span><span class="n">IOutputIO</span> <span class="n">outputStream</span><span class="o">)</span> <span class="o">{</span>
+      <span class="k">this</span><span class="o">.</span><span class="na">outputStream</span> <span class="o">=</span> <span class="n">outputStream</span><span class="o">;</span>
+      <span class="k">return</span> <span class="k">this</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="cm">/**
+     * Build the filtering instance.
+     *
+     * @return Built instance.
+     * @throws Exception When fatal error.
+     */</span>
+    <span class="kd">public</span> <span class="n">CFilter</span> <span class="nf">build</span><span class="o">()</span> <span class="kd">throws</span> <span class="n">Exception</span> <span class="o">{</span>
+      <span class="k">return</span> <span class="k">new</span> <span class="nf">CFilter</span><span class="o">(</span><span class="k">this</span><span class="o">);</span>
+    <span class="o">}</span>
+
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] c44757f_20181214_162548</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=c44757f_20181214_162548"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
