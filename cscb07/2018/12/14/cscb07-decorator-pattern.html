@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - Decorator Pattern - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=641ae7c_20181214_163712" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=641ae7c_20181214_163712" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - Decorator Pattern</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Decorator pattern.</p>
+
+<!--more-->
+
+<p>Classes should be open for extension but closed for modification.</p>
+
+<h2 id="decorators">Decorators</h2>
+
+<ul>
+  <li>Decorators have the same supertypes as the objects they decorate.</li>
+  <li>Decorator add behaviour by delegating to the object it decorates and then adding its own behaviour.</li>
+  <li>Can add at any time.</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Beverage</span> <span class="o">{</span>
+    <span class="n">String</span> <span class="n">des</span> <span class="o">=</span> <span class="s">"unknown"</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">des</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">cost</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">CondimentDecorator</span> <span class="kd">extends</span> <span class="n">Beverage</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">();</span>
+    <span class="kd">public</span> <span class="kd">abstract</span> <span class="kt">double</span> <span class="nf">cost</span><span class="o">();</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Espresso</span> <span class="kd">extends</span> <span class="n">Beverage</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="nf">Espresso</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">description</span> <span class="o">=</span> <span class="s">"Espresso"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">cost</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="mf">1.99</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Mocha</span> <span class="kd">extends</span> <span class="n">CondimentDecorator</span> <span class="o">{</span>
+    <span class="n">Beverage</span> <span class="n">bev</span><span class="o">;</span>
+
+    <span class="kd">public</span> <span class="nf">Mocha</span><span class="o">(</span><span class="n">Beverage</span> <span class="n">bev</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">bev</span> <span class="o">=</span> <span class="n">bev</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getDescription</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="n">bev</span><span class="o">.</span><span class="na">getDescription</span><span class="o">()</span> <span class="o">+</span> <span class="s">", Mocha"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">double</span> <span class="nf">cost</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">.</span><span class="mi">20</span> <span class="o">+</span> <span class="n">bev</span><span class="o">.</span><span class="na">cost</span><span class="o">();</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="c1">// Now you can do</span>
+<span class="n">Beverage</span> <span class="n">bev</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Mocha</span><span class="o">(</span><span class="k">new</span> <span class="n">Espresso</span><span class="o">());</span>
+<span class="c1">// You now have mocha! with price of 2.19</span>
+
+</code></pre></div></div>
+
+<h2 id="decorator-design-principle">Decorator Design Principle</h2>
+
+<ul>
+  <li>Classes should be open for extension but closed for modification</li>
+  <li>Systems can be extended without changing existing code.</li>
+</ul>
+
+<h3 id="tradeoffs">Tradeoffs</h3>
+
+<ul>
+  <li>Time and effort</li>
+  <li>Introduces new abstraction can make code hard to understand</li>
+</ul>
+
+<p>Therefore don’t use decotrators everywhere.</p>
+
+<h3 id="advantages">Advantages</h3>
+
+<ul>
+  <li>Provides a flexible alternative to using inheritance to extend functionality.</li>
+  <li>Objects can be decorated dynamically at runtime.</li>
+</ul>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 641ae7c_20181214_163712</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=641ae7c_20181214_163712"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

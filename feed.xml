@@ -1,85 +1,88 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T16:25:49-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T16:37:13-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Decorator Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Decorator Pattern" /><published>2018-12-14T15:28:00-05:00</published><updated>2018-12-14T15:28:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
-&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
+&lt;p&gt;Decorator pattern.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
-&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
+&lt;p&gt;Classes should be open for extension but closed for modification.&lt;/p&gt;
 
-&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
-    &lt;ul&gt;
-      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;When something changes in publisher.
-    &lt;ul&gt;
-      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
-      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
-
-&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
-
-&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
+&lt;h2 id=&quot;decorators&quot;&gt;Decorators&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Decorators have the same supertypes as the objects they decorate.&lt;/li&gt;
+  &lt;li&gt;Decorator add behaviour by delegating to the object it decorates and then adding its own behaviour.&lt;/li&gt;
+  &lt;li&gt;Can add at any time.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;des&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;unknown&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getDescription&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;des&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
-&lt;/blockquote&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CondimentDecorator&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getDescription&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Espresso&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Espresso&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;description&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Espresso&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;1.99&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Mocha&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CondimentDecorator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
 
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Mocha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;bev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getDescription&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getDescription&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;, Mocha&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;double&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;cost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;20&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;cost&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;c1&quot;&gt;// Now you can do&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Beverage&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bev&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Mocha&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Espresso&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;());&lt;/span&gt;
+&lt;span class=&quot;c1&quot;&gt;// You now have mocha! with price of 2.19&lt;/span&gt;
+
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;decorator-design-principle&quot;&gt;Decorator Design Principle&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Classes should be open for extension but closed for modification&lt;/li&gt;
+  &lt;li&gt;Systems can be extended without changing existing code.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tradeoffs&quot;&gt;Tradeoffs&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Time and effort&lt;/li&gt;
+  &lt;li&gt;Introduces new abstraction can make code hard to understand&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Therefore don’t use decotrators everywhere.&lt;/p&gt;
 
 &lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
-  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
-  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+  &lt;li&gt;Provides a flexible alternative to using inheritance to extend functionality.&lt;/li&gt;
+  &lt;li&gt;Objects can be decorated dynamically at runtime.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Decorator pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Iterator and Builder design pattern.&lt;/p&gt;
 
@@ -341,7 +344,88 @@
 
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When something changes in publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
+      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
+
+&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
+
+&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
+  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
+  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Introduction to JUnit.&lt;/p&gt;
 
@@ -1447,162 +1531,4 @@
         &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createWithSerialNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to Java programming. This note assumes you are somewhat knows how to program, many obvious details are ignored.</summary></entry><entry><title type="html">CSCB07 Software Design - SVN</title><link href="https://jackzh.com/cscb07/2018/12/11/cscb07-svn.html" rel="alternate" type="text/html" title="CSCB07 Software Design - SVN" /><published>2018-12-11T01:40:00-05:00</published><updated>2018-12-11T01:40:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/11/cscb07-svn</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/11/cscb07-svn.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Basic introduction to version control and how to use SVN.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
-
-&lt;p&gt;&lt;strong&gt;Why not email code to each other?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Someone is responsible for merging different source files together into one, which is painful.&lt;/li&gt;
-  &lt;li&gt;No way to track what file got changed what time by which developer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;strong&gt;What is version control?&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;Version control tracks files over a period of time (who wrote what and what your file looked like an hour ago etc.). It also automatically merges contributions.&lt;/p&gt;
-
-&lt;p&gt;It creates revisions, which keep track of the changing states of files over time and merge contributions of multiple developers.&lt;/p&gt;
-
-&lt;h3 id=&quot;benifits-of-version-control&quot;&gt;Benifits of Version Control&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Data integrity
-    &lt;ul&gt;
-      &lt;li&gt;Nothing is every deleted or lost.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Productivity
-    &lt;ul&gt;
-      &lt;li&gt;Automatically integrates work from different developers into a central repository.&lt;/li&gt;
-      &lt;li&gt;If a revision introduces errors, you can easily go back to a previous version.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Accountability
-    &lt;ul&gt;
-      &lt;li&gt;Can track who wrote which part of the code.&lt;/li&gt;
-      &lt;li&gt;Track when the change is added.&lt;/li&gt;
-      &lt;li&gt;Track subsequent changes made by other developers.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Record Keeping&lt;/li&gt;
-  &lt;li&gt;Rapid Development&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;some-popular-version-control-systems&quot;&gt;Some Popular Version Control Systems&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Git&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Git was created by Linus Torvalds in 2005 for development of the Linux kernel, with other kernel developers contributing to its initial development. Its current maintainer since 2005 is Junio Hamano.&lt;/p&gt;
-
-&lt;p&gt;As with most other distributed version-control systems, and unlike most client–server systems, &lt;strong&gt;every Git directory on every computer is a full-fledged repository&lt;/strong&gt; with complete history and full version-tracking abilities, independent of network access or a central server. (Wikipedia)&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Perforce&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Enterprise version control, seems like it is used by gaming companies.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Microsoft Visual SourceSafe&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Targets towards small teams, this software is not supported by Microsoft anymore.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Subversion (SVN)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Quite widely used, built by Apache Foundation.&lt;/p&gt;
-
-&lt;h2 id=&quot;client-server-architecture&quot;&gt;Client-Server Architecture&lt;/h2&gt;
-
-&lt;p&gt;SVN uses client-server architecture. This architecture is very common among many programs.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Note Git is not client-server, it does not have a centralized server at all.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq30awzYd1dGMrjsxjx30DDBHe70DB6sbNkB/image.png&quot; alt=&quot;SVN client server&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;use-subversion&quot;&gt;Use Subversion&lt;/h2&gt;
-
-&lt;p&gt;Before doing anything, you must first checkout the repository:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn checkout https://lecture1207.googlecode.com/svn/trunk/ lecture1207 --username xyzM@gmail.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Above command will checkout repository &lt;code class=&quot;highlighter-rouge&quot;&gt;https://lecture1207.googlecode.com/svn/trunk/&lt;/code&gt; to a folder called &lt;code class=&quot;highlighter-rouge&quot;&gt;lecture1207&lt;/code&gt; as user &lt;code class=&quot;highlighter-rouge&quot;&gt;xyzM@gmail.com&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;After creating a new file, you must add it to SVN tracking tree:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;touch newfile.txt
-svn add newfile.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then you can commit using the following command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn commit -m &quot;Add newfile.txt&quot; newfile.txt
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To fetch updates from server, use the command:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;svn-status&quot;&gt;svn status&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;svn status&lt;/code&gt; command is used to check current repository status, it will give you the following output:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;STATUS_CODE file_name1
-...
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;STATUS_CODE can be one of the following:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt; &lt;/code&gt; - Nothing has changed.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;A&lt;/code&gt; - Marked for addition.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;D&lt;/code&gt; - Marked for deletion.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;M&lt;/code&gt; - Item modified.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;R&lt;/code&gt; - Item replaced (was removed, but then a new file with same name is added).&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;C&lt;/code&gt; - Contents of the file conflicts with the update from repository.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;X&lt;/code&gt; - Item is present because of an externals definition.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;I&lt;/code&gt; - Ignored by &lt;code class=&quot;highlighter-rouge&quot;&gt;svn:ignore&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt; - Not under version control.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;!&lt;/code&gt; - Item is missing from working copy.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;~&lt;/code&gt; - Was version as one kind of object (for example file), but then replaced with another type (for example directory).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;svn-log&quot;&gt;svn log&lt;/h3&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn log [PATH]
-
-svn log URL[@REV] [PATH...]
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Shows log messages from the repository. If no arguments are supplied, svn log shows the log messages for all files and directories inside (and including) the current working directory of your working copy. You can refine the results by specifying a path, one or more revisions, or any combination of the two. The default revision range for a local path is BASE:1.&lt;/p&gt;
-
-&lt;h2 id=&quot;resolve-conflicts&quot;&gt;Resolve Conflicts&lt;/h2&gt;
-
-&lt;p&gt;Following are the instructions provided by the instructor, however it is outdated.&lt;/p&gt;
-
-&lt;p&gt;To discard my own change:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;svn revert
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;To discard other person’s change:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;cp someFile.mine.java someFile.java
-svn resolved
-svn commit -m “I accepted mine changes”
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;However, there is a new instruction: &lt;a href=&quot;http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html&quot;&gt;http://svnbook.red-bean.com/en/1.7/svn.ref.svn.c.resolve.html&lt;/a&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Basic introduction to version control and how to use SVN.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to Java programming. This note assumes you are somewhat knows how to program, many obvious details are ignored.</summary></entry></feed>
