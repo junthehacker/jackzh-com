@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MATA22 Linear Algebra - Diagonalization - Jun Zheng</title>
+        <title>CSCB07 Software Design - More Java Memory Model - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=cd396a6_20181214_135952" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>MATA22 Linear Algebra - Diagonalization</small></h1>
+        <h1>Jun Zheng <small>CSCB07 Software Design - More Java Memory Model</small></h1>
     </div>
 </header>
 
@@ -36,31 +36,67 @@
     <div class="js-toc"></div>
     <br/>
     
-        <span class="post-tag">mata22</span>
+        <span class="post-tag">cscb07</span>
     
         <span class="post-tag">course-notes</span>
     
     <div class="post-content">
-        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.2. For course MATA22 at UTSC.</p>
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>More topics on Java memory model.</p>
 
 <!--more-->
 
-<p>A square matrix is called diagonal if all entries not on the main diagonal are zero.</p>
+<h2 id="stack">Stack</h2>
 
-<p>We will show that if \(A\) has \(n\) distinct eigenvalues, then the computation of \(A^k\) can be replaced by \(D^k\), where \(D\) is a diagonal matrix with the eigenvalues of \(A\) as entries.</p>
+<ul>
+  <li>Values exist only within the function scope.
+    <ul>
+      <li>Once returns, values are freed automatically.</li>
+    </ul>
+  </li>
+  <li>Only primitives.
+    <ul>
+      <li>Helps stack to be small, and individual stack frames small. (so we can do recursive calls :)).</li>
+    </ul>
+  </li>
+  <li>For objects, only references (which are primitives) are passed around on stack.</li>
+  <li>Can’t be shared between threads.</li>
+</ul>
 
-<h3 id="matrix-summary-of-eigenvalues-of-a">Matrix Summary of Eigenvalues of \(A\)</h3>
+<blockquote>
+  <p>Java does not specify how references are implemented, but in C, they are integers.</p>
+</blockquote>
 
-<p>Let \(A\) be an \(n \times n\) matrix and let \(\lambda_1, \lambda_2, …., \lambda_n\) be scalars and \(\vec v_1, \vec v_2, … , \vec v_n \) be nonzero vectors in n-space. Let \(C\) be the \(n \times n\) matrix having \(\vec v_j\) as \(j\)th column vector, and let \(D\) be the diagonal matrix with entries of all lambda scalars.</p>
+<ul>
+  <li>Each function have their own <strong>stack frame</strong>.
+    <ul>
+      <li>Stack frames are destroyed once method returns.</li>
+    </ul>
+  </li>
+</ul>
 
-<p>Then \(AC = CD\) if and only if all \(\lambda\) are eigenvalues of \(A\) and \(\vec v_j\) is an eigenvector of \(A\) corresponding to \(\lambda_j\)</p>
+<h2 id="heap">Heap</h2>
 
-<p>\(C\) is invertible if and only if \(rank(C) = n\). That case, we can write the equation as \(D = C^{-1}AC\).</p>
+<ul>
+  <li>Objects are on the heap, they are created using <code class="highlighter-rouge">new</code> keyword.</li>
+  <li>Only destroyed if garbage collector collects it.</li>
+  <li>Object with all its instance members (variables/methods) are put on the heap.</li>
+  <li>Can be shared by multiple threads.</li>
+</ul>
 
-<h3 id="diagonalizable-matrix">Diagonalizable Matrix</h3>
+<h2 id="static-variables">Static Variables</h2>
 
-<p>An \(n \times n\) matrix \(A\) is diagonalizable if there exists an invertible matrix \(C\) such that \(C^{-1}AC = D\), a diagonal matrix.</p>
+<ul>
+  <li>The heap is divided into two parts:
+    <ul>
+      <li><code class="highlighter-rouge">Object Heap Space</code> where all instances live.</li>
+      <li><code class="highlighter-rouge">Static Heap Space</code> where all static members live.</li>
+    </ul>
+  </li>
+</ul>
 
+<p><img src="https://www.evernote.com/l/Aq0hoi4ftghMtowCxNW0fcYUZr7Jzqy-7TwB/image.png" alt="" /></p>
 
     </div>
 </div>
