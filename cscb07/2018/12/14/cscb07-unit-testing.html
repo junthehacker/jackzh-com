@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CSCB07 Software Design - More Java Memory Model - Jun Zheng</title>
+        <title>CSCB07 Software Design - Unit Testing - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=4bac173_20181214_150019" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>CSCB07 Software Design - More Java Memory Model</small></h1>
+        <h1>Jun Zheng <small>CSCB07 Software Design - Unit Testing</small></h1>
     </div>
 </header>
 
@@ -43,60 +43,85 @@
     <div class="post-content">
         <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
 
-<p>More topics on Java memory model.</p>
+<p>Introduction to JUnit.</p>
 
 <!--more-->
 
-<h2 id="stack">Stack</h2>
+<h2 id="unit-testing-overview">Unit Testing Overview</h2>
+
+<p>Unit testing is testing bits of your code in isolation.</p>
+
+<p>A unit can be viewed as the smallest testable part of an application.</p>
+
+<h3 id="benefits">Benefits</h3>
 
 <ul>
-  <li>Values exist only within the function scope.
+  <li>Allows you to make big changes quickly.
     <ul>
-      <li>Once returns, values are freed automatically.</li>
+      <li>You know everything works now because tests pass.</li>
+      <li>As you refactor the code, you know what breaks since you continuously running tests.</li>
     </ul>
   </li>
-  <li>Only primitives.
+  <li>Helps with code design.
     <ul>
-      <li>Helps stack to be small, and individual stack frames small. (so we can do recursive calls :)).</li>
-    </ul>
-  </li>
-  <li>For objects, only references (which are primitives) are passed around on stack.</li>
-  <li>Can’t be shared between threads.</li>
-</ul>
-
-<blockquote>
-  <p>Java does not specify how references are implemented, but in C, they are integers.</p>
-</blockquote>
-
-<ul>
-  <li>Each function have their own <strong>stack frame</strong>.
-    <ul>
-      <li>Stack frames are destroyed once method returns.</li>
+      <li>Instead of directly writing code, you first outline all the conditions your code must met.</li>
     </ul>
   </li>
 </ul>
 
-<h2 id="heap">Heap</h2>
+<h3 id="test-suites">Test Suites</h3>
+
+<p>There are two main ways to test:</p>
 
 <ul>
-  <li>Objects are on the heap, they are created using <code class="highlighter-rouge">new</code> keyword.</li>
-  <li>Only destroyed if garbage collector collects it.</li>
-  <li>Object with all its instance members (variables/methods) are put on the heap.</li>
-  <li>Can be shared by multiple threads.</li>
+  <li>Ad Hoc - Test whatever occurs to you at the moment.</li>
+  <li>Test Suite - Write a thorough set of tests.</li>
 </ul>
 
-<h2 id="static-variables">Static Variables</h2>
+<p>There is a major disadvantage of writing a test suite:</p>
+<ul>
+  <li>A LOT of extra programming</li>
+</ul>
+
+<h2 id="terminologies">Terminologies</h2>
 
 <ul>
-  <li>The heap is divided into two parts:
-    <ul>
-      <li><code class="highlighter-rouge">Object Heap Space</code> where all instances live.</li>
-      <li><code class="highlighter-rouge">Static Heap Space</code> where all static members live.</li>
-    </ul>
-  </li>
+  <li>Test fixture - Sets up the data that are needed to run tests.</li>
+  <li>Unit test - Test of a single class.</li>
+  <li>Test case - Test the response of a single method to a set of inputs.</li>
+  <li>Test suite - Collection of test cases.</li>
+  <li>Test runner - Software to run all tests.</li>
+  <li>Integration test - Test how well classes work together.</li>
 </ul>
 
-<p><img src="https://www.evernote.com/l/Aq0hoi4ftghMtowCxNW0fcYUZr7Jzqy-7TwB/image.png" alt="" /></p>
+<h2 id="assertequals"><code class="highlighter-rouge">assertEquals</code></h2>
+
+<p>Nice function to use, but just a warning, if inputs are primitives, it will use <code class="highlighter-rouge">==</code>, however if are objects, it will use the <code class="highlighter-rouge">.equals</code> method.</p>
+
+<h2 id="sample-unit-test">Sample Unit Test</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">test</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">static</span> <span class="n">org</span><span class="o">.</span><span class="na">junit</span><span class="o">.</span><span class="na">Assert</span><span class="o">.</span><span class="na">assertEquals</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">matrix.comparator.ComparisonType</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.junit.Test</span><span class="o">;</span>
+
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">ComparisonTypeTest</span> <span class="o">{</span>
+
+  <span class="nd">@Test</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldHaveMAX</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="n">ComparisonType</span><span class="o">.</span><span class="na">MAX</span><span class="o">,</span> <span class="n">ComparisonType</span><span class="o">.</span><span class="na">MAX</span><span class="o">);</span>
+  <span class="o">}</span>
+
+  <span class="nd">@Test</span>
+  <span class="kd">public</span> <span class="kt">void</span> <span class="nf">testShouldHaveMIN</span><span class="o">()</span> <span class="o">{</span>
+    <span class="n">assertEquals</span><span class="o">(</span><span class="n">ComparisonType</span><span class="o">.</span><span class="na">MIN</span><span class="o">,</span> <span class="n">ComparisonType</span><span class="o">.</span><span class="na">MIN</span><span class="o">);</span>
+  <span class="o">}</span>
+
+<span class="o">}</span>
+
+</code></pre></div></div>
 
     </div>
 </div>

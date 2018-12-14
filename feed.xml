@@ -1,4 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T14:43:44-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T15:00:20-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
+
+&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
+
+&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
+
+&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Allows you to make big changes quickly.
+    &lt;ul&gt;
+      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
+      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Helps with code design.
+    &lt;ul&gt;
+      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
+
+&lt;p&gt;There are two main ways to test:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
+  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
+  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
+  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
+  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
+  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
+  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.&lt;/p&gt;
 
@@ -460,8 +540,8 @@
 
 &lt;p&gt;Final Product - The software&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq3AC7U482hJLbArItqeZ5BfrI-fPs-j-gIB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). CRC cards and how to properly develop software with a team.</summary></entry><entry><title type="html">How I Redesigned IFCAT</title><link href="https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed.html" rel="alternate" type="text/html" title="How I Redesigned IFCAT
-" /><published>2018-12-12T09:22:00-05:00</published><updated>2018-12-12T09:22:00-05:00</updated><id>https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed</id><content type="html" xml:base="https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed.html">&lt;p&gt;A good piece of code should look clean, concise and does what it is supposed to do.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq3AC7U482hJLbArItqeZ5BfrI-fPs-j-gIB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). CRC cards and how to properly develop software with a team.</summary></entry><entry><title type="html">How I Redesigned IFCAT</title><link href="https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat.html" rel="alternate" type="text/html" title="How I Redesigned IFCAT
+" /><published>2018-12-12T09:22:00-05:00</published><updated>2018-12-12T09:22:00-05:00</updated><id>https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat</id><content type="html" xml:base="https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat.html">&lt;p&gt;A good piece of code should look clean, concise and does what it is supposed to do.&lt;/p&gt;
 
 &lt;p&gt;I am not an expert in software engineering, but during my time contributing to IFCAT project, I did find some design flaws, and this is how I fixed them.&lt;/p&gt;
 
@@ -1565,60 +1645,4 @@ svn commit -m “I accepted mine changes”
 
 &lt;blockquote&gt;
   &lt;p&gt;$\oplus$ is exclusive or.&lt;/p&gt;
-&lt;/blockquote&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</summary></entry><entry><title type="html">CSCB36 Theory of Computation - Chapter 0</title><link href="https://jackzh.com/cscb36/2018/12/03/cscb36-chapter-0.html" rel="alternate" type="text/html" title="CSCB36 Theory of Computation - Chapter 0" /><published>2018-12-03T00:00:00-05:00</published><updated>2018-12-03T00:00:00-05:00</updated><id>https://jackzh.com/cscb36/2018/12/03/cscb36-chapter-0</id><content type="html" xml:base="https://jackzh.com/cscb36/2018/12/03/cscb36-chapter-0.html">&lt;p&gt;Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;sets&quot;&gt;Sets&lt;/h2&gt;
-
-&lt;p&gt;If an object is $a$ in $A$, then we write $a \in A$, if not, we write $a \notin A$.&lt;/p&gt;
-
-&lt;p&gt;If a set has 0 elements, we call that an &lt;em&gt;empty set&lt;/em&gt;, or $\emptyset$.&lt;/p&gt;
-
-&lt;p&gt;Number of elements within a set $A$ is called its size or cardinality, denoted by $|A|$.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;For infinite set $A$, $|A| = \infty$&lt;/li&gt;
-  &lt;li&gt;For empty set $\emptyset$, $|\emptyset| = 0$&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;describing-sets&quot;&gt;Describing Sets&lt;/h3&gt;
-
-&lt;p&gt;There are 2 ways to describe sets.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Extensional: List all elements within a set. For example $\{1,2,3\}$.&lt;/li&gt;
-  &lt;li&gt;Intensional: Describle the set with format $\{x: \text{x is odd number}\}$.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;relationship-between-sets&quot;&gt;Relationship Between Sets&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;$A \subseteq B$: If every element in $A$ is also in $B$, then $A$ is a subset of $B$.&lt;/li&gt;
-  &lt;li&gt;$B \supseteq A$: If $A \subseteq B$ then this holds.&lt;/li&gt;
-  &lt;li&gt;$A \subseteq B$ and $B \subseteq A$ then $A = B$.&lt;/li&gt;
-  &lt;li&gt;$A \subseteq B$ and $A \neq B$ then $A$ is a proper subset of $B$, or $A \subset B$.&lt;/li&gt;
-  &lt;li&gt;$B \supset A$ if $A \subset B$.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Interesting properties:&lt;/p&gt;
-
-&lt;p&gt;$\emptyset \subseteq A$ for all set $A$.&lt;/p&gt;
-
-&lt;p&gt;$\emptyset \subset A$ for all set $A \neq \emptyset$.&lt;/p&gt;
-
-&lt;h3 id=&quot;set-operations&quot;&gt;Set Operations&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Union of $A$ and $B$ or $A \cup B$, is the set of elements that belongs to $A$ or $B$.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Intersection of $A$ and $B$ or $A \cap B$, is the set of element that belongs to $A$ and $B$. If $A \cap B = \emptyset$, then $A$ and $B$ are disjoint.&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Difference of $A$ and $B$ or $A - B$, is the set of elements that belong to $A$ but not to $B$.&lt;/p&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry></feed>
+&lt;/blockquote&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 5, Propositional Logic.</summary></entry></feed>
