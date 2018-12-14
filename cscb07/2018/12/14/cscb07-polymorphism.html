@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=54f8a4d_20181214_144343" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=54f8a4d_20181214_144343" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</p>
+
+<!--more-->
+
+<h2 id="polymorphism">Polymorphism</h2>
+
+<ul>
+  <li>Poly = many</li>
+  <li>Morph = change of form</li>
+</ul>
+
+<p>The concept is basically that you should have a general super class, and sub classes takes different shapes and forms of the super class.</p>
+
+<p>A basic example would be:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">Cat</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">talk</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"meow"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Snake</span> <span class="kd">extends</span> <span class="n">Animal</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">talk</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"szzzz"</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+
+<span class="kd">class</span> <span class="nc">Animal</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">talk</span><span class="o">()</span> <span class="o">{</span>
+        <span class="n">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"..."</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="advantages">Advantages</h3>
+
+<ul>
+  <li>Enables you to program in the general rather then specific.</li>
+  <li>Enables you to write programs that processes objects that share the same super class.</li>
+  <li>Easily extensible.</li>
+</ul>
+
+<h3 id="recap">Recap</h3>
+
+<ul>
+  <li>In polymorphism you have a base class reference pointing to an object of subclasses.</li>
+  <li>Super class ref can only be used to invoke methods declared within the super class. Otherwise it will cause compilation errors.</li>
+  <li>If you want to perform specific tasks, you can downcast it.</li>
+</ul>
+
+<h3 id="downcasting">Downcasting</h3>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Animal</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cat</span><span class="o">();</span>
+<span class="n">Cat</span> <span class="n">c</span> <span class="o">=</span> <span class="o">(</span><span class="n">Cat</span><span class="o">)</span><span class="n">a</span><span class="o">;</span>
+</code></pre></div></div>
+
+<h2 id="function-binding">Function Binding</h2>
+
+<p>Function binding maps a function call to function implementation. It decides when I do <code class="highlighter-rouge">a.talk()</code>, which function should be invoked.</p>
+
+<h3 id="static-binding">Static Binding</h3>
+
+<p>This binds call during compile time.</p>
+
+<h3 id="dynamic-binding">Dynamic Binding</h3>
+
+<p>Runtime binding. This is used in polymorphism, and this is why it works.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Animal</span> <span class="n">a</span> <span class="o">=</span> <span class="k">new</span> <span class="n">Cat</span><span class="o">();</span>
+<span class="n">a</span><span class="o">.</span><span class="na">talk</span><span class="o">();</span> <span class="c1">// This is binded to Cat.talk not Animal.talk during runtime.</span>
+</code></pre></div></div>
+
+<p>Dynamic binding are used for all methods except:</p>
+
+<ul>
+  <li>Private instance methods</li>
+  <li>Overloaded instance methods</li>
+  <li>Instance methods that are final.</li>
+</ul>
+
+<h2 id="final-keyword"><code class="highlighter-rouge">final</code> Keyword</h2>
+
+<p>If a method is <code class="highlighter-rouge">final</code>, it</p>
+<ul>
+  <li>Cannot be overridden in subclass.</li>
+  <li><code class="highlighter-rouge">private</code> and <code class="highlighter-rouge">static</code> are implicitly <code class="highlighter-rouge">final</code>.</li>
+</ul>
+
+<p>If a class is <code class="highlighter-rouge">final</code>, it</p>
+<ul>
+  <li>Can’t be extended</li>
+  <li>All methods in a <code class="highlighter-rouge">final</code> class are implicitly <code class="highlighter-rouge">final</code>.</li>
+</ul>
+
+<h2 id="interfaces">Interfaces</h2>
+
+<p>A class can implement multiple interfaces but can only extend one class.</p>
+
+<p>CLasses from different inheritance tree can implement the same interface.</p>
+
+<p>Interfaces are used when different classes have their own “characteristics”, for example:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">ComputerScienceStudent</span> <span class="kd">extends</span> <span class="n">Student</span> <span class="kd">implements</span> <span class="n">AntiSocial</span><span class="o">,</span> <span class="n">LovesPizza</span> <span class="o">{</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">beAwkward</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">eatPizza</span><span class="o">()</span> <span class="o">{</span>
+
+    <span class="o">}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>You can’t create a new interface instance, since nothing is implemented.</p>
+
+<h2 id="abstract-classes">Abstract Classes</h2>
+
+<p>Abstract class is like the middleground of classes and interfaces, it can contain abstract methods that must be implemented.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">abstract</span> <span class="kd">class</span> <span class="nc">Student</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">getName</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="s">"haha"</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="kd">abstract</span> <span class="kd">public</span> <span class="kt">void</span> <span class="nf">study</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>You can’t create instance of abstract classes.</p>
+
+<h2 id="singleton-pattern">Singleton Pattern</h2>
+
+<p>Singleton is used when multiple other instances must share a single instance. For example, file system.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">FS</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">FS</span> <span class="n">ref</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nf">FS</span><span class="o">(){}</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="n">FS</span> <span class="nf">createInstance</span><span class="o">()</span> <span class="o">{</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">ref</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">ref</span> <span class="o">=</span> <span class="k">new</span> <span class="n">FS</span><span class="o">();</span>
+        <span class="k">return</span> <span class="n">ref</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="liskov-substitution-principle">Liskov Substitution Principle</h2>
+
+<p>“If it looks like a duck, quacks like a duck, but needs batteries, you probably have the wrong abstraction”.</p>
+
+<p>For any important properties of a <code class="highlighter-rouge">type</code>:</p>
+<ul>
+  <li>Should also hold for its subtypes.</li>
+  <li>And method written for <code class="highlighter-rouge">type</code> should work equally well on its <code class="highlighter-rouge">subtypes</code>.</li>
+</ul>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 54f8a4d_20181214_144343</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=54f8a4d_20181214_144343"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

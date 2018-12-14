@@ -1,4 +1,160 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T13:59:53-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T14:43:44-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;polymorphism&quot;&gt;Polymorphism&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Poly = many&lt;/li&gt;
+  &lt;li&gt;Morph = change of form&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The concept is basically that you should have a general super class, and sub classes takes different shapes and forms of the super class.&lt;/p&gt;
+
+&lt;p&gt;A basic example would be:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Cat&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Animal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;talk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;meow&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Snake&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Animal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;talk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;szzzz&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Animal&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;talk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;System&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;out&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;println&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;...&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Enables you to program in the general rather then specific.&lt;/li&gt;
+  &lt;li&gt;Enables you to write programs that processes objects that share the same super class.&lt;/li&gt;
+  &lt;li&gt;Easily extensible.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;recap&quot;&gt;Recap&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;In polymorphism you have a base class reference pointing to an object of subclasses.&lt;/li&gt;
+  &lt;li&gt;Super class ref can only be used to invoke methods declared within the super class. Otherwise it will cause compilation errors.&lt;/li&gt;
+  &lt;li&gt;If you want to perform specific tasks, you can downcast it.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;downcasting&quot;&gt;Downcasting&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Animal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Cat&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;function-binding&quot;&gt;Function Binding&lt;/h2&gt;
+
+&lt;p&gt;Function binding maps a function call to function implementation. It decides when I do &lt;code class=&quot;highlighter-rouge&quot;&gt;a.talk()&lt;/code&gt;, which function should be invoked.&lt;/p&gt;
+
+&lt;h3 id=&quot;static-binding&quot;&gt;Static Binding&lt;/h3&gt;
+
+&lt;p&gt;This binds call during compile time.&lt;/p&gt;
+
+&lt;h3 id=&quot;dynamic-binding&quot;&gt;Dynamic Binding&lt;/h3&gt;
+
+&lt;p&gt;Runtime binding. This is used in polymorphism, and this is why it works.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Animal&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;talk&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is binded to Cat.talk not Animal.talk during runtime.&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Dynamic binding are used for all methods except:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Private instance methods&lt;/li&gt;
+  &lt;li&gt;Overloaded instance methods&lt;/li&gt;
+  &lt;li&gt;Instance methods that are final.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;final-keyword&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt; Keyword&lt;/h2&gt;
+
+&lt;p&gt;If a method is &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt;, it&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Cannot be overridden in subclass.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;static&lt;/code&gt; are implicitly &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If a class is &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt;, it&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Can’t be extended&lt;/li&gt;
+  &lt;li&gt;All methods in a &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt; class are implicitly &lt;code class=&quot;highlighter-rouge&quot;&gt;final&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;interfaces&quot;&gt;Interfaces&lt;/h2&gt;
+
+&lt;p&gt;A class can implement multiple interfaces but can only extend one class.&lt;/p&gt;
+
+&lt;p&gt;CLasses from different inheritance tree can implement the same interface.&lt;/p&gt;
+
+&lt;p&gt;Interfaces are used when different classes have their own “characteristics”, for example:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComputerScienceStudent&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AntiSocial&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;LovesPizza&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;beAwkward&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;eatPizza&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can’t create a new interface instance, since nothing is implemented.&lt;/p&gt;
+
+&lt;h2 id=&quot;abstract-classes&quot;&gt;Abstract Classes&lt;/h2&gt;
+
+&lt;p&gt;Abstract class is like the middleground of classes and interfaces, it can contain abstract methods that must be implemented.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;haha&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;abstract&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;study&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can’t create instance of abstract classes.&lt;/p&gt;
+
+&lt;h2 id=&quot;singleton-pattern&quot;&gt;Singleton Pattern&lt;/h2&gt;
+
+&lt;p&gt;Singleton is used when multiple other instances must share a single instance. For example, file system.&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;FS&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(){}&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FS&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createInstance&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;null&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ref&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FS&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ref&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;liskov-substitution-principle&quot;&gt;Liskov Substitution Principle&lt;/h2&gt;
+
+&lt;p&gt;“If it looks like a duck, quacks like a duck, but needs batteries, you probably have the wrong abstraction”.&lt;/p&gt;
+
+&lt;p&gt;For any important properties of a &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt;:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Should also hold for its subtypes.&lt;/li&gt;
+  &lt;li&gt;And method written for &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; should work equally well on its &lt;code class=&quot;highlighter-rouge&quot;&gt;subtypes&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</summary></entry><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;More topics on Java memory model.&lt;/p&gt;
 
@@ -1465,22 +1621,4 @@ svn commit -m “I accepted mine changes”
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry><entry><title type="html">MATA22 Linear Algebra - Diagonalization</title><link href="https://jackzh.com/mata22/2018/08/12/mata22-diagonalization.html" rel="alternate" type="text/html" title="MATA22 Linear Algebra - Diagonalization" /><published>2018-08-12T10:46:00-04:00</published><updated>2018-08-12T10:46:00-04:00</updated><id>https://jackzh.com/mata22/2018/08/12/mata22-diagonalization</id><content type="html" xml:base="https://jackzh.com/mata22/2018/08/12/mata22-diagonalization.html">&lt;p&gt;This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.2. For course MATA22 at UTSC.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;A square matrix is called diagonal if all entries not on the main diagonal are zero.&lt;/p&gt;
-
-&lt;p&gt;We will show that if \(A\) has \(n\) distinct eigenvalues, then the computation of \(A^k\) can be replaced by \(D^k\), where \(D\) is a diagonal matrix with the eigenvalues of \(A\) as entries.&lt;/p&gt;
-
-&lt;h3 id=&quot;matrix-summary-of-eigenvalues-of-a&quot;&gt;Matrix Summary of Eigenvalues of \(A\)&lt;/h3&gt;
-
-&lt;p&gt;Let \(A\) be an \(n \times n\) matrix and let \(\lambda_1, \lambda_2, …., \lambda_n\) be scalars and \(\vec v_1, \vec v_2, … , \vec v_n \) be nonzero vectors in n-space. Let \(C\) be the \(n \times n\) matrix having \(\vec v_j\) as \(j\)th column vector, and let \(D\) be the diagonal matrix with entries of all lambda scalars.&lt;/p&gt;
-
-&lt;p&gt;Then \(AC = CD\) if and only if all \(\lambda\) are eigenvalues of \(A\) and \(\vec v_j\) is an eigenvector of \(A\) corresponding to \(\lambda_j\)&lt;/p&gt;
-
-&lt;p&gt;\(C\) is invertible if and only if \(rank(C) = n\). That case, we can write the equation as \(D = C^{-1}AC\).&lt;/p&gt;
-
-&lt;h3 id=&quot;diagonalizable-matrix&quot;&gt;Diagonalizable Matrix&lt;/h3&gt;
-
-&lt;p&gt;An \(n \times n\) matrix \(A\) is diagonalizable if there exists an invertible matrix \(C\) such that \(C^{-1}AC = D\), a diagonal matrix.&lt;/p&gt;</content><author><name></name></author><category term="mata22" /><category term="mata22" /><category term="course-notes" /><summary type="html">This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.2. For course MATA22 at UTSC.</summary></entry></feed>
+&lt;h4 id=&quot;arbitrary-number-of-operations&quot;&gt;Arbitrary Number of Operations&lt;/h4&gt;</content><author><name></name></author><category term="cscb36" /><category term="cscb36" /><category term="course-notes" /><summary type="html">Notes taken for CSCB36 course at UofT, this post is for Chapter 0, mainly talks about sets and fundamental mathematical units.</summary></entry></feed>
