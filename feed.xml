@@ -1,4 +1,255 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-13T20:27:26-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">How I Redesigned IFCAT</title><link href="https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed.html" rel="alternate" type="text/html" title="How I Redesigned IFCAT
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-13T22:19:25-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Software Development Process</title><link href="https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Software Development Process" /><published>2018-12-13T20:32:00-05:00</published><updated>2018-12-13T20:32:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;CRC cards and how to properly develop software with a team.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;In previous note, we discussed CRC cards, they look like this:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;------------------------------------------------
+| Class: InputAudioDevice                      |
+| Super-classes: AudioDevice                   |
+| Sub-classes: Microphone                      |
+| Responsibility:                              |
+|     - Passes audio signal to computer.       |
+| Collaborators:                               |
+|     - StreamWriter                           |
+------------------------------------------------
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now let’s convert it to an actual class!&lt;/p&gt;
+
+&lt;p&gt;An &lt;code class=&quot;highlighter-rouge&quot;&gt;InputAudioDevice&lt;/code&gt; might look like the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InputAudioDevice&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AudioDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StreamWriter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;writeAudioStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;object-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; Class&lt;/h2&gt;
+
+&lt;p&gt;All classes within Java extends from &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;, and you should always consider override some of the methods:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#clone() -&amp;gt; Object&lt;/code&gt; Creates and returns a copy of this object.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;equals(Object obj) -&amp;gt; boolean&lt;/code&gt; Check if &lt;code class=&quot;highlighter-rouge&quot;&gt;obj&lt;/code&gt; is equal to this one.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hashCode() -&amp;gt; int&lt;/code&gt; Returns a hash value.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toString() -&amp;gt; String&lt;/code&gt; Returns string representation.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;always-check-parameters&quot;&gt;Always Check Parameters&lt;/h2&gt;
+
+&lt;p&gt;You should always check parameter validity, and indicate in JavaDoc what exception might be thrown within this method.&lt;/p&gt;
+
+&lt;p&gt;Not really necessary within private methods, since you have full control over them.&lt;/p&gt;
+
+&lt;h2 id=&quot;software-development-process&quot;&gt;Software Development Process&lt;/h2&gt;
+
+&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
+
+&lt;p&gt;In many courses, programs are coded once and thrown away. However, in real life, that is not the case, and development is an agile process.&lt;/p&gt;
+
+&lt;h3 id=&quot;common-elements-within-software-development&quot;&gt;Common Elements Within Software Development&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Requirements
+    &lt;ul&gt;
+      &lt;li&gt;What do we need to build?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Design
+    &lt;ul&gt;
+      &lt;li&gt;How can we build the thing so it meets the requirement?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Implementation
+    &lt;ul&gt;
+      &lt;li&gt;Build it!&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Verification
+    &lt;ul&gt;
+      &lt;li&gt;Does it work?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Maintenance
+    &lt;ul&gt;
+      &lt;li&gt;Fixing/adding/changing features.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;validation-and-verification&quot;&gt;Validation and Verification&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Validation
+    &lt;ul&gt;
+      &lt;li&gt;Test the specification, not the software.&lt;/li&gt;
+      &lt;li&gt;Are we building the right thing?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Verification
+    &lt;ul&gt;
+      &lt;li&gt;Testing the software we built.&lt;/li&gt;
+      &lt;li&gt;Does it follow our specification?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0E9ia59mlBq4EVzVBI7kKCGfpkftxDDw8B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;waterfall-model&quot;&gt;Waterfall Model&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq2LDGa-GXJOZ4Y5IanWdB88NtoGkcRHgmsB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Advantages
+    &lt;ul&gt;
+      &lt;li&gt;Easy to use&lt;/li&gt;
+      &lt;li&gt;Works well for small projects&lt;/li&gt;
+      &lt;li&gt;Cost effective&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Disadvantages
+    &lt;ul&gt;
+      &lt;li&gt;Only test one time after everything has been built&lt;/li&gt;
+      &lt;li&gt;High risk&lt;/li&gt;
+      &lt;li&gt;Not flexible&lt;/li&gt;
+      &lt;li&gt;Bad for complex projects&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It does not work well when&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Requirement changes&lt;/li&gt;
+  &lt;li&gt;You are not 100% sure about the requirements&lt;/li&gt;
+  &lt;li&gt;New ideas come up&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;iterative-development&quot;&gt;Iterative Development&lt;/h3&gt;
+
+&lt;p&gt;Don’t finish all features in one go, you code, get feedback, then code again…&lt;/p&gt;
+
+&lt;h3 id=&quot;incremental-development&quot;&gt;Incremental Development&lt;/h3&gt;
+
+&lt;p&gt;Code only what you need now, code the rest piece by piece.&lt;/p&gt;
+
+&lt;h3 id=&quot;agile-methods&quot;&gt;Agile Methods&lt;/h3&gt;
+
+&lt;p&gt;Agility is the ability to both create and respond to change in order to profit in a turbulent business environment.&lt;/p&gt;
+
+&lt;p&gt;Agile is&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;People oriented&lt;/li&gt;
+  &lt;li&gt;Easily responds to changes&lt;/li&gt;
+  &lt;li&gt;Results in the creation of working systems that meets the needs of its stakeholders&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Traditional software development timeline:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Requirements -&amp;gt; Build -&amp;gt; Test -&amp;gt; Release
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You can only use the software at the end, and bugs are found late.&lt;/p&gt;
+
+&lt;p&gt;Agile timeline:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Build/Release -&amp;gt; Build/Release -&amp;gt; Build/Relase -&amp;gt; ....
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Good visibility of progress, find bugs early, easy to respond to changes, use the software early.&lt;/p&gt;
+
+&lt;h2 id=&quot;user-stories&quot;&gt;User Stories&lt;/h2&gt;
+
+&lt;p&gt;Users usually do not use the same terms as software developers.&lt;/p&gt;
+
+&lt;p&gt;User stories help to cleaify requirements and can be used for clarification when communicating with the client.&lt;/p&gt;
+
+&lt;p&gt;Can also used to identify different types of users.&lt;/p&gt;
+
+&lt;p&gt;Examples:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;As a store associate, I can search for a book by its ISBN, so that I can determine the book's in-stock quantity for the store.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;As a bookstore customer, I can search for books by the Author's name, so that I can easily find all book by that author.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;agile-tools&quot;&gt;Agile Tools&lt;/h2&gt;
+
+&lt;p&gt;There are a few important tools we use in agile development process:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;User stories to drive design&lt;/li&gt;
+  &lt;li&gt;Continuous unit testing&lt;/li&gt;
+  &lt;li&gt;Pair programming&lt;/li&gt;
+  &lt;li&gt;Lightweight design as code is written and features are added&lt;/li&gt;
+  &lt;li&gt;Continuous refactoring&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;scrum-agile-development-process&quot;&gt;Scrum Agile Development Process&lt;/h2&gt;
+
+&lt;p&gt;It is iterative and incremental, and there are a few roles:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Product Owner
+    &lt;ul&gt;
+      &lt;li&gt;The customer&lt;/li&gt;
+      &lt;li&gt;Who is paying for this&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Team
+    &lt;ul&gt;
+      &lt;li&gt;The Team is responsible for managing itself and has the full authority to do anything to meet the Sprint goal within the guidelines, standards, and conventions of the organization and of Scrum.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Scrum Master
+    &lt;ul&gt;
+      &lt;li&gt;Maintains the process, enforces the rules&lt;/li&gt;
+      &lt;li&gt;Remove development obstacles&lt;/li&gt;
+      &lt;li&gt;Facilitates communications&lt;/li&gt;
+      &lt;li&gt;The Scrum Master is responsible for the success of the project, and he or she helps increase the probability of success by helping the Product Owner select the most valuable product backlog and by helping the Team turn that backlog into functionality.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;scrum-method&quot;&gt;Scrum Method&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Product Backlog - Features of the product
+    &lt;ul&gt;
+      &lt;li&gt;Master list of all functionalities in the product&lt;/li&gt;
+      &lt;li&gt;Does not have to be complete&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Sprint Backlog - Subset of features to work on for the sprint
+    &lt;ul&gt;
+      &lt;li&gt;List of tasks that the team is committing they will do&lt;/li&gt;
+      &lt;li&gt;Must be drawn from product backlog, and broken down to smaller items&lt;/li&gt;
+      &lt;li&gt;Chosen based on the priority&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Code Sprint - Can take weeks to complete&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Daily Scrum - Daily meetings
+    &lt;ul&gt;
+      &lt;li&gt;What did you work on?&lt;/li&gt;
+      &lt;li&gt;What will you work on?&lt;/li&gt;
+      &lt;li&gt;Is there any issue that you are currently blocked on?&lt;/li&gt;
+      &lt;li&gt;Usually short, like 15 mins.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Final Product - The software&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq3AC7U482hJLbArItqeZ5BfrI-fPs-j-gIB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). CRC cards and how to properly develop software with a team.</summary></entry><entry><title type="html">How I Redesigned IFCAT</title><link href="https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed.html" rel="alternate" type="text/html" title="How I Redesigned IFCAT
 " /><published>2018-12-12T09:22:00-05:00</published><updated>2018-12-12T09:22:00-05:00</updated><id>https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed</id><content type="html" xml:base="https://jackzh.com/random/2018/12/12/how-ice-mc2-software-design-is-flawed.html">&lt;p&gt;A good piece of code should look clean, concise and does what it is supposed to do.&lt;/p&gt;
 
 &lt;p&gt;I am not an expert in software engineering, but during my time contributing to IFCAT project, I did find some design flaws, and this is how I fixed them.&lt;/p&gt;
@@ -1231,243 +1482,4 @@ svn commit -m “I accepted mine changes”
 &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// And&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;^&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Xor&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;|&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Or&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb09" /><category term="cscb09" /><category term="coures-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry><entry><title type="html">CSCB09 Software Tools and Systems Programming - Sockets</title><link href="https://jackzh.com/cscb09/2018/08/09/cscb09-sockets.html" rel="alternate" type="text/html" title="CSCB09 Software Tools and Systems Programming - Sockets" /><published>2018-08-09T10:49:00-04:00</published><updated>2018-08-09T10:49:00-04:00</updated><id>https://jackzh.com/cscb09/2018/08/09/cscb09-sockets</id><content type="html" xml:base="https://jackzh.com/cscb09/2018/08/09/cscb09-sockets.html">&lt;p&gt;This article is mainly notes I have taken for CSCB09/CSC209 at UofT.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;tcpip&quot;&gt;TCP/IP&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Transmission Control Protocol&lt;/li&gt;
-  &lt;li&gt;It tells us how to package up the data&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq3pZW8_29dAvrU4mV4d0ZhMT0UF3PBUxXEB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;three-way-handshake&quot;&gt;Three-Way Handshake&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Client request connection&lt;/li&gt;
-  &lt;li&gt;Server return with ack&lt;/li&gt;
-  &lt;li&gt;Client sends ack&lt;/li&gt;
-  &lt;li&gt;Server gets ack, connection established&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Following graph is the whole process, three-way handshake happends at client connect.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq27o7vPDAtKEJv7fy233DdwMdE8Bj8C2gAB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;tcp-congestion-control&quot;&gt;TCP Congestion Control&lt;/h3&gt;
-
-&lt;p&gt;TCP control congestion using two methods:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Slow-start
-    &lt;ul&gt;
-      &lt;li&gt;Connection won’t reach full speed right away&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Window-based
-    &lt;ul&gt;
-      &lt;li&gt;Some packets are allowed to be sent without ack’d&lt;/li&gt;
-      &lt;li&gt;If ack’d, grow window&lt;/li&gt;
-      &lt;li&gt;If packet loss, cut window&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;sockets&quot;&gt;Sockets&lt;/h2&gt;
-
-&lt;p&gt;Another form of communication between processes.&lt;/p&gt;
-
-&lt;p&gt;Very similar to pipes, but on different machines, file descriptors are used to refer to sockets, it is an interface between application and network.&lt;/p&gt;
-
-&lt;h3 id=&quot;types-of-sockets&quot;&gt;Types of Sockets&lt;/h3&gt;
-
-&lt;p&gt;There are two main categories&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;UNIX domain: Both processes on same machine&lt;/li&gt;
-  &lt;li&gt;INET domain: on different machines&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There three main types&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;SOCK_STREAM - TCP Sockets&lt;/li&gt;
-  &lt;li&gt;SOCK_DGRAM - UDP Sockets&lt;/li&gt;
-  &lt;li&gt;SOCK_RAW&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;addresses-and-ports&quot;&gt;Addresses and Ports&lt;/h3&gt;
-
-&lt;p&gt;Socket pair is the two endpoints of the connection, which is identified by an IP address and a port.&lt;/p&gt;
-
-&lt;p&gt;IPv4 are 4 8-bit numbers, ports can range from 0-65535 (2^16)&lt;/p&gt;
-
-&lt;p&gt;Port categories:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Well-known ports: 0-1023&lt;/li&gt;
-  &lt;li&gt;Registered ports: 1024-49151&lt;/li&gt;
-  &lt;li&gt;Dynamic ports: 49152-65535&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;server-setup&quot;&gt;Server Setup&lt;/h3&gt;
-
-&lt;p&gt;To start a socket server, use the following function&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;protocol&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Family can be &lt;code class=&quot;highlighter-rouge&quot;&gt;PF_INET&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;PF_LOCAL&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Type can be &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCK_STREAM&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCK_DGRAM&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;SOCK_RAW&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;Protocal should be 0 other than RAW.&lt;/p&gt;
-
-&lt;p&gt;Returns a socket descriptor, which is just like a file descriptor.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;ctype.h&amp;gt;
-#include&amp;lt;sys/types.h&amp;gt;
-#include&amp;lt;sys/socket.h&amp;gt;
-#include&amp;lt;netinet/in.h&amp;gt;
-&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AF_INET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SOCK_STREAM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;socket call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;//*** bind the server address to the end point,&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connections&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accept&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connection&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;*/&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we need to bind to a name&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socklen_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;addrlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;sockfd is the descriptor returned by &lt;code class=&quot;highlighter-rouge&quot;&gt;socket()&lt;/code&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr_in&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sin_family&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;u_short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sin_port&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;in_addr&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sin_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sin_zero&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sin_addr&lt;/code&gt; can be set to &lt;code class=&quot;highlighter-rouge&quot;&gt;INADDR_ANY&lt;/code&gt; to communicate on any network interface.&lt;/p&gt;
-
-&lt;p&gt;After binding, we need to setup the queue in kernel.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;listen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;backlog&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After listening, socket is ready to accept connections.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;backlog&lt;/code&gt; is the max number of partially completed connections that kernal should queue.&lt;/p&gt;
-
-&lt;p&gt;Finally, we can complete the connection.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cliaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socklen_t&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;addrlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This function will block while waiting for connection.&lt;/p&gt;
-
-&lt;p&gt;Returns a new descriptor which refers to the TCP connection for client.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;sockfd&lt;/code&gt; is the listening socket.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cliaddr&lt;/code&gt; is the client address.&lt;/p&gt;
-
-&lt;p&gt;Read / Write on the socket returned.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;ctype.h&amp;gt;
-#include&amp;lt;sys/types.h&amp;gt;
-#include&amp;lt;sys/socket.h&amp;gt;
-#include&amp;lt;netinet/in.h&amp;gt;
-#define SIZE sizeof(struct sockaddr_in)
-&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;newsockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr_in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AF_INET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;INADDR_ANY&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AF_INET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SOCK_STREAM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;socket call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bind&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bind call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;listem&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;listen call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(;;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;newsockfd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;accept&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;accept call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;client-setup&quot;&gt;Client Setup&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;socket()&lt;/code&gt; is the same as server.&lt;/p&gt;
-
-&lt;p&gt;To establish a connection, use &lt;code class=&quot;highlighter-rouge&quot;&gt;connect&lt;/code&gt; function&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socketfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;servaddr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;socklen_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;addrlen&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Kernel will choose a dynamic port and source address.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;#include&amp;lt;ctype.h&amp;gt;
-#include&amp;lt;sys/types.h&amp;gt;
-#include&amp;lt;sys/socket.h&amp;gt;
-#include&amp;lt;netinet/in.h&amp;gt;
-#define SIZE sizeof(struct sockaddr_in)
-&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockaddr_in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AF_INET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;7000&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sin_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;s_addr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;inet_addr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;206.45.10.2&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;socket&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;AF_INET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SOCK_STREAM&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;socket call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;connect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;sockfd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;struct&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sockadr&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;server&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SIZE&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;perror&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;connect call failed&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;exit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;network-byte-order&quot;&gt;Network Byte Order&lt;/h3&gt;
-
-&lt;p&gt;Before sending numbers, convert them to network byte order first.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htonl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;htons&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;long&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ntohs&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;short&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;sending-and-receiving-data&quot;&gt;Sending and Receiving Data&lt;/h3&gt;
-
-&lt;p&gt;You can use &lt;code class=&quot;highlighter-rouge&quot;&gt;read&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;write&lt;/code&gt;, but sometimes if you want more control, you can use &lt;code class=&quot;highlighter-rouge&quot;&gt;send&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;recv&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;ssize_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;send&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Same as &lt;code class=&quot;highlighter-rouge&quot;&gt;write&lt;/code&gt; if flags is 0, you can use other flags like &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_OOB&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_DONTROUTE&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_DONTWAIT&lt;/code&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;ssize_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;recv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;size_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flags&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Flags: &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_OOB&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_WAITALL&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;MSG_PEEK&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;After you are finished with the socket, simply call &lt;code class=&quot;highlighter-rouge&quot;&gt;close(s)&lt;/code&gt;.&lt;/p&gt;</content><author><name></name></author><category term="cscb09" /><category term="cscb09" /><category term="course-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb09" /><category term="cscb09" /><category term="coures-notes" /><summary type="html">This article is mainly notes I have taken for CSCB09/CSC209 at UofT.</summary></entry></feed>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB07 Software Design - Software Development Process - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=d54f435_20181213_221924" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=d54f435_20181213_221924" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB07 Software Design - Software Development Process</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb07</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>CRC cards and how to properly develop software with a team.</p>
+
+<!--more-->
+
+<p>In previous note, we discussed CRC cards, they look like this:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>------------------------------------------------
+| Class: InputAudioDevice                      |
+| Super-classes: AudioDevice                   |
+| Sub-classes: Microphone                      |
+| Responsibility:                              |
+|     - Passes audio signal to computer.       |
+| Collaborators:                               |
+|     - StreamWriter                           |
+------------------------------------------------
+</code></pre></div></div>
+
+<p>Now let’s convert it to an actual class!</p>
+
+<p>An <code class="highlighter-rouge">InputAudioDevice</code> might look like the following:</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">InputAudioDevice</span> <span class="kd">extends</span> <span class="n">AudioDevice</span> <span class="o">{</span>
+
+    <span class="kd">private</span> <span class="n">StreamWriter</span> <span class="n">writer</span><span class="o">;</span>
+
+    <span class="kt">void</span> <span class="nf">writeAudioStream</span><span class="o">(</span><span class="kt">byte</span> <span class="n">b</span><span class="o">)</span> <span class="o">{}</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h2 id="object-class"><code class="highlighter-rouge">Object</code> Class</h2>
+
+<p>All classes within Java extends from <code class="highlighter-rouge">Object</code>, and you should always consider override some of the methods:</p>
+
+<ul>
+  <li><code class="highlighter-rouge">#clone() -&gt; Object</code> Creates and returns a copy of this object.</li>
+  <li><code class="highlighter-rouge">equals(Object obj) -&gt; boolean</code> Check if <code class="highlighter-rouge">obj</code> is equal to this one.</li>
+  <li><code class="highlighter-rouge">hashCode() -&gt; int</code> Returns a hash value.</li>
+  <li><code class="highlighter-rouge">toString() -&gt; String</code> Returns string representation.</li>
+</ul>
+
+<h2 id="always-check-parameters">Always Check Parameters</h2>
+
+<p>You should always check parameter validity, and indicate in JavaDoc what exception might be thrown within this method.</p>
+
+<p>Not really necessary within private methods, since you have full control over them.</p>
+
+<h2 id="software-development-process">Software Development Process</h2>
+
+<h3 id="introduction">Introduction</h3>
+
+<p>In many courses, programs are coded once and thrown away. However, in real life, that is not the case, and development is an agile process.</p>
+
+<h3 id="common-elements-within-software-development">Common Elements Within Software Development</h3>
+
+<ul>
+  <li>Requirements
+    <ul>
+      <li>What do we need to build?</li>
+    </ul>
+  </li>
+  <li>Design
+    <ul>
+      <li>How can we build the thing so it meets the requirement?</li>
+    </ul>
+  </li>
+  <li>Implementation
+    <ul>
+      <li>Build it!</li>
+    </ul>
+  </li>
+  <li>Verification
+    <ul>
+      <li>Does it work?</li>
+    </ul>
+  </li>
+  <li>Maintenance
+    <ul>
+      <li>Fixing/adding/changing features.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="validation-and-verification">Validation and Verification</h3>
+
+<ul>
+  <li>Validation
+    <ul>
+      <li>Test the specification, not the software.</li>
+      <li>Are we building the right thing?</li>
+    </ul>
+  </li>
+  <li>Verification
+    <ul>
+      <li>Testing the software we built.</li>
+      <li>Does it follow our specification?</li>
+    </ul>
+  </li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq0E9ia59mlBq4EVzVBI7kKCGfpkftxDDw8B/image.png" alt="" /></p>
+
+<h3 id="waterfall-model">Waterfall Model</h3>
+
+<p><img src="https://www.evernote.com/l/Aq2LDGa-GXJOZ4Y5IanWdB88NtoGkcRHgmsB/image.png" alt="" /></p>
+
+<ul>
+  <li>Advantages
+    <ul>
+      <li>Easy to use</li>
+      <li>Works well for small projects</li>
+      <li>Cost effective</li>
+    </ul>
+  </li>
+  <li>Disadvantages
+    <ul>
+      <li>Only test one time after everything has been built</li>
+      <li>High risk</li>
+      <li>Not flexible</li>
+      <li>Bad for complex projects</li>
+    </ul>
+  </li>
+</ul>
+
+<p>It does not work well when</p>
+<ul>
+  <li>Requirement changes</li>
+  <li>You are not 100% sure about the requirements</li>
+  <li>New ideas come up</li>
+</ul>
+
+<h3 id="iterative-development">Iterative Development</h3>
+
+<p>Don’t finish all features in one go, you code, get feedback, then code again…</p>
+
+<h3 id="incremental-development">Incremental Development</h3>
+
+<p>Code only what you need now, code the rest piece by piece.</p>
+
+<h3 id="agile-methods">Agile Methods</h3>
+
+<p>Agility is the ability to both create and respond to change in order to profit in a turbulent business environment.</p>
+
+<p>Agile is</p>
+<ul>
+  <li>People oriented</li>
+  <li>Easily responds to changes</li>
+  <li>Results in the creation of working systems that meets the needs of its stakeholders</li>
+</ul>
+
+<p>Traditional software development timeline:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Requirements -&gt; Build -&gt; Test -&gt; Release
+</code></pre></div></div>
+
+<p>You can only use the software at the end, and bugs are found late.</p>
+
+<p>Agile timeline:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Build/Release -&gt; Build/Release -&gt; Build/Relase -&gt; ....
+</code></pre></div></div>
+
+<p>Good visibility of progress, find bugs early, easy to respond to changes, use the software early.</p>
+
+<h2 id="user-stories">User Stories</h2>
+
+<p>Users usually do not use the same terms as software developers.</p>
+
+<p>User stories help to cleaify requirements and can be used for clarification when communicating with the client.</p>
+
+<p>Can also used to identify different types of users.</p>
+
+<p>Examples:</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>As a store associate, I can search for a book by its ISBN, so that I can determine the book's in-stock quantity for the store.
+</code></pre></div></div>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>As a bookstore customer, I can search for books by the Author's name, so that I can easily find all book by that author.
+</code></pre></div></div>
+
+<h2 id="agile-tools">Agile Tools</h2>
+
+<p>There are a few important tools we use in agile development process:</p>
+
+<ul>
+  <li>User stories to drive design</li>
+  <li>Continuous unit testing</li>
+  <li>Pair programming</li>
+  <li>Lightweight design as code is written and features are added</li>
+  <li>Continuous refactoring</li>
+</ul>
+
+<h2 id="scrum-agile-development-process">Scrum Agile Development Process</h2>
+
+<p>It is iterative and incremental, and there are a few roles:</p>
+
+<ul>
+  <li>Product Owner
+    <ul>
+      <li>The customer</li>
+      <li>Who is paying for this</li>
+    </ul>
+  </li>
+  <li>Team
+    <ul>
+      <li>The Team is responsible for managing itself and has the full authority to do anything to meet the Sprint goal within the guidelines, standards, and conventions of the organization and of Scrum.</li>
+    </ul>
+  </li>
+  <li>Scrum Master
+    <ul>
+      <li>Maintains the process, enforces the rules</li>
+      <li>Remove development obstacles</li>
+      <li>Facilitates communications</li>
+      <li>The Scrum Master is responsible for the success of the project, and he or she helps increase the probability of success by helping the Product Owner select the most valuable product backlog and by helping the Team turn that backlog into functionality.</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="scrum-method">Scrum Method</h3>
+
+<ul>
+  <li>Product Backlog - Features of the product
+    <ul>
+      <li>Master list of all functionalities in the product</li>
+      <li>Does not have to be complete</li>
+    </ul>
+  </li>
+  <li>Sprint Backlog - Subset of features to work on for the sprint
+    <ul>
+      <li>List of tasks that the team is committing they will do</li>
+      <li>Must be drawn from product backlog, and broken down to smaller items</li>
+      <li>Chosen based on the priority</li>
+    </ul>
+  </li>
+  <li>
+    <p>Code Sprint - Can take weeks to complete</p>
+  </li>
+  <li>Daily Scrum - Daily meetings
+    <ul>
+      <li>What did you work on?</li>
+      <li>What will you work on?</li>
+      <li>Is there any issue that you are currently blocked on?</li>
+      <li>Usually short, like 15 mins.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Final Product - The software</p>
+
+<p><img src="https://www.evernote.com/l/Aq3AC7U482hJLbArItqeZ5BfrI-fPs-j-gIB/image.png" alt="" /></p>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] d54f435_20181213_221924</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=d54f435_20181213_221924"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
