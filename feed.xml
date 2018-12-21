@@ -1,4 +1,55 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-14T16:37:13-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Decorator Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Decorator Pattern" /><published>2018-12-14T15:28:00-05:00</published><updated>2018-12-14T15:28:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2018-12-21T14:18:01-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Intro to Refactoring</title><link href="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Intro to Refactoring" /><published>2018-12-15T10:42:00-05:00</published><updated>2018-12-15T10:42:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Introduction to refactoring.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;Refactoring is restructuring code in a series of small, semantics-preserving transformations in order to make the code easier to maintain and modify.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Code must still work&lt;/li&gt;
+  &lt;li&gt;Small steps only so the semantics are preserved&lt;/li&gt;
+  &lt;li&gt;Unit tests to prove the code still works&lt;/li&gt;
+  &lt;li&gt;Code should be
+    &lt;ul&gt;
+      &lt;li&gt;More loosely coupled&lt;/li&gt;
+      &lt;li&gt;More cohesive modules&lt;/li&gt;
+      &lt;li&gt;More comprehensible&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;when-to-refactor&quot;&gt;When to Refactor&lt;/h2&gt;
+
+&lt;p&gt;You should refactor any time you see better way to do things.&lt;/p&gt;
+
+&lt;p&gt;You can do it without breaking the code (unit tests).&lt;/p&gt;
+
+&lt;p&gt;You should not refactor if code is already stable and doesn’t need to change, or if it is someone else’s code.&lt;/p&gt;
+
+&lt;h2 id=&quot;refactoring-process&quot;&gt;Refactoring Process&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Make small change&lt;/li&gt;
+  &lt;li&gt;Run all tests to make sure it still works&lt;/li&gt;
+  &lt;li&gt;If it works, go to next refactoring&lt;/li&gt;
+  &lt;li&gt;If not, fix it, or undo so you still have a working system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-smells&quot;&gt;Code Smells&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Duplicate code&lt;/li&gt;
+  &lt;li&gt;Long methods&lt;/li&gt;
+  &lt;li&gt;Big classes&lt;/li&gt;
+  &lt;li&gt;Big switch statements&lt;/li&gt;
+  &lt;li&gt;Long navigations &lt;code class=&quot;highlighter-rouge&quot;&gt;a.b().c().d()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Lots of checking for null&lt;/li&gt;
+  &lt;li&gt;Data clumps&lt;/li&gt;
+  &lt;li&gt;Data classes&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to refactoring.</summary></entry><entry><title type="html">CSCB07 Software Design - Decorator Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Decorator Pattern" /><published>2018-12-14T15:28:00-05:00</published><updated>2018-12-14T15:28:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-decorator-pattern.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Decorator pattern.&lt;/p&gt;
 
@@ -425,87 +476,7 @@
   &lt;li&gt;Loosely coupled systems&lt;/li&gt;
   &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
   &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
-
-&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
-
-&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
-
-&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Allows you to make big changes quickly.
-    &lt;ul&gt;
-      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
-      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Helps with code design.
-    &lt;ul&gt;
-      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
-
-&lt;p&gt;There are two main ways to test:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
-  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
-  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
-  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
-  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
-  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
-  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.&lt;/p&gt;
 
@@ -661,7 +632,87 @@
 &lt;ul&gt;
   &lt;li&gt;Should also hold for its subtypes.&lt;/li&gt;
   &lt;li&gt;And method written for &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; should work equally well on its &lt;code class=&quot;highlighter-rouge&quot;&gt;subtypes&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</summary></entry><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
+
+&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
+
+&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
+
+&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Allows you to make big changes quickly.
+    &lt;ul&gt;
+      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
+      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Helps with code design.
+    &lt;ul&gt;
+      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
+
+&lt;p&gt;There are two main ways to test:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
+  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
+  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
+  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
+  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
+  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
+  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
+
+&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
+
+&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;More topics on Java memory model.&lt;/p&gt;
 
@@ -1301,234 +1352,4 @@
 ------------------------------------------------
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;Personally I think CRC cards are stupid and hard to read for large scale projects. As it is impossible to comprehend if you have say 200 cards (where is the entry point?), how do I cross reference?&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Java memory model and some CRC.</summary></entry><entry><title type="html">CSCB07 Software Design - Intro to Java</title><link href="https://jackzh.com/cscb07/2018/12/11/cscb07-intro-java.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Intro to Java" /><published>2018-12-11T12:36:00-05:00</published><updated>2018-12-11T12:36:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/11/cscb07-intro-java</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/11/cscb07-intro-java.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Introduction to Java programming. This note assumes you are somewhat knows how to program, many obvious details are ignored.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;primitive-types&quot;&gt;Primitive Types&lt;/h2&gt;
-
-&lt;p&gt;Java has 8 primitive types.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;int&lt;/code&gt; - 32 bit signed integer.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;byte&lt;/code&gt; - 8 bit signed integer.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;short&lt;/code&gt; - 16 bit signed integer.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;long&lt;/code&gt; - 64 bit signed integer.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;float&lt;/code&gt; - Single precision 32 bit floating point.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;double&lt;/code&gt; - Double precision 64 bit floating point.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;boolean&lt;/code&gt; - 1 bit value.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;char&lt;/code&gt; - 16 bit unsigned integer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;strings&quot;&gt;Strings&lt;/h3&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;String&lt;/code&gt; is a class in Java, and it is immutable.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// or&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hello&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// This is less efficient&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;classes-and-objects&quot;&gt;Classes and Objects&lt;/h2&gt;
-
-&lt;p&gt;Classes are like our own custom data types, they are blueprints from which objects are created. It models the state and behaviour of a real world object.&lt;/p&gt;
-
-&lt;p&gt;Objects are created out of classes. It is a software bundle of related state and behaviour.&lt;/p&gt;
-
-&lt;h3 id=&quot;student-example&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Student&lt;/code&gt; Example&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * private, protected, public are access modifiers.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;physicsMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chemistryMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;studentNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfStudents&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;constructor&quot;&gt;Constructor&lt;/h3&gt;
-
-&lt;p&gt;Constructors are used to create objects.&lt;/p&gt;
-
-&lt;p&gt;They have a few interesting properties:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;They use the same name as the class, and have no return type.&lt;/li&gt;
-  &lt;li&gt;If you don’t code any constructors, the default one will be created for you.&lt;/li&gt;
-  &lt;li&gt;If you do provide any constructors, the default one will not be created for you. (but you can manually create a default constructor).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In our &lt;code class=&quot;highlighter-rouge&quot;&gt;Student&lt;/code&gt; class, constructors might look like the following:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... properties&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Default constructor&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Constructor to set names&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Constructor to set names and marks&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;physicsMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chemistryMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;firstName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;firstName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;lastName&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lastName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mathMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;physicsMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;physicsMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;chemistryMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;chemistryMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;create-objects&quot;&gt;Create Objects&lt;/h3&gt;
-
-&lt;p&gt;Now we have the &lt;code class=&quot;highlighter-rouge&quot;&gt;Student&lt;/code&gt; class, we can create 3 students by running the following code:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Jack&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Wilson&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Matt&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Milley&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Pill&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Zack&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;a,b,c&lt;/code&gt; are references with type of &lt;code class=&quot;highlighter-rouge&quot;&gt;Student&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;We now encounter a problem, we can’t set the marks! Since constructors can’t be invoked more than once.&lt;/p&gt;
-
-&lt;h2 id=&quot;setters-and-getters&quot;&gt;Setters and Getters&lt;/h2&gt;
-
-&lt;p&gt;Setters also called mutator methods are used to control changes to an instance variable.&lt;/p&gt;
-
-&lt;p&gt;Getters also called accessor methods, they return the value of the instance variable.&lt;/p&gt;
-
-&lt;p&gt;For our student class, we can add the following getters and setters:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... properties&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... constructors&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getMathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setMathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mathMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mathMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&quot;c1&quot;&gt;// physics, chemistry ignored&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;instance-methods&quot;&gt;Instance Methods&lt;/h3&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Getters and setters are instance methods that depends on an instance of a class. You can create other instance methods if you wish.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... properties&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... constructors&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// ... getters/setters&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// An instance method&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;calculateAverage&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;mathMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;physicsMark&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;chemistryMark&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;/&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;3.0f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;public-and-private&quot;&gt;Public and Private&lt;/h2&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt; are called access modifiers, there is another one called &lt;code class=&quot;highlighter-rouge&quot;&gt;protected&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;All &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt; properties and methods are not accessable outside of the class, and it is meant to be used to hide implementation details.&lt;/p&gt;
-
-&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;public&lt;/code&gt; properties and methods are accessable outside of the class, they are used to describe behaviours.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Student.java&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;someMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Main.java&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;someMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Error&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;static-fields-and-methods&quot;&gt;Static Fields and Methods&lt;/h2&gt;
-
-&lt;p&gt;Static fields and methods do not depend on an instance.&lt;/p&gt;
-
-&lt;p&gt;In our student class, we have &lt;code class=&quot;highlighter-rouge&quot;&gt;numberOfStudents&lt;/code&gt; as a static field.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numberOfStudents&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;getNumberOfStudents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;numberOfStudents&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;factory-methods&quot;&gt;Factory Methods&lt;/h2&gt;
-
-&lt;p&gt;Consider the following class:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Construct with name&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Construct with serial number&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;When I use the class, it gets confusing, what is &lt;code class=&quot;highlighter-rouge&quot;&gt;String n&lt;/code&gt; and what is &lt;code class=&quot;highlighter-rouge&quot;&gt;int n&lt;/code&gt;? Since constructors have the same name, I can’t really tell.&lt;/p&gt;
-
-&lt;p&gt;Factory methods provides abstraction on top of constructors, and they can have names.&lt;/p&gt;
-
-&lt;p&gt;We can refactor our code to the following:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Construct with name&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Construct with serial number&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;){}&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Factory methods&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createWithName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createWithSerialNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;n&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Note we changed both constructors to &lt;code class=&quot;highlighter-rouge&quot;&gt;private&lt;/code&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;We can now use the class like the following:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Main&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lgg7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createWithName&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;LG G7 ThinQ&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;generic&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SmartPhone&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createWithSerialNumber&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;123&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to Java programming. This note assumes you are somewhat knows how to program, many obvious details are ignored.</summary></entry></feed>
+&lt;p&gt;Personally I think CRC cards are stupid and hard to read for large scale projects. As it is impossible to comprehend if you have say 200 cards (where is the entry point?), how do I cross reference?&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Java memory model and some CRC.</summary></entry></feed>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>MATA22 Linear Algebra - Diagonalization - Jun Zheng</title>
+        <title>CSCB07 Software Design - Intro to Refactoring - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=440bf46_20181221_141758" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>MATA22 Linear Algebra - Diagonalization</small></h1>
+        <h1>Jun Zheng <small>CSCB07 Software Design - Intro to Refactoring</small></h1>
     </div>
 </header>
 
@@ -36,31 +36,63 @@
     <div class="js-toc"></div>
     <br/>
     
-        <span class="post-tag">mata22</span>
+        <span class="post-tag">cscb07</span>
     
         <span class="post-tag">course-notes</span>
     
     <div class="post-content">
-        <p>This article is mainly notes I have taken from reading Linear Algebra (Addison-Wesley, 1995) section 5.2. For course MATA22 at UTSC.</p>
+        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+
+<p>Introduction to refactoring.</p>
 
 <!--more-->
 
-<p>A square matrix is called diagonal if all entries not on the main diagonal are zero.</p>
+<h2 id="overview">Overview</h2>
 
-<p>We will show that if \(A\) has \(n\) distinct eigenvalues, then the computation of \(A^k\) can be replaced by \(D^k\), where \(D\) is a diagonal matrix with the eigenvalues of \(A\) as entries.</p>
+<p>Refactoring is restructuring code in a series of small, semantics-preserving transformations in order to make the code easier to maintain and modify.</p>
 
-<h3 id="matrix-summary-of-eigenvalues-of-a">Matrix Summary of Eigenvalues of \(A\)</h3>
+<ul>
+  <li>Code must still work</li>
+  <li>Small steps only so the semantics are preserved</li>
+  <li>Unit tests to prove the code still works</li>
+  <li>Code should be
+    <ul>
+      <li>More loosely coupled</li>
+      <li>More cohesive modules</li>
+      <li>More comprehensible</li>
+    </ul>
+  </li>
+</ul>
 
-<p>Let \(A\) be an \(n \times n\) matrix and let \(\lambda_1, \lambda_2, …., \lambda_n\) be scalars and \(\vec v_1, \vec v_2, … , \vec v_n \) be nonzero vectors in n-space. Let \(C\) be the \(n \times n\) matrix having \(\vec v_j\) as \(j\)th column vector, and let \(D\) be the diagonal matrix with entries of all lambda scalars.</p>
+<h2 id="when-to-refactor">When to Refactor</h2>
 
-<p>Then \(AC = CD\) if and only if all \(\lambda\) are eigenvalues of \(A\) and \(\vec v_j\) is an eigenvector of \(A\) corresponding to \(\lambda_j\)</p>
+<p>You should refactor any time you see better way to do things.</p>
 
-<p>\(C\) is invertible if and only if \(rank(C) = n\). That case, we can write the equation as \(D = C^{-1}AC\).</p>
+<p>You can do it without breaking the code (unit tests).</p>
 
-<h3 id="diagonalizable-matrix">Diagonalizable Matrix</h3>
+<p>You should not refactor if code is already stable and doesn’t need to change, or if it is someone else’s code.</p>
 
-<p>An \(n \times n\) matrix \(A\) is diagonalizable if there exists an invertible matrix \(C\) such that \(C^{-1}AC = D\), a diagonal matrix.</p>
+<h2 id="refactoring-process">Refactoring Process</h2>
 
+<ul>
+  <li>Make small change</li>
+  <li>Run all tests to make sure it still works</li>
+  <li>If it works, go to next refactoring</li>
+  <li>If not, fix it, or undo so you still have a working system</li>
+</ul>
+
+<h2 id="code-smells">Code Smells</h2>
+
+<ul>
+  <li>Duplicate code</li>
+  <li>Long methods</li>
+  <li>Big classes</li>
+  <li>Big switch statements</li>
+  <li>Long navigations <code class="highlighter-rouge">a.b().c().d()</code></li>
+  <li>Lots of checking for null</li>
+  <li>Data clumps</li>
+  <li>Data classes</li>
+</ul>
 
     </div>
 </div>
