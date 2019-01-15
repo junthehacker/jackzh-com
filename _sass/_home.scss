@@ -1,0 +1,123 @@
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+div.home {
+  header {
+    padding: 0;
+    border: none;
+    h1 {
+      font-size: 50px;
+      padding-top: 30px;
+      opacity: 0;
+      animation: fadeIn 0.5s linear 0s 1 normal forwards;
+    }
+    .subtitle {
+      font-size: 30px;
+      opacity: 0;
+      animation: fadeIn 0.5s linear 1s 1 normal forwards;
+    }
+    .social-icons {
+      font-size: 20px;
+      margin: 0;
+      padding: 0;
+      li {
+        font-size: 30px;
+        margin-right: 20px;
+        display: inline-block;
+        list-style: none;
+        transition: all ease 0.5s;
+        &:hover {
+          transform: scale(1.5);
+          transition: all ease 0.5s;
+        }
+        a:link,
+        a:visited {
+          text-decoration: none;
+          color: black;
+        }
+        opacity: 0;
+      }
+      @for $i from 0 through 3 {
+        li:nth-child(#{($i + 1)}) {
+          animation: fadeIn 0.5s linear #{$i / 4 + 0.5}s 1 normal forwards;
+        }
+      }
+    }
+    nav {
+      ul {
+        margin: 30px 0 0 0;
+        padding: 0;
+        display: flex;
+        justify-content: space-between;
+        opacity: 0.7;
+        li {
+          list-style: none;
+          //text-align: center;
+          flex: 1;
+          padding: 20px 0 15px 0;
+          transition: all ease 0.5s;
+          cursor: pointer;
+          margin: 5px 30px 0 0;
+          opacity: 0;
+          border-bottom: white 4px solid;
+          a:link,
+          a:visited {
+            text-decoration: none;
+            color: inherit;
+          }
+          &.active,
+          &:hover {
+            transition: all ease 0.5s;
+            border-bottom: black 4px solid;
+          }
+        }
+        @for $i from 0 through 3 {
+          li:nth-child(#{($i + 1)}) {
+            animation: fadeIn 0.5s linear #{$i / 4}s 1 normal forwards;
+          }
+        }
+      }
+    }
+  }
+  section.csod {
+    padding-top: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s linear 1.25s 1 normal forwards;
+    .toggle-button {
+      border: none;
+      border-bottom: rgba(0,0,0,0.5) 2px solid;
+      color: white;
+      background-color: black;
+      text-align: center;
+      width: 23px;
+      transition: all ease 0.4s;
+      &:hover {
+        width: 70px;
+        transition: all ease 0.4s;
+      }
+    }
+    .code-collapsed {
+      overflow: hidden;
+      max-height: 111px;
+      transition: all ease 0.5s;
+      &.expanded {
+        max-height: 1500px;
+        transition: all ease 0.5s;
+      }
+    }
+    h2 {
+      font-size: 20px;
+      font-weight: 100;
+      opacity: 0.5;
+    }
+    .hljs {
+      background-color: white;
+    }
+  }
+}

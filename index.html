@@ -1,36 +1,55 @@
 ---
-layout: page
+layout: home
 title: Home
 ---
 
-<section>
-    <div class="container">
-        <h2>About</h2>
-        <p>I am a second-year student at the University of Toronto, pursuing a Bachelor's degree in Computer Science (Software Engineering Specialization).
-        </p>
-        <p>When I am free, I enjoy watching documentaries and playing around with FPGAs.</p>
-        <p><b><i>Currently seeking summer 2019 internship opportunities.</i></b></p>
+<div class="home">
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="{% real_path /experience.html %}">Experience</a></li>
+                    <li><a href="{% real_path /education.html %}">Education</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+            <h1>Hi, my name is Jun!</h1>
+            <ul class="social-icons">
+                <li>
+                    <a href="https://github.com/junthehacker">
+                        <i class="fa fa-github-alt" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/jun-zheng-ca/">
+                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+            <p class="subtitle">I am <span id="description-typed"></span></p>
+        </div>
+    </header>
+    <section class="csod">
+        <div class="container">
+            <h2>Code snippet of the day...</h2>
+            <pre class="code-collapsed"><code>{% include csod/fib-recursion.asm %}</code></pre>
+            <button onClick="toggleCsod();" class="toggle-button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+        </div>
+    </section>
 
-        <br/>
-        <a class="home-large" href="{% real_path /experience.html %}"><i class="fa fa-suitcase" aria-hidden="true"></i> Experience <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        <a class="home-large" href="{% real_path /education.html %}"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        <br/><br/><br/>
+</div>
 
-
-        <h2>Cool Stuff I Have Done</h2>
-        <h3>WorldSkills Canadian National Team</h3>
-        <p>Member of WorldSkills 2017 Canadian National Team competed for website design and development. Achieved 10th place out of 33 countries.</p>
-        <a href="{% asset /photos/skillscanada-1.JPG %}"><img class="thumb" src="{% asset /photos/skillscanada-1.JPG %}" /></a>
-        <a href="{% asset /photos/skillscanada-2.JPG %}"><img class="thumb" src="{% asset /photos/skillscanada-2.JPG %}" /></a>
-        <a href="{% asset /photos/skillscanada-3.JPG %}"><img class="thumb" src="{% asset /photos/skillscanada-3.JPG %}" /></a>
-        <br/>
-        <small class="super-small">
-            [1] Team photo with The Honourable Patricia A. Hajdu.<br/>
-            [2] Photo right in front of parliment hall.<br/>
-            [3] During the competition in Abu Dhabi, UAE.
-        </small>
-        <h3>Microsoft Imagine Cup Canadian Finalist</h3>
-        <p>One of the Imagine Cup Canadian fianlists. Our project is CheaprEats, which since has become a small start-up.</p>
-        <a href="{% asset /photos/imagine-1.jpeg %}"><img class="thumb" src="{% asset /photos/imagine-1.jpeg %}" /></a>
-    </div>
-</section>
+<script>
+    let typed = new Typed('#description-typed', {
+        strings: ["a developer.", "a student.", "a problem solver.", "an entrepreneur."],
+        typeSpeed: 40,
+        loop: true,
+        cursorChar: " █",
+        backDelay: 1500
+    });
+    function toggleCsod() {
+        $(".code-collapsed").toggleClass("expanded");
+    }
+</script>

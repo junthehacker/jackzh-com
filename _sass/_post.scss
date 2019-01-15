@@ -3,6 +3,23 @@
 
 .post-content {
     padding-right: 260px;
+    padding-bottom: 50px;
+    table {
+        box-shadow: rgba(0,0,0,0.1) 5px 5px 20px;
+        padding: 20px;
+        border-radius: 5px;
+        td, th {
+            padding: 5px 10px 5px 10px;
+        }
+
+        td {
+            border-bottom: rgba(0,0,0,0.05) 1px solid;
+        }
+
+        th {
+            background-color: rgba(0,0,0,0.05);
+        }
+    }
 }
 
 .js-toc {
