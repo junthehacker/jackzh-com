@@ -4,74 +4,137 @@
         <title>Home - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=9a48274_20190108_152156" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=24ea558_20190115_121830" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=9a48274_20190108_152156" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=24ea558_20190115_121830" />
     </head>
     <body>
-<header>
-    <div class="container">
-        <h1>Jun Zheng <small>Home</small></h1>
-    </div>
-</header>
+<script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
 
-<nav class="navbar">
-    <div class="container">
-        <ul>
-            <li><a href="/">Home</a></li>
-            <li><a href="/experience.html">Experience</a></li>
-            <li><a href="/research.html">Research</a></li>
-            <li><a href="/education.html">Education</a></li>
-            <li><a href="/posts.html">Posts</a></li>
-            <li><a href="/contact.html">Contact</a></li>
-        </ul>
-    </div>
-</nav>
+<div class="home">
+    <header>
+        <div class="container">
+            <nav>
+                <ul>
+                    <li class="active"><a href="#">Home</a></li>
+                    <li><a href="/experience.html">Experience</a></li>
+                    <li><a href="/education.html">Education</a></li>
+                </ul>
+            </nav>
+        </div>
+        <div class="container">
+            <h1>Hi, my name is Jun!</h1>
+            <ul class="social-icons">
+                <li>
+                    <a href="https://github.com/junthehacker">
+                        <i class="fa fa-github-alt" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="https://www.linkedin.com/in/jun-zheng-ca/">
+                        <i class="fa fa-linkedin" aria-hidden="true"></i>
+                    </a>
+                </li>
+            </ul>
+            <p class="subtitle">I am <span id="description-typed"></span></p>
+        </div>
+    </header>
+    <section class="csod">
+        <div class="container">
+            <h2>Code snippet of the day...</h2>
+            <pre class="code-collapsed"><code># Recursive fibbonachi sequence generator in assembly.
 
-<section>
-    <div class="container">
-        <h2>About</h2>
-        <p>I am a second-year student at the University of Toronto, pursuing a Bachelor's degree in Computer Science (Software Engineering Specialization).
-        </p>
-        <p>When I am free, I enjoy watching documentaries and playing around with FPGAs.</p>
-        <p><b><i>Currently seeking summer 2019 internship opportunities.</i></b></p>
+main:       li      $t1, 10               # Load N
+            sw      $t1, 0($sp)           # Call fib(N)
+            jal     fib
+            lw      $s1, 0($sp)           # Load result to $s1
+            addi    $sp, $sp, 4
 
-        <br/>
-        <a class="home-large" href="/experience.html"><i class="fa fa-suitcase" aria-hidden="true"></i> Experience <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        <a class="home-large" href="/education.html"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Education <i class="fa fa-angle-right" aria-hidden="true"></i></a>
-        <br/><br/><br/>
+            add     $a0, $zero, $s1       # Print out the result
+            li      $v0, 1
+            syscall
+            li      $v0, 10               # Exit
+            syscall
 
+fib:        lw      $t3, 0($sp)           # Pop input value from stack
+            addi    $sp, $sp, 4
+            addi    $t5, $zero, 1
+            beq     $t3, $zero, fib_b1    # Base case where N=0
+            beq     $t3, $t5, fib_b2      # Base case where N=1
 
-        <h2>Cool Stuff I Have Done</h2>
-        <h3>WorldSkills Canadian National Team</h3>
-        <p>Member of WorldSkills 2017 Canadian National Team competed for website design and development. Achieved 10th place out of 33 countries.</p>
-        <a href="/assets/photos/skillscanada-1.JPG?v=9a48274_20190108_152156"><img class="thumb" src="/assets/photos/skillscanada-1.JPG?v=9a48274_20190108_152156" /></a>
-        <a href="/assets/photos/skillscanada-2.JPG?v=9a48274_20190108_152156"><img class="thumb" src="/assets/photos/skillscanada-2.JPG?v=9a48274_20190108_152156" /></a>
-        <a href="/assets/photos/skillscanada-3.JPG?v=9a48274_20190108_152156"><img class="thumb" src="/assets/photos/skillscanada-3.JPG?v=9a48274_20190108_152156" /></a>
-        <br/>
-        <small class="super-small">
-            [1] Team photo with The Honourable Patricia A. Hajdu.<br/>
-            [2] Photo right in front of parliment hall.<br/>
-            [3] During the competition in Abu Dhabi, UAE.
-        </small>
-        <h3>Microsoft Imagine Cup Canadian Finalist</h3>
-        <p>One of the Imagine Cup Canadian fianlists. Our project is CheaprEats, which since has become a small start-up.</p>
-        <a href="/assets/photos/imagine-1.jpeg?v=9a48274_20190108_152156"><img class="thumb" src="/assets/photos/imagine-1.jpeg?v=9a48274_20190108_152156" /></a>
-    </div>
-</section>
+fib_nb:     addi    $t3, $t3, -1
+            addi    $sp, $sp, -4
+            sw      $t3, 0($sp)           # Save $t3
+            addi    $sp, $sp, -4
+            sw      $ra, 0($sp)           # Save $ra
 
-<footer>
-    <div class="container">
-        <div class="build">[production] 9a48274_20190108_152156</div>
-        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
-        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
-        <a href="/opensource.html">Open Source</a>
-    </div>
-</footer>
+            addi    $sp, $sp, -4
+            sw      $t3, 0($sp)
+            jal     fib                   # Call fib
+
+            lw      $t7, 0($sp)           # Load result to $t7
+            addi    $sp, $sp, 4
+
+            lw      $ra, 0($sp)           # Restore $ra
+            addi    $sp, $sp, 4
+            lw      $t3, 0($sp)           # Restore $t3
+            addi    $sp, $sp, 4
+            addi    $t3, $t3, -1          # Decrement N
+
+            addi    $sp, $sp, -4
+            sw      $ra, 0($sp)           # Save $ra
+            addi    $sp, $sp, -4
+            sw      $t7, 0($sp)           # Save $t7
+
+            addi    $sp, $sp, -4
+            sw      $t3, 0($sp)
+            jal     fib                   # Call fib
+
+            lw      $t8, 0($sp)           # Load result to $t8
+            addi    $sp, $sp, 4
+
+            lw      $t7, 0($sp)           # Restore $t7
+            addi    $sp, $sp, 4
+            lw      $ra, 0($sp)           # Restore $ra
+            addi    $sp, $sp, 4
+
+            add    $t9, $t7, $t8
+            addi    $sp, $sp, -4
+            sw      $t9, 0($sp)           # Store result
+
+            jr  $ra
+
+fib_b1:     addi    $sp, $sp, -4
+            sw      $zero, 0($sp)         # Return 0
+            jr $ra
+
+fib_b2:     addi    $t4, $zero, 1
+            addi    $sp, $sp, -4
+            sw      $t4, 0($sp)           # Return 1
+            jr $ra</code></pre>
+            <button onClick="toggleCsod();" class="toggle-button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+        </div>
+    </section>
+
+</div>
+
+<script>
+    let typed = new Typed('#description-typed', {
+        strings: ["a developer.", "a student.", "a problem solver.", "an entrepreneur."],
+        typeSpeed: 40,
+        loop: true,
+        cursorChar: " █",
+        backDelay: 1500
+    });
+    function toggleCsod() {
+        $(".code-collapsed").toggleClass("expanded");
+    }
+</script>
+
 <script
   src="https://code.jquery.com/jquery-3.3.1.min.js"
   integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -83,6 +146,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=9a48274_20190108_152156"></script>
+<script src="/assets/js/app.js?v=24ea558_20190115_121830"></script>
 </body>
 </html>

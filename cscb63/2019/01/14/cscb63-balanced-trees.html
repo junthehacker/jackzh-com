@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB63 Data Structure Design and Analysis - Balanced Trees - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=24ea558_20190115_121830" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=24ea558_20190115_121830" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB63 Data Structure Design and Analysis - Balanced Trees</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/research.html">Research</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb63</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <h2 id="why-balanced-trees">Why balanced trees?</h2>
+
+<p>Binary tree: $O(n)$ for <code class="highlighter-rouge">insert</code>, <code class="highlighter-rouge">delete</code> and <code class="highlighter-rouge">search</code>.</p>
+
+<p>Some better trees:</p>
+<ul>
+  <li>AVL Trees</li>
+  <li>B-trees</li>
+  <li>Splay trees</li>
+  <li>Weight …</li>
+</ul>
+
+<h2 id="avl-trees">AVL Trees</h2>
+
+<p>Similar to binary search tree. But also different in a few ways:</p>
+
+<ul>
+  <li>The height of an AVL tree is $O(log n)$.</li>
+  <li>Each internal node has a balance property equal to -1, 0, 1.</li>
+  <li>Balance value = height of the left subtree - height of the right sub tree.</li>
+</ul>
+
+<h3 id="balance-property">Balance Property</h3>
+
+<p>Have to store the height of sub-trees.</p>
+
+<p>-1 - Right heavy, +1 - Left heavy, 0 - Balanced.</p>
+
+<h3 id="searching">Searching</h3>
+
+<ul>
+  <li>Same as BST</li>
+</ul>
+
+<h3 id="insertion">Insertion</h3>
+
+<p>After insert, if a node’s balance factor is not -1, 0 or +1, we have to do one single rotation to fix it.</p>
+
+<p>If there is a “bent”, then we have to do double rotation</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (X = parent(Z); X != null; X = parent(Z)) { // Loop (possibly up to the root)
+    // BalanceFactor(X) has to be updated:
+    if (Z == right_child(X)) { // The right subtree increases
+        if (BalanceFactor(X) &gt; 0) { // X is right-heavy
+            // ===&gt; the temporary BalanceFactor(X) == +2
+            // ===&gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &lt; 0)      // Right Left Case     (see figure 5)
+                N = rotate_RightLeft(X, Z); // Double rotation: Right(Z) then Left(X)
+            else                           // Right Right Case    (see figure 4)
+                N = rotate_Left(X, Z);     // Single rotation Left(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &lt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = +1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    } else { // Z == left_child(X): the left subtree increases
+        if (BalanceFactor(X) &lt; 0) { // X is left-heavy
+            // ===&gt; the temporary BalanceFactor(X) == –2
+            // ===&gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &gt; 0)      // Left Right Case
+                N = rotate_LeftRight(X, Z); // Double rotation: Left(Z) then Right(X)
+            else                           // Left Left Case
+                N = rotate_Right(X, Z);    // Single rotation Right(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &gt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = –1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    }
+    // After a rotation adapt parent link:
+    // N is the new root of the rotated subtree
+    // Height does not change: Height(N) == old Height(X)
+    parent(N) = G;
+    if (G != null) {
+        if (X == left_child(G))
+            left_child(G) = N;
+        else
+            right_child(G) = N;
+        break;
+    } else {
+        tree-&gt;root = N; // N is the new root of the total tree
+        break;
+    }
+    // There is no fall thru, only break; or continue;
+}
+// Unless loop is left via break, the height of the total tree increases by 1.
+</code></pre></div></div>
+
+<h3 id="deletion">Deletion</h3>
+
+<ul>
+  <li>If the key is a leaf, delete and rebalance.</li>
+</ul>
+
+<h3 id="tree-height">Tree Height</h3>
+
+<p>Maximum possible height is $log(n)$, if we have $n$ nodes.</p>
+
+<p>If the height is $h$, let <code class="highlighter-rouge">minsize(h)</code> be the minimum number of nodes for an AVL tree of height $h$.</p>
+
+<p>Then</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minsize(0) = 0,
+minsize(1) = 1,
+minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
+</code></pre></div></div>
+
+<p>minsize(h) = fib(h+2) - 1 (why?)</p>
+
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 24ea558_20190115_121830</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=24ea558_20190115_121830"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

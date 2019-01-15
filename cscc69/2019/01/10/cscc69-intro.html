@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>404 _(┐「ε:)_ - Jun Zheng</title>
+        <title>CSCC69 Operating Systems - Lecture 1 - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=24ea558_20190115_121830" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>404 _(┐「ε:)_</small></h1>
+        <h1>Jun Zheng <small>CSCC69 Operating Systems - Lecture 1</small></h1>
     </div>
 </header>
 
@@ -33,9 +33,44 @@
 </nav>
 
 <div class="container">
-  <h1>_(┐「ε:)_</h1>
-  <h2>Sorry bud, nothing to see here.</h1>
-  <p>404 Page Not Found</p>
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscc69</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <h2 id="what-is-an-os">What is an OS</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----------------
+Applications
+-----------------
+Operating System
+-----------------
+Hardware
+</code></pre></div></div>
+
+<ul>
+  <li>Provides services</li>
+  <li>Resource manager</li>
+  <li>Control program (protection)</li>
+</ul>
+
+<h2 id="processes">Processes</h2>
+
+<p>A process contains</p>
+
+<ul>
+  <li>An address space</li>
+  <li>Set of OS resources</li>
+  <li>Set of general-purpose registers with current values</li>
+</ul>
+
+<h2 id="what-is-a-context-switch">What is a Context Switch</h2>
+
+
+    </div>
 </div>
 
 <footer>
@@ -60,3 +95,16 @@
 <script src="/assets/js/app.js?v=24ea558_20190115_121830"></script>
 </body>
 </html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

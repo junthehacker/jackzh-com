@@ -60,7 +60,18 @@ footer {
     height: 0; }
 
 .post-content {
-  padding-right: 260px; }
+  padding-right: 260px;
+  padding-bottom: 50px; }
+  .post-content table {
+    box-shadow: rgba(0, 0, 0, 0.1) 5px 5px 20px;
+    padding: 20px;
+    border-radius: 5px; }
+    .post-content table td, .post-content table th {
+      padding: 5px 10px 5px 10px; }
+    .post-content table td {
+      border-bottom: rgba(0, 0, 0, 0.05) 1px solid; }
+    .post-content table th {
+      background-color: rgba(0, 0, 0, 0.05); }
 
 .js-toc {
   width: 250px;
@@ -101,6 +112,108 @@ footer {
     .contact-list li a:visited {
       color: black;
       text-decoration: none; }
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+div.home header {
+  padding: 0;
+  border: none; }
+  div.home header h1 {
+    font-size: 50px;
+    padding-top: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s linear 0s 1 normal forwards; }
+  div.home header .subtitle {
+    font-size: 30px;
+    opacity: 0;
+    animation: fadeIn 0.5s linear 1s 1 normal forwards; }
+  div.home header .social-icons {
+    font-size: 20px;
+    margin: 0;
+    padding: 0; }
+    div.home header .social-icons li {
+      font-size: 30px;
+      margin-right: 20px;
+      display: inline-block;
+      list-style: none;
+      transition: all ease 0.5s;
+      opacity: 0; }
+      div.home header .social-icons li:hover {
+        transform: scale(1.5);
+        transition: all ease 0.5s; }
+      div.home header .social-icons li a:link,
+      div.home header .social-icons li a:visited {
+        text-decoration: none;
+        color: black; }
+    div.home header .social-icons li:nth-child(1) {
+      animation: fadeIn 0.5s linear 0.5s 1 normal forwards; }
+    div.home header .social-icons li:nth-child(2) {
+      animation: fadeIn 0.5s linear 0.75s 1 normal forwards; }
+    div.home header .social-icons li:nth-child(3) {
+      animation: fadeIn 0.5s linear 1s 1 normal forwards; }
+    div.home header .social-icons li:nth-child(4) {
+      animation: fadeIn 0.5s linear 1.25s 1 normal forwards; }
+  div.home header nav ul {
+    margin: 30px 0 0 0;
+    padding: 0;
+    display: flex;
+    justify-content: space-between;
+    opacity: 0.7; }
+    div.home header nav ul li {
+      list-style: none;
+      flex: 1;
+      padding: 20px 0 15px 0;
+      transition: all ease 0.5s;
+      cursor: pointer;
+      margin: 5px 30px 0 0;
+      opacity: 0;
+      border-bottom: white 4px solid; }
+      div.home header nav ul li a:link,
+      div.home header nav ul li a:visited {
+        text-decoration: none;
+        color: inherit; }
+      div.home header nav ul li.active, div.home header nav ul li:hover {
+        transition: all ease 0.5s;
+        border-bottom: black 4px solid; }
+    div.home header nav ul li:nth-child(1) {
+      animation: fadeIn 0.5s linear 0s 1 normal forwards; }
+    div.home header nav ul li:nth-child(2) {
+      animation: fadeIn 0.5s linear 0.25s 1 normal forwards; }
+    div.home header nav ul li:nth-child(3) {
+      animation: fadeIn 0.5s linear 0.5s 1 normal forwards; }
+    div.home header nav ul li:nth-child(4) {
+      animation: fadeIn 0.5s linear 0.75s 1 normal forwards; }
+div.home section.csod {
+  padding-top: 30px;
+  opacity: 0;
+  animation: fadeIn 0.5s linear 1.25s 1 normal forwards; }
+  div.home section.csod .toggle-button {
+    border: none;
+    border-bottom: rgba(0, 0, 0, 0.5) 2px solid;
+    color: white;
+    background-color: black;
+    text-align: center;
+    width: 23px;
+    transition: all ease 0.4s; }
+    div.home section.csod .toggle-button:hover {
+      width: 70px;
+      transition: all ease 0.4s; }
+  div.home section.csod .code-collapsed {
+    overflow: hidden;
+    max-height: 111px;
+    transition: all ease 0.5s; }
+    div.home section.csod .code-collapsed.expanded {
+      max-height: 1500px;
+      transition: all ease 0.5s; }
+  div.home section.csod h2 {
+    font-size: 20px;
+    font-weight: 100;
+    opacity: 0.5; }
+  div.home section.csod .hljs {
+    background-color: white; }
 
 body {
   font-family: "Shanti", sans-serif; }

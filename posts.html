@@ -4,13 +4,13 @@
         <title>Posts - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=9a48274_20190108_152156" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=24ea558_20190115_121830" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=9a48274_20190108_152156" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=24ea558_20190115_121830" />
     </head>
     <body>
 <header>
@@ -34,6 +34,353 @@
 
 <section>
     <div class="container">
+        
+        <div class="post-item">
+            <a href="/cscb63/2019/01/14/cscb63-balanced-trees.html"><h3>CSCB63 Data Structure Design and Analysis - Balanced Trees</h3></a>
+            
+                <span class="post-tag">cscb63</span>
+            
+                <span class="post-tag">course-notes</span>
+            
+            <h2 id="why-balanced-trees">Why balanced trees?</h2>
+
+<p>Binary tree: $O(n)$ for <code class="highlighter-rouge">insert</code>, <code class="highlighter-rouge">delete</code> and <code class="highlighter-rouge">search</code>.</p>
+
+<p>Some better trees:</p>
+<ul>
+  <li>AVL Trees</li>
+  <li>B-trees</li>
+  <li>Splay trees</li>
+  <li>Weight …</li>
+</ul>
+
+<h2 id="avl-trees">AVL Trees</h2>
+
+<p>Similar to binary search tree. But also different in a few ways:</p>
+
+<ul>
+  <li>The height of an AVL tree is $O(log n)$.</li>
+  <li>Each internal node has a balance property equal to -1, 0, 1.</li>
+  <li>Balance value = height of the left subtree - height of the right sub tree.</li>
+</ul>
+
+<h3 id="balance-property">Balance Property</h3>
+
+<p>Have to store the height of sub-trees.</p>
+
+<p>-1 - Right heavy, +1 - Left heavy, 0 - Balanced.</p>
+
+<h3 id="searching">Searching</h3>
+
+<ul>
+  <li>Same as BST</li>
+</ul>
+
+<h3 id="insertion">Insertion</h3>
+
+<p>After insert, if a node’s balance factor is not -1, 0 or +1, we have to do one single rotation to fix it.</p>
+
+<p>If there is a “bent”, then we have to do double rotation</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>for (X = parent(Z); X != null; X = parent(Z)) { // Loop (possibly up to the root)
+    // BalanceFactor(X) has to be updated:
+    if (Z == right_child(X)) { // The right subtree increases
+        if (BalanceFactor(X) &gt; 0) { // X is right-heavy
+            // ===&gt; the temporary BalanceFactor(X) == +2
+            // ===&gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &lt; 0)      // Right Left Case     (see figure 5)
+                N = rotate_RightLeft(X, Z); // Double rotation: Right(Z) then Left(X)
+            else                           // Right Right Case    (see figure 4)
+                N = rotate_Left(X, Z);     // Single rotation Left(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &lt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = +1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    } else { // Z == left_child(X): the left subtree increases
+        if (BalanceFactor(X) &lt; 0) { // X is left-heavy
+            // ===&gt; the temporary BalanceFactor(X) == –2
+            // ===&gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &gt; 0)      // Left Right Case
+                N = rotate_LeftRight(X, Z); // Double rotation: Left(Z) then Right(X)
+            else                           // Left Left Case
+                N = rotate_Right(X, Z);    // Single rotation Right(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &gt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = –1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    }
+    // After a rotation adapt parent link:
+    // N is the new root of the rotated subtree
+    // Height does not change: Height(N) == old Height(X)
+    parent(N) = G;
+    if (G != null) {
+        if (X == left_child(G))
+            left_child(G) = N;
+        else
+            right_child(G) = N;
+        break;
+    } else {
+        tree-&gt;root = N; // N is the new root of the total tree
+        break;
+    }
+    // There is no fall thru, only break; or continue;
+}
+// Unless loop is left via break, the height of the total tree increases by 1.
+</code></pre></div></div>
+
+<h3 id="deletion">Deletion</h3>
+
+<ul>
+  <li>If the key is a leaf, delete and rebalance.</li>
+</ul>
+
+<h3 id="tree-height">Tree Height</h3>
+
+<p>Maximum possible height is $log(n)$, if we have $n$ nodes.</p>
+
+<p>If the height is $h$, let <code class="highlighter-rouge">minsize(h)</code> be the minimum number of nodes for an AVL tree of height $h$.</p>
+
+<p>Then</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>minsize(0) = 0,
+minsize(1) = 1,
+minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
+</code></pre></div></div>
+
+<p>minsize(h) = fib(h+2) - 1 (why?)</p>
+
+
+        </div>
+        
+        <div class="post-item">
+            <a href="/cscb63/2019/01/14/cscb63-complexity.html"><h3>CSCB63 Data Structure Design and Analysis - Complexity</h3></a>
+            
+                <span class="post-tag">cscb63</span>
+            
+                <span class="post-tag">course-notes</span>
+            
+            <h2 id="useful-manipulations">Useful Manipulations</h2>
+
+<p>$log_b(x) = log_b(a) * log_a(x)$</p>
+
+<p>$lim_{n \to \infty} \frac{2^{3n}}{2^n} = lim_{n \to \infty} {2^{2n}} = \infty$</p>
+
+<h2 id="complexity-table">Complexity Table</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>in Big O of</th>
+      <th>$ln(n)$</th>
+      <th>lg_2(n)</th>
+      <th>lg_2(n^2)</th>
+      <th>(lg_2(n))^2</th>
+      <th>n</th>
+      <th>n lg_2 n</th>
+      <th>2^n</th>
+      <th>2^{3n}</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>ln(n)</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>log(n)</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>log(n^2)</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>(lg_2(n))^2</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>n</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>n log n</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>2^n</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+      <td>Y</td>
+    </tr>
+    <tr>
+      <td>2^{3n}</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>N</td>
+      <td>Y</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="complexity-proofs">Complexity Proofs</h2>
+
+<h3 id="prove-n-in-on-lg-n">Prove $n \in O(n lg n)$</h3>
+
+<p>$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$</p>
+
+<p>$n \leq 1n$</p>
+
+<p>$n \leq n \cdot log(n), n \geq 2$</p>
+
+<p>$n \leq c \cdot n \cdot log(n)$</p>
+
+<p>Therefore we have c = 1, and n_0 = 2.</p>
+
+<h3 id="prove-n-logn-notin-on">Prove $n log(n) \notin O(n)$</h3>
+
+<p>Assume for a contradiction that $nlog(n) \in O(n)$, so</p>
+
+<p>$\exists c, \exists n_0, \forall n, n \geq n_0 \implies nlog(n) \leq c \cdot n$.</p>
+
+<p>$log(n) \leq c$
+$n \leq 2^c$</p>
+
+<p>Suppose $n &gt; 2^c$, then $n \geq n_0 \implies n \leq 2^c$. Which is a contradiction.</p>
+
+<h3 id="prove-6n5--n2---n3-in-thetan5">Prove $6n^5 + n^2 - n^3 \in \Theta(n^5)$</h3>
+
+<p>First prove $6n^5 + n^2 - n^3 \in O(n^5)$</p>
+
+<p>$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$</p>
+
+<p>$6n^5 + n^2 - n^3 \leq 6n^5 + n^2 \leq 6n^5 + n^5 \leq 7n^5$</p>
+
+<p>Let c = 7, and n = 1.</p>
+
+<p>Then prove $6n^5 + n^2 - n^3 \in \Omega(n^5)$</p>
+
+<p>$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \geq c \cdot g(n)$</p>
+
+<p>$6n^5 + n^2 - n^3 \geq 6n^5 - n^3 \geq 5n^5$</p>
+
+<p>Let c = 5, and n != 1.</p>
+
+<h3 id="prove-3n2---4n-in-omegan2">Prove $3n^2 - 4n \in \Omega(n^2)$</h3>
+
+<p>$3n^2 - 4n \geq bn^2$</p>
+
+<p>$3n - 4 \geq bn$</p>
+
+<p>$3n - bn \geq 4$</p>
+
+<p>$n(3-b) \geq 4$</p>
+
+<p>$n \geq \frac{4}{3-b}$</p>
+
+        </div>
+        
+        <div class="post-item">
+            <a href="/cscc69/2019/01/10/cscc69-intro.html"><h3>CSCC69 Operating Systems - Lecture 1</h3></a>
+            
+                <span class="post-tag">cscc69</span>
+            
+                <span class="post-tag">course-notes</span>
+            
+            <h2 id="what-is-an-os">What is an OS</h2>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----------------
+Applications
+-----------------
+Operating System
+-----------------
+Hardware
+</code></pre></div></div>
+
+<ul>
+  <li>Provides services</li>
+  <li>Resource manager</li>
+  <li>Control program (protection)</li>
+</ul>
+
+<h2 id="processes">Processes</h2>
+
+<p>A process contains</p>
+
+<ul>
+  <li>An address space</li>
+  <li>Set of OS resources</li>
+  <li>Set of general-purpose registers with current values</li>
+</ul>
+
+<h2 id="what-is-a-context-switch">What is a Context Switch</h2>
+
+
+        </div>
         
         <div class="post-item">
             <a href="/cscb07/2018/12/15/cscb07-refactoring.html"><h3>CSCB07 Software Design - Intro to Refactoring</h3></a>
@@ -418,7 +765,7 @@
 
 <footer>
     <div class="container">
-        <div class="build">[production] 9a48274_20190108_152156</div>
+        <div class="build">[production] 24ea558_20190115_121830</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -435,6 +782,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=9a48274_20190108_152156"></script>
+<script src="/assets/js/app.js?v=24ea558_20190115_121830"></script>
 </body>
 </html>

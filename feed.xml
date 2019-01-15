@@ -1,4 +1,316 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-01-08T15:21:59-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB07 Software Design - Intro to Refactoring</title><link href="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Intro to Refactoring" /><published>2018-12-15T10:42:00-05:00</published><updated>2018-12-15T10:42:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-01-15T12:18:32-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB63 Data Structure Design and Analysis - Balanced Trees</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Balanced Trees" /><published>2019-01-14T12:13:00-05:00</published><updated>2019-01-14T12:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees.html">&lt;h2 id=&quot;why-balanced-trees&quot;&gt;Why balanced trees?&lt;/h2&gt;
+
+&lt;p&gt;Binary tree: $O(n)$ for &lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;search&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Some better trees:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;AVL Trees&lt;/li&gt;
+  &lt;li&gt;B-trees&lt;/li&gt;
+  &lt;li&gt;Splay trees&lt;/li&gt;
+  &lt;li&gt;Weight …&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;avl-trees&quot;&gt;AVL Trees&lt;/h2&gt;
+
+&lt;p&gt;Similar to binary search tree. But also different in a few ways:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The height of an AVL tree is $O(log n)$.&lt;/li&gt;
+  &lt;li&gt;Each internal node has a balance property equal to -1, 0, 1.&lt;/li&gt;
+  &lt;li&gt;Balance value = height of the left subtree - height of the right sub tree.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;balance-property&quot;&gt;Balance Property&lt;/h3&gt;
+
+&lt;p&gt;Have to store the height of sub-trees.&lt;/p&gt;
+
+&lt;p&gt;-1 - Right heavy, +1 - Left heavy, 0 - Balanced.&lt;/p&gt;
+
+&lt;h3 id=&quot;searching&quot;&gt;Searching&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Same as BST&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;insertion&quot;&gt;Insertion&lt;/h3&gt;
+
+&lt;p&gt;After insert, if a node’s balance factor is not -1, 0 or +1, we have to do one single rotation to fix it.&lt;/p&gt;
+
+&lt;p&gt;If there is a “bent”, then we have to do double rotation&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (X = parent(Z); X != null; X = parent(Z)) { // Loop (possibly up to the root)
+    // BalanceFactor(X) has to be updated:
+    if (Z == right_child(X)) { // The right subtree increases
+        if (BalanceFactor(X) &amp;gt; 0) { // X is right-heavy
+            // ===&amp;gt; the temporary BalanceFactor(X) == +2
+            // ===&amp;gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &amp;lt; 0)      // Right Left Case     (see figure 5)
+                N = rotate_RightLeft(X, Z); // Double rotation: Right(Z) then Left(X)
+            else                           // Right Right Case    (see figure 4)
+                N = rotate_Left(X, Z);     // Single rotation Left(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &amp;lt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = +1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    } else { // Z == left_child(X): the left subtree increases
+        if (BalanceFactor(X) &amp;lt; 0) { // X is left-heavy
+            // ===&amp;gt; the temporary BalanceFactor(X) == –2
+            // ===&amp;gt; rebalancing is required.
+            G = parent(X); // Save parent of X around rotations
+            if (BalanceFactor(Z) &amp;gt; 0)      // Left Right Case
+                N = rotate_LeftRight(X, Z); // Double rotation: Left(Z) then Right(X)
+            else                           // Left Left Case
+                N = rotate_Right(X, Z);    // Single rotation Right(X)
+            // After rotation adapt parent link
+        } else {
+            if (BalanceFactor(X) &amp;gt; 0) {
+                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
+                break; // Leave the loop
+            }
+            BalanceFactor(X) = –1;
+            Z = X; // Height(Z) increases by 1
+            continue;
+        }
+    }
+    // After a rotation adapt parent link:
+    // N is the new root of the rotated subtree
+    // Height does not change: Height(N) == old Height(X)
+    parent(N) = G;
+    if (G != null) {
+        if (X == left_child(G))
+            left_child(G) = N;
+        else
+            right_child(G) = N;
+        break;
+    } else {
+        tree-&amp;gt;root = N; // N is the new root of the total tree
+        break;
+    }
+    // There is no fall thru, only break; or continue;
+}
+// Unless loop is left via break, the height of the total tree increases by 1.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;deletion&quot;&gt;Deletion&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If the key is a leaf, delete and rebalance.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;tree-height&quot;&gt;Tree Height&lt;/h3&gt;
+
+&lt;p&gt;Maximum possible height is $log(n)$, if we have $n$ nodes.&lt;/p&gt;
+
+&lt;p&gt;If the height is $h$, let &lt;code class=&quot;highlighter-rouge&quot;&gt;minsize(h)&lt;/code&gt; be the minimum number of nodes for an AVL tree of height $h$.&lt;/p&gt;
+
+&lt;p&gt;Then&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;minsize(0) = 0,
+minsize(1) = 1,
+minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search. Some better trees: AVL Trees B-trees Splay trees Weight … AVL Trees Similar to binary search tree. But also different in a few ways: The height of an AVL tree is $O(log n)$. Each internal node has a balance property equal to -1, 0, 1. Balance value = height of the left subtree - height of the right sub tree. Balance Property Have to store the height of sub-trees. -1 - Right heavy, +1 - Left heavy, 0 - Balanced. Searching Same as BST Insertion After insert, if a node’s balance factor is not -1, 0 or +1, we have to do one single rotation to fix it. If there is a “bent”, then we have to do double rotation for (X = parent(Z); X != null; X = parent(Z)) { // Loop (possibly up to the root) // BalanceFactor(X) has to be updated: if (Z == right_child(X)) { // The right subtree increases if (BalanceFactor(X) &amp;gt; 0) { // X is right-heavy // ===&amp;gt; the temporary BalanceFactor(X) == +2 // ===&amp;gt; rebalancing is required. G = parent(X); // Save parent of X around rotations if (BalanceFactor(Z) &amp;lt; 0) // Right Left Case (see figure 5) N = rotate_RightLeft(X, Z); // Double rotation: Right(Z) then Left(X) else // Right Right Case (see figure 4) N = rotate_Left(X, Z); // Single rotation Left(X) // After rotation adapt parent link } else { if (BalanceFactor(X) &amp;lt; 0) { BalanceFactor(X) = 0; // Z’s height increase is absorbed at X. break; // Leave the loop } BalanceFactor(X) = +1; Z = X; // Height(Z) increases by 1 continue; } } else { // Z == left_child(X): the left subtree increases if (BalanceFactor(X) &amp;lt; 0) { // X is left-heavy // ===&amp;gt; the temporary BalanceFactor(X) == –2 // ===&amp;gt; rebalancing is required. G = parent(X); // Save parent of X around rotations if (BalanceFactor(Z) &amp;gt; 0) // Left Right Case N = rotate_LeftRight(X, Z); // Double rotation: Left(Z) then Right(X) else // Left Left Case N = rotate_Right(X, Z); // Single rotation Right(X) // After rotation adapt parent link } else { if (BalanceFactor(X) &amp;gt; 0) { BalanceFactor(X) = 0; // Z’s height increase is absorbed at X. break; // Leave the loop } BalanceFactor(X) = –1; Z = X; // Height(Z) increases by 1 continue; } } // After a rotation adapt parent link: // N is the new root of the rotated subtree // Height does not change: Height(N) == old Height(X) parent(N) = G; if (G != null) { if (X == left_child(G)) left_child(G) = N; else right_child(G) = N; break; } else { tree-&amp;gt;root = N; // N is the new root of the total tree break; } // There is no fall thru, only break; or continue; } // Unless loop is left via break, the height of the total tree increases by 1. Deletion If the key is a leaf, delete and rebalance. Tree Height Maximum possible height is $log(n)$, if we have $n$ nodes. If the height is $h$, let minsize(h) be the minimum number of nodes for an AVL tree of height $h$. Then minsize(0) = 0, minsize(1) = 1, minsize(h + 2) = 1 + minsize(h + 1) + minsize(h) minsize(h) = fib(h+2) - 1 (why?)</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Complexity</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Complexity" /><published>2019-01-14T09:13:00-05:00</published><updated>2019-01-14T09:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-complexity</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html">&lt;h2 id=&quot;useful-manipulations&quot;&gt;Useful Manipulations&lt;/h2&gt;
+
+&lt;p&gt;$log_b(x) = log_b(a) * log_a(x)$&lt;/p&gt;
+
+&lt;p&gt;$lim_{n \to \infty} \frac{2^{3n}}{2^n} = lim_{n \to \infty} {2^{2n}} = \infty$&lt;/p&gt;
+
+&lt;h2 id=&quot;complexity-table&quot;&gt;Complexity Table&lt;/h2&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;in Big O of&lt;/th&gt;
+      &lt;th&gt;$ln(n)$&lt;/th&gt;
+      &lt;th&gt;lg_2(n)&lt;/th&gt;
+      &lt;th&gt;lg_2(n^2)&lt;/th&gt;
+      &lt;th&gt;(lg_2(n))^2&lt;/th&gt;
+      &lt;th&gt;n&lt;/th&gt;
+      &lt;th&gt;n lg_2 n&lt;/th&gt;
+      &lt;th&gt;2^n&lt;/th&gt;
+      &lt;th&gt;2^{3n}&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;ln(n)&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;log(n)&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;log(n^2)&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;(lg_2(n))^2&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;n&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;n log n&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2^n&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2^{3n}&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;N&lt;/td&gt;
+      &lt;td&gt;Y&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;complexity-proofs&quot;&gt;Complexity Proofs&lt;/h2&gt;
+
+&lt;h3 id=&quot;prove-n-in-on-lg-n&quot;&gt;Prove $n \in O(n lg n)$&lt;/h3&gt;
+
+&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$&lt;/p&gt;
+
+&lt;p&gt;$n \leq 1n$&lt;/p&gt;
+
+&lt;p&gt;$n \leq n \cdot log(n), n \geq 2$&lt;/p&gt;
+
+&lt;p&gt;$n \leq c \cdot n \cdot log(n)$&lt;/p&gt;
+
+&lt;p&gt;Therefore we have c = 1, and n_0 = 2.&lt;/p&gt;
+
+&lt;h3 id=&quot;prove-n-logn-notin-on&quot;&gt;Prove $n log(n) \notin O(n)$&lt;/h3&gt;
+
+&lt;p&gt;Assume for a contradiction that $nlog(n) \in O(n)$, so&lt;/p&gt;
+
+&lt;p&gt;$\exists c, \exists n_0, \forall n, n \geq n_0 \implies nlog(n) \leq c \cdot n$.&lt;/p&gt;
+
+&lt;p&gt;$log(n) \leq c$
+$n \leq 2^c$&lt;/p&gt;
+
+&lt;p&gt;Suppose $n &amp;gt; 2^c$, then $n \geq n_0 \implies n \leq 2^c$. Which is a contradiction.&lt;/p&gt;
+
+&lt;h3 id=&quot;prove-6n5--n2---n3-in-thetan5&quot;&gt;Prove $6n^5 + n^2 - n^3 \in \Theta(n^5)$&lt;/h3&gt;
+
+&lt;p&gt;First prove $6n^5 + n^2 - n^3 \in O(n^5)$&lt;/p&gt;
+
+&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$&lt;/p&gt;
+
+&lt;p&gt;$6n^5 + n^2 - n^3 \leq 6n^5 + n^2 \leq 6n^5 + n^5 \leq 7n^5$&lt;/p&gt;
+
+&lt;p&gt;Let c = 7, and n = 1.&lt;/p&gt;
+
+&lt;p&gt;Then prove $6n^5 + n^2 - n^3 \in \Omega(n^5)$&lt;/p&gt;
+
+&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \geq c \cdot g(n)$&lt;/p&gt;
+
+&lt;p&gt;$6n^5 + n^2 - n^3 \geq 6n^5 - n^3 \geq 5n^5$&lt;/p&gt;
+
+&lt;p&gt;Let c = 5, and n != 1.&lt;/p&gt;
+
+&lt;h3 id=&quot;prove-3n2---4n-in-omegan2&quot;&gt;Prove $3n^2 - 4n \in \Omega(n^2)$&lt;/h3&gt;
+
+&lt;p&gt;$3n^2 - 4n \geq bn^2$&lt;/p&gt;
+
+&lt;p&gt;$3n - 4 \geq bn$&lt;/p&gt;
+
+&lt;p&gt;$3n - bn \geq 4$&lt;/p&gt;
+
+&lt;p&gt;$n(3-b) \geq 4$&lt;/p&gt;
+
+&lt;p&gt;$n \geq \frac{4}{3-b}$&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Useful Manipulations $log_b(x) = log_b(a) * log_a(x)$ $lim_{n \to \infty} \frac{2^{3n}}{2^n} = lim_{n \to \infty} {2^{2n}} = \infty$ Complexity Table in Big O of $ln(n)$ lg_2(n) lg_2(n^2) (lg_2(n))^2 n n lg_2 n 2^n 2^{3n} ln(n) Y Y Y Y Y Y Y Y log(n) Y Y Y Y Y Y Y Y log(n^2) Y Y Y Y Y Y Y Y (lg_2(n))^2 N N N Y Y Y Y Y n N N N N Y Y Y Y n log n N N N N N Y Y Y 2^n N N N N N N Y Y 2^{3n} N N N N N N N Y Complexity Proofs Prove $n \in O(n lg n)$ $\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$ $n \leq 1n$ $n \leq n \cdot log(n), n \geq 2$ $n \leq c \cdot n \cdot log(n)$ Therefore we have c = 1, and n_0 = 2. Prove $n log(n) \notin O(n)$ Assume for a contradiction that $nlog(n) \in O(n)$, so $\exists c, \exists n_0, \forall n, n \geq n_0 \implies nlog(n) \leq c \cdot n$. $log(n) \leq c$ $n \leq 2^c$ Suppose $n &amp;gt; 2^c$, then $n \geq n_0 \implies n \leq 2^c$. Which is a contradiction. Prove $6n^5 + n^2 - n^3 \in \Theta(n^5)$ First prove $6n^5 + n^2 - n^3 \in O(n^5)$ $\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$ $6n^5 + n^2 - n^3 \leq 6n^5 + n^2 \leq 6n^5 + n^5 \leq 7n^5$ Let c = 7, and n = 1. Then prove $6n^5 + n^2 - n^3 \in \Omega(n^5)$ $\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \geq c \cdot g(n)$ $6n^5 + n^2 - n^3 \geq 6n^5 - n^3 \geq 5n^5$ Let c = 5, and n != 1. Prove $3n^2 - 4n \in \Omega(n^2)$ $3n^2 - 4n \geq bn^2$ $3n - 4 \geq bn$ $3n - bn \geq 4$ $n(3-b) \geq 4$ $n \geq \frac{4}{3-b}$</summary></entry><entry><title type="html">CSCC69 Operating Systems - Lecture 1</title><link href="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Lecture 1" /><published>2019-01-10T16:25:00-05:00</published><updated>2019-01-10T16:25:00-05:00</updated><id>https://jackzh.com/cscc69/2019/01/10/cscc69-intro</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html">&lt;h2 id=&quot;what-is-an-os&quot;&gt;What is an OS&lt;/h2&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-----------------
+Applications
+-----------------
+Operating System
+-----------------
+Hardware
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Provides services&lt;/li&gt;
+  &lt;li&gt;Resource manager&lt;/li&gt;
+  &lt;li&gt;Control program (protection)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;processes&quot;&gt;Processes&lt;/h2&gt;
+
+&lt;p&gt;A process contains&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;An address space&lt;/li&gt;
+  &lt;li&gt;Set of OS resources&lt;/li&gt;
+  &lt;li&gt;Set of general-purpose registers with current values&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;what-is-a-context-switch&quot;&gt;What is a Context Switch&lt;/h2&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">What is an OS ----------------- Applications ----------------- Operating System ----------------- Hardware Provides services Resource manager Control program (protection) Processes A process contains An address space Set of OS resources Set of general-purpose registers with current values What is a Context Switch</summary></entry><entry><title type="html">CSCB07 Software Design - Intro to Refactoring</title><link href="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Intro to Refactoring" /><published>2018-12-15T10:42:00-05:00</published><updated>2018-12-15T10:42:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Introduction to refactoring.&lt;/p&gt;
 
@@ -133,7 +445,88 @@
 &lt;ul&gt;
   &lt;li&gt;Provides a flexible alternative to using inheritance to extend functionality.&lt;/li&gt;
   &lt;li&gt;Objects can be decorated dynamically at runtime.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Decorator pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Decorator pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When something changes in publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
+      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
+
+&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
+
+&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
+  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
+  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Iterator and Builder design pattern.&lt;/p&gt;
 
@@ -395,88 +788,87 @@
 
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
-&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
+&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
-&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
+&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
 
-&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
+&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
+
+&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
+
+&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
+  &lt;li&gt;Allows you to make big changes quickly.
     &lt;ul&gt;
-      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
+      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
+      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;When something changes in publisher.
+  &lt;li&gt;Helps with code design.
     &lt;ul&gt;
-      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
-      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
+      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
     &lt;/ul&gt;
   &lt;/li&gt;
-  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
+&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
 
-&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
-
-&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
+&lt;p&gt;There are two main ways to test:&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
+  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
+&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
+  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
+  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
+  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
+  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
+  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
 
-&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
+  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
-  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
-  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry><entry><title type="html">CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-polymorphism.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.&lt;/p&gt;
 
@@ -632,87 +1024,7 @@
 &lt;ul&gt;
   &lt;li&gt;Should also hold for its subtypes.&lt;/li&gt;
   &lt;li&gt;And method written for &lt;code class=&quot;highlighter-rouge&quot;&gt;type&lt;/code&gt; should work equally well on its &lt;code class=&quot;highlighter-rouge&quot;&gt;subtypes&lt;/code&gt;.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
-
-&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
-
-&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
-
-&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Allows you to make big changes quickly.
-    &lt;ul&gt;
-      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
-      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Helps with code design.
-    &lt;ul&gt;
-      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
-
-&lt;p&gt;There are two main ways to test:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
-  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
-  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
-  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
-  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
-  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
-  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Polymorphism, Abstract Classes, Interfaces, Liskov, Singleton.</summary></entry><entry><title type="html">CSCB07 Software Design - More Java Memory Model</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html" rel="alternate" type="text/html" title="CSCB07 Software Design - More Java Memory Model" /><published>2018-12-14T12:45:00-05:00</published><updated>2018-12-14T12:45:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-java-memory-model-depth.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;More topics on Java memory model.&lt;/p&gt;
 
@@ -767,589 +1079,4 @@
   &lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0hoi4ftghMtowCxNW0fcYUZr7Jzqy-7TwB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). More topics on Java memory model.</summary></entry><entry><title type="html">CSCB07 Software Design - Software Development Process</title><link href="https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Software Development Process" /><published>2018-12-13T20:32:00-05:00</published><updated>2018-12-13T20:32:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/13/cscb07-software-dev-process.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;CRC cards and how to properly develop software with a team.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;In previous note, we discussed CRC cards, they look like this:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;------------------------------------------------
-| Class: InputAudioDevice                      |
-| Super-classes: AudioDevice                   |
-| Sub-classes: Microphone                      |
-| Responsibility:                              |
-|     - Passes audio signal to computer.       |
-| Collaborators:                               |
-|     - StreamWriter                           |
-------------------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now let’s convert it to an actual class!&lt;/p&gt;
-
-&lt;p&gt;An &lt;code class=&quot;highlighter-rouge&quot;&gt;InputAudioDevice&lt;/code&gt; might look like the following:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;InputAudioDevice&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;AudioDevice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StreamWriter&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;writer&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;writeAudioStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;object-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt; Class&lt;/h2&gt;
-
-&lt;p&gt;All classes within Java extends from &lt;code class=&quot;highlighter-rouge&quot;&gt;Object&lt;/code&gt;, and you should always consider override some of the methods:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;#clone() -&amp;gt; Object&lt;/code&gt; Creates and returns a copy of this object.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;equals(Object obj) -&amp;gt; boolean&lt;/code&gt; Check if &lt;code class=&quot;highlighter-rouge&quot;&gt;obj&lt;/code&gt; is equal to this one.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;hashCode() -&amp;gt; int&lt;/code&gt; Returns a hash value.&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;toString() -&amp;gt; String&lt;/code&gt; Returns string representation.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;always-check-parameters&quot;&gt;Always Check Parameters&lt;/h2&gt;
-
-&lt;p&gt;You should always check parameter validity, and indicate in JavaDoc what exception might be thrown within this method.&lt;/p&gt;
-
-&lt;p&gt;Not really necessary within private methods, since you have full control over them.&lt;/p&gt;
-
-&lt;h2 id=&quot;software-development-process&quot;&gt;Software Development Process&lt;/h2&gt;
-
-&lt;h3 id=&quot;introduction&quot;&gt;Introduction&lt;/h3&gt;
-
-&lt;p&gt;In many courses, programs are coded once and thrown away. However, in real life, that is not the case, and development is an agile process.&lt;/p&gt;
-
-&lt;h3 id=&quot;common-elements-within-software-development&quot;&gt;Common Elements Within Software Development&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Requirements
-    &lt;ul&gt;
-      &lt;li&gt;What do we need to build?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Design
-    &lt;ul&gt;
-      &lt;li&gt;How can we build the thing so it meets the requirement?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Implementation
-    &lt;ul&gt;
-      &lt;li&gt;Build it!&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Verification
-    &lt;ul&gt;
-      &lt;li&gt;Does it work?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Maintenance
-    &lt;ul&gt;
-      &lt;li&gt;Fixing/adding/changing features.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;validation-and-verification&quot;&gt;Validation and Verification&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Validation
-    &lt;ul&gt;
-      &lt;li&gt;Test the specification, not the software.&lt;/li&gt;
-      &lt;li&gt;Are we building the right thing?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Verification
-    &lt;ul&gt;
-      &lt;li&gt;Testing the software we built.&lt;/li&gt;
-      &lt;li&gt;Does it follow our specification?&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0E9ia59mlBq4EVzVBI7kKCGfpkftxDDw8B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;h3 id=&quot;waterfall-model&quot;&gt;Waterfall Model&lt;/h3&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq2LDGa-GXJOZ4Y5IanWdB88NtoGkcRHgmsB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Advantages
-    &lt;ul&gt;
-      &lt;li&gt;Easy to use&lt;/li&gt;
-      &lt;li&gt;Works well for small projects&lt;/li&gt;
-      &lt;li&gt;Cost effective&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Disadvantages
-    &lt;ul&gt;
-      &lt;li&gt;Only test one time after everything has been built&lt;/li&gt;
-      &lt;li&gt;High risk&lt;/li&gt;
-      &lt;li&gt;Not flexible&lt;/li&gt;
-      &lt;li&gt;Bad for complex projects&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;It does not work well when&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Requirement changes&lt;/li&gt;
-  &lt;li&gt;You are not 100% sure about the requirements&lt;/li&gt;
-  &lt;li&gt;New ideas come up&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;iterative-development&quot;&gt;Iterative Development&lt;/h3&gt;
-
-&lt;p&gt;Don’t finish all features in one go, you code, get feedback, then code again…&lt;/p&gt;
-
-&lt;h3 id=&quot;incremental-development&quot;&gt;Incremental Development&lt;/h3&gt;
-
-&lt;p&gt;Code only what you need now, code the rest piece by piece.&lt;/p&gt;
-
-&lt;h3 id=&quot;agile-methods&quot;&gt;Agile Methods&lt;/h3&gt;
-
-&lt;p&gt;Agility is the ability to both create and respond to change in order to profit in a turbulent business environment.&lt;/p&gt;
-
-&lt;p&gt;Agile is&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;People oriented&lt;/li&gt;
-  &lt;li&gt;Easily responds to changes&lt;/li&gt;
-  &lt;li&gt;Results in the creation of working systems that meets the needs of its stakeholders&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Traditional software development timeline:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Requirements -&amp;gt; Build -&amp;gt; Test -&amp;gt; Release
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;You can only use the software at the end, and bugs are found late.&lt;/p&gt;
-
-&lt;p&gt;Agile timeline:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Build/Release -&amp;gt; Build/Release -&amp;gt; Build/Relase -&amp;gt; ....
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Good visibility of progress, find bugs early, easy to respond to changes, use the software early.&lt;/p&gt;
-
-&lt;h2 id=&quot;user-stories&quot;&gt;User Stories&lt;/h2&gt;
-
-&lt;p&gt;Users usually do not use the same terms as software developers.&lt;/p&gt;
-
-&lt;p&gt;User stories help to cleaify requirements and can be used for clarification when communicating with the client.&lt;/p&gt;
-
-&lt;p&gt;Can also used to identify different types of users.&lt;/p&gt;
-
-&lt;p&gt;Examples:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;As a store associate, I can search for a book by its ISBN, so that I can determine the book's in-stock quantity for the store.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;As a bookstore customer, I can search for books by the Author's name, so that I can easily find all book by that author.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;agile-tools&quot;&gt;Agile Tools&lt;/h2&gt;
-
-&lt;p&gt;There are a few important tools we use in agile development process:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;User stories to drive design&lt;/li&gt;
-  &lt;li&gt;Continuous unit testing&lt;/li&gt;
-  &lt;li&gt;Pair programming&lt;/li&gt;
-  &lt;li&gt;Lightweight design as code is written and features are added&lt;/li&gt;
-  &lt;li&gt;Continuous refactoring&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;scrum-agile-development-process&quot;&gt;Scrum Agile Development Process&lt;/h2&gt;
-
-&lt;p&gt;It is iterative and incremental, and there are a few roles:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Product Owner
-    &lt;ul&gt;
-      &lt;li&gt;The customer&lt;/li&gt;
-      &lt;li&gt;Who is paying for this&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Team
-    &lt;ul&gt;
-      &lt;li&gt;The Team is responsible for managing itself and has the full authority to do anything to meet the Sprint goal within the guidelines, standards, and conventions of the organization and of Scrum.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Scrum Master
-    &lt;ul&gt;
-      &lt;li&gt;Maintains the process, enforces the rules&lt;/li&gt;
-      &lt;li&gt;Remove development obstacles&lt;/li&gt;
-      &lt;li&gt;Facilitates communications&lt;/li&gt;
-      &lt;li&gt;The Scrum Master is responsible for the success of the project, and he or she helps increase the probability of success by helping the Product Owner select the most valuable product backlog and by helping the Team turn that backlog into functionality.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;scrum-method&quot;&gt;Scrum Method&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Product Backlog - Features of the product
-    &lt;ul&gt;
-      &lt;li&gt;Master list of all functionalities in the product&lt;/li&gt;
-      &lt;li&gt;Does not have to be complete&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Sprint Backlog - Subset of features to work on for the sprint
-    &lt;ul&gt;
-      &lt;li&gt;List of tasks that the team is committing they will do&lt;/li&gt;
-      &lt;li&gt;Must be drawn from product backlog, and broken down to smaller items&lt;/li&gt;
-      &lt;li&gt;Chosen based on the priority&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;Code Sprint - Can take weeks to complete&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Daily Scrum - Daily meetings
-    &lt;ul&gt;
-      &lt;li&gt;What did you work on?&lt;/li&gt;
-      &lt;li&gt;What will you work on?&lt;/li&gt;
-      &lt;li&gt;Is there any issue that you are currently blocked on?&lt;/li&gt;
-      &lt;li&gt;Usually short, like 15 mins.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Final Product - The software&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq3AC7U482hJLbArItqeZ5BfrI-fPs-j-gIB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). CRC cards and how to properly develop software with a team.</summary></entry><entry><title type="html">How I Redesigned IFCAT</title><link href="https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat.html" rel="alternate" type="text/html" title="How I Redesigned IFCAT
-" /><published>2018-12-12T09:22:00-05:00</published><updated>2018-12-12T09:22:00-05:00</updated><id>https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat</id><content type="html" xml:base="https://jackzh.com/random/2018/12/12/how-i-redesigned-ifcat.html">&lt;p&gt;A good piece of code should look clean, concise and does what it is supposed to do.&lt;/p&gt;
-
-&lt;p&gt;I am not an expert in software engineering, but during my time contributing to IFCAT project, I did find some design flaws, and this is how I fixed them.&lt;/p&gt;
-
-&lt;p&gt;This post mainly serves as my personal reference in the future when I try to code Node.js systems. But also is a good read for anyone who is new to programming.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;controllers&quot;&gt;Controllers&lt;/h2&gt;
-
-&lt;p&gt;In the original code, controllers are single JavaScript files that use &lt;code class=&quot;highlighter-rouge&quot;&gt;module.exports&lt;/code&gt; to export simple functions.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Save groups for tutorial&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;saveGroups&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Logic here&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This is all good and functional, but what if I need to store state variables? Say I need to keep track of how many users are logged in. It is impossible to do so without another program such as Redis.&lt;/p&gt;
-
-&lt;p&gt;I decided to create a Controller super-class that exposes a &lt;code class=&quot;highlighter-rouge&quot;&gt;getInstance()&lt;/code&gt; static method (yes in JavaScript static methods gets inherited), so I can have all controllers as singletons.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;StudentController&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Controller&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;getStudent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;c1&quot;&gt;// Do stuff here.&lt;/span&gt;
-    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Now I can do cool stuff like this:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;studentController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;StudentController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;kr&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;studentController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getStudent&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Which is much more readable and robust.&lt;/p&gt;
-
-&lt;h2 id=&quot;routers&quot;&gt;Routers&lt;/h2&gt;
-
-&lt;p&gt;Old code routing files contained actual controller and middleware logic, which is a big no-no.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// non-authenticated routes&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;authenticate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'local-login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;successRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/student/courses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;failureRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;failureFlash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}));&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/uteach-login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;passport&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;authenticate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'auth0'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;successRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/student/courses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;failureRedirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
-    &lt;span class=&quot;na&quot;&gt;failureFlash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;kc&quot;&gt;true&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}),&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/student/courses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// check if user is authenticated&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;use&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;((&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isAuthenticated&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;())&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;redirect&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/login'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The new design encapsulates all logic within their own classes, router only serves as a mounting point.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;controllers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Controllers/Student'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'express'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;Router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;GetCourseByParameterMiddleware&lt;/span&gt;       &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Middlewares/ParameterMiddlewares/GetCourseByParameterMiddleware'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;GetQuestionByParameterMiddleware&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Middlewares/ParameterMiddlewares/GetQuestionByParameterMiddleware'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;GetTutorialQuizByParameterMiddleware&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Middlewares/ParameterMiddlewares/GetTutorialQuizByParameterMiddleware'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;EnsureAuthenticatedMiddleware&lt;/span&gt;        &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Middlewares/EnsureAuthenticatedMiddleware'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Mount all middlewares&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;GetCourseByParameterMiddleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;applyToRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'course'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;GetQuestionByParameterMiddleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;applyToRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'question'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;GetTutorialQuizByParameterMiddleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;applyToRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'tutorialQuiz'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;EnsureAuthenticatedMiddleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;applyToRouter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;StudentController&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Controllers/Student/StudentController'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;FileController&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Controllers/Student/FileController'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;QuestionController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;require&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../Controllers/Student/QuestionController'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;studentController&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;StudentController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileController&lt;/span&gt;     &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;FileController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;let&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;questionController&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;QuestionController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getInstance&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// authenticated routes&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/courses'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;studentController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getCourses&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/courses/:course/quizzes'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;studentController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getQuizzes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/courses/:course/quizzes/:tutorialQuiz/start'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;controllers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;TutorialQuiz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;startQuiz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/courses/:course/quizzes/:tutorialQuiz/submit-question'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;questionController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getQuestionForm&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/courses/:course/quizzes/:tutorialQuiz/submit-question'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;questionController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;addQuestion&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;kd&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/file/:id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;fileController&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;getFileLinkById&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-
-&lt;span class=&quot;nx&quot;&gt;module&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;exports&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;inconsistant-naming-schemes&quot;&gt;Inconsistant Naming Schemes&lt;/h2&gt;
-
-&lt;p&gt;This is an obvious one, if you look into socket.io folder, you can find events that are called &lt;code class=&quot;highlighter-rouge&quot;&gt;REQUEST_QUIZ&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;quizData&lt;/code&gt;, which just looks weird.&lt;/p&gt;
-
-&lt;p&gt;I decided to go with &lt;code class=&quot;highlighter-rouge&quot;&gt;REQUEST_QUIZ&lt;/code&gt; style.&lt;/p&gt;
-
-&lt;h2 id=&quot;ancient-async-practice&quot;&gt;Ancient Async Practice&lt;/h2&gt;
-
-&lt;p&gt;This is not really a design flaw, but more of a technical restrictions.&lt;/p&gt;
-
-&lt;p&gt;For example the following code:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;course&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;$addToSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;instructors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;$each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}}},&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'success'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'The list of instructors has been updated for the course.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sendStatus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;});&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It is more readable if written in the following way:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;try&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kr&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;course&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;$addToSet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;instructors&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;$each&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;users&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}}});&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;req&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;flash&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'success'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'The list of instructors has been updated for the course.'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;nx&quot;&gt;res&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;sendStatus&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;200&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;catch&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;err&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;       
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;lacking-newlines&quot;&gt;Lacking Newlines&lt;/h2&gt;
-
-&lt;p&gt;It is not good to have excessive newlines, but also bad to not have them at all. In the old code, there is no blank line between methods.&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Populate files&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;withFiles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;populate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'files'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}}});&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a multiple choice question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isMultipleChoice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'multiple choice'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a multiple select question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isMultipleSelect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'multiple select'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a short answer question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isShortAnswer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'short answer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Much nicer this way:&lt;/p&gt;
-
-&lt;div class=&quot;language-javascript highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// Populate files&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;withFiles&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;populate&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'files'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;options&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;sort&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;}}});&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a multiple choice question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isMultipleChoice&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'multiple choice'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a multiple select question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isMultipleSelect&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'multiple select'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-
-&lt;span class=&quot;c1&quot;&gt;// Check if question is a short answer question&lt;/span&gt;
-&lt;span class=&quot;nx&quot;&gt;QuestionSchema&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;methods&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;isShortAnswer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'short answer'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;There are more design problems that I haven’t noticed yet, I will update this post as I code.&lt;/p&gt;</content><author><name></name></author><category term="random" /><category term="software-design" /><category term="draft" /><summary type="html">A good piece of code should look clean, concise and does what it is supposed to do. I am not an expert in software engineering, but during my time contributing to IFCAT project, I did find some design flaws, and this is how I fixed them. This post mainly serves as my personal reference in the future when I try to code Node.js systems. But also is a good read for anyone who is new to programming.</summary></entry><entry><title type="html">CSCB07 Software Design - Java Memory Model &amp;amp; CRC</title><link href="https://jackzh.com/cscb07/2018/12/11/cscb07-memory-model.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Java Memory Model &amp; CRC" /><published>2018-12-11T13:50:00-05:00</published><updated>2018-12-11T13:50:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/11/cscb07-memory-model</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/11/cscb07-memory-model.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Java memory model and some CRC.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;I have already covered memory model in more depth here: &lt;a href=&quot;/cscb09/2018/08/08/cscb09-intro-to-c.html#memory-model&quot;&gt;CSCB09 - Intro to C&lt;/a&gt;, therefore this note won’t cover too much detail.&lt;/p&gt;
-
-&lt;h2 id=&quot;stack-and-heap&quot;&gt;Stack and Heap&lt;/h2&gt;
-
-&lt;p&gt;Stack:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Local variables are stored within the stack, and will be freed if the variable goes out of scope.&lt;/li&gt;
-  &lt;li&gt;Faster than heap.&lt;/li&gt;
-  &lt;li&gt;Stores local data, return addresses, used for function parameter passing.&lt;/li&gt;
-  &lt;li&gt;Can have overflow if too much stack is used.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Heap:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;In Java, objects are allocated on the heap using &lt;code class=&quot;highlighter-rouge&quot;&gt;new&lt;/code&gt;.&lt;/li&gt;
-  &lt;li&gt;Slower than stack.&lt;/li&gt;
-  &lt;li&gt;Variables must be destroyed manually, in Java, there is a “garbage collector” to do this.&lt;/li&gt;
-  &lt;li&gt;Responsible for memory leaks.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Informally, following code in memory would look like:&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;c&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Student&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq2lf1PZXYVJepxAH6KDXMs_sZJ0H3SrPRsB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;All primitive types are stored within stack.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;inheritance&quot;&gt;Inheritance&lt;/h2&gt;
-
-&lt;p&gt;You can create a general class and let other sub-classes extend it.&lt;/p&gt;
-
-&lt;p&gt;Class that is inherited is called super class, class that is inheriting is called sub class.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Class DO NOT inherit static fields / methods. No do it inherit private and no modifier (package protected) fields / methods.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Sub classes can call &lt;code class=&quot;highlighter-rouge&quot;&gt;super()&lt;/code&gt; to access super class’ constructor, and this should be the first thing you call in sub-class constructor.&lt;/p&gt;
-
-&lt;h3 id=&quot;why-encapsulation&quot;&gt;Why Encapsulation?&lt;/h3&gt;
-
-&lt;p&gt;It seperates implementation details from behaviour.&lt;/p&gt;
-
-&lt;p&gt;Steve McConnell in his book, ‘Code Complete’ uses the analogy of an ice berg.&lt;/p&gt;
-
-&lt;p&gt;Only a small portion of iceberg is visible on the surface, most of it is hidden underwater.&lt;/p&gt;
-
-&lt;p&gt;Similarly, in our software design the visible parts of our modules/classes constitute their public interface and this is exposed to the outside world. The rest of it should be hidden to the naked eye.&lt;/p&gt;
-
-&lt;h3 id=&quot;overriding&quot;&gt;Overriding&lt;/h3&gt;
-
-&lt;p&gt;When methods have the same name and signature, the method is overridden.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Sub&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Super&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Overrides Super.myMethod&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;overloading&quot;&gt;Overloading&lt;/h3&gt;
-
-&lt;p&gt;When methods have the same name, but different signature (input types, not including return types), the method is overloaded.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Super&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;a&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Sub&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Super&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Overloads Super.myMethod&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;myMethod&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;In Java, everything inherits from Object class.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;is-a-relationship&quot;&gt;IS-A Relationship&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Car&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Sportscar&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Car&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we call Sportscar is a Car, which is an Object.&lt;/p&gt;
-
-&lt;h3 id=&quot;has-a-relationship&quot;&gt;HAS-A Relationship&lt;/h3&gt;
-
-&lt;p&gt;Also called composition or aggregation.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Engine&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{}&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Car&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Engine&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;e&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we call Car has an Engine. We can also say Car is collaborating with Engine.&lt;/p&gt;
-
-&lt;h2 id=&quot;single-responsibility-principle&quot;&gt;Single Responsibility Principle&lt;/h2&gt;
-
-&lt;p&gt;In OOP, SRP states that:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Every class should have a single responsibility.&lt;/li&gt;
-  &lt;li&gt;the responsibility should be entirely encapsulated by the class.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;&lt;a href=&quot;https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html&quot;&gt;https://blog.cleancoder.com/uncle-bob/2014/05/08/SingleReponsibilityPrinciple.html&lt;/a&gt;&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;A class should have one and only one reason to change.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h2 id=&quot;crc-cards&quot;&gt;CRC Cards&lt;/h2&gt;
-
-&lt;p&gt;A CRC card looks like the following:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;------------------------------------------------
-| Class: InputAudioDevice                      |
-| Super-classes: AudioDevice                   |
-| Sub-classes: Microphone                      |
-| Responsibility:                              |
-|     - Passes audio signal to computer.       |
-| Collaborators:                               |
-|     - StreamWriter                           |
-------------------------------------------------
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Personally I think CRC cards are stupid and hard to read for large scale projects. As it is impossible to comprehend if you have say 200 cards (where is the entry point?), how do I cross reference?&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Java memory model and some CRC.</summary></entry></feed>
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0hoi4ftghMtowCxNW0fcYUZr7Jzqy-7TwB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). More topics on Java memory model.</summary></entry></feed>
