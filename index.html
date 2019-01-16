@@ -18,6 +18,11 @@ title: Home
             <h1>Hi, my name is Jun!</h1>
             <ul class="social-icons">
                 <li>
+                    <a href="{% real_path /assets/Resume.pdf %}">
+                        <i class="fa fa-file-text" aria-hidden="true"></i>
+                    </a>
+                </li>
+                <li>
                     <a href="https://github.com/junthehacker">
                         <i class="fa fa-github-alt" aria-hidden="true"></i>
                     </a>
@@ -35,7 +40,7 @@ title: Home
         <div class="container">
             <h2>Code snippet of the day...</h2>
             <pre class="code-collapsed"><code>{% include csod/fib-recursion.asm %}</code></pre>
-            <button onClick="toggleCsod();" class="toggle-button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
+            <button onClick="toggleCsod()" class="toggle-button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
         </div>
     </section>
 
@@ -50,6 +55,11 @@ title: Home
         backDelay: 1500
     });
     function toggleCsod() {
+        if($(".code-collapsed").hasClass("expanded")) {
+            $(".toggle-button").html('<i class="fa fa-angle-down" aria-hidden="true"></i>');
+        } else {
+            $(".toggle-button").html('<i class="fa fa-angle-up" aria-hidden="true"></i>');
+        }
         $(".code-collapsed").toggleClass("expanded");
     }
 </script>

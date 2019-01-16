@@ -97,6 +97,8 @@ div.home {
       text-align: center;
       width: 23px;
       transition: all ease 0.4s;
+      cursor: pointer;
+      outline: none;
       &:hover {
         width: 70px;
         transition: all ease 0.4s;
@@ -118,6 +120,27 @@ div.home {
     }
     .hljs {
       background-color: white;
+    }
+  }
+  section.resume {
+    background-color: black;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    bottom: -100vh;
+    left: 0;
+    transition: all ease 0.3s;
+    &.expanded {
+      bottom: 0;
+      transition: all ease 0.3s;
+    }
+    .container {
+      height: 100%;
+    }
+    iframe {
+      border: none;
+      width: 100%;
+      height: 100%;
     }
   }
 }
