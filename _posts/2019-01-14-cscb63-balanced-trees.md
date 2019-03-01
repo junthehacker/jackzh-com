@@ -10,6 +10,8 @@ category: cscb63
 
 Binary tree: $O(n)$ for `insert`, `delete` and `search`.
 
+<!--more-->
+
 Some better trees:
 * AVL Trees
 * B-trees

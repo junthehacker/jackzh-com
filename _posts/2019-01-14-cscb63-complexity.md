@@ -9,6 +9,7 @@ category: cscb63
 
 ## Useful Manipulations
 
+<!--more-->
 
 $log_b(x) = log_b(a) * log_a(x)$
 
