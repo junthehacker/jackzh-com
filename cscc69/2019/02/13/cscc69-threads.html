@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>CSCB07 Software Design - More Java Memory Model - Jun Zheng</title>
+        <title>CSCC69 Operating Systems - Threads - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
         <link href="/assets/css/style.css?v=02321d6_20190301_132221" rel="stylesheet" />
@@ -15,7 +15,7 @@
     <body>
 <header>
     <div class="container">
-        <h1>Jun Zheng <small>CSCB07 Software Design - More Java Memory Model</small></h1>
+        <h1>Jun Zheng <small>CSCC69 Operating Systems - Threads</small></h1>
     </div>
 </header>
 
@@ -35,67 +35,54 @@
     <div class="js-toc"></div>
     <br/>
     
-        <span class="post-tag">cscb07</span>
+        <span class="post-tag">cscc69</span>
     
         <span class="post-tag">course-notes</span>
     
     <div class="post-content">
-        <p>Course notes taken for CSCB07/CSC207 at UofT (Software Design).</p>
+        <h2 id="overview">Overview</h2>
 
-<p>More topics on Java memory model.</p>
+<p>Threads are basically mini-processes within a process. However they share the same address space.</p>
 
-<!--more-->
+<p>Creating threads are much faster than creating processes, in some systems, this can be 10x to 100x faster.</p>
 
-<h2 id="stack">Stack</h2>
+<p>Think of threads as JS event loops, basically it.</p>
 
-<ul>
-  <li>Values exist only within the function scope.
-    <ul>
-      <li>Once returns, values are freed automatically.</li>
-    </ul>
-  </li>
-  <li>Only primitives.
-    <ul>
-      <li>Helps stack to be small, and individual stack frames small. (so we can do recursive calls :)).</li>
-    </ul>
-  </li>
-  <li>For objects, only references (which are primitives) are passed around on stack.</li>
-  <li>Can’t be shared between threads.</li>
-</ul>
+<h2 id="classic-thread-model">Classic Thread Model</h2>
 
-<blockquote>
-  <p>Java does not specify how references are implemented, but in C, they are integers.</p>
-</blockquote>
+<p>The classic thread model basically have all threads with their own stack and own PC.</p>
+
+<p>Everything else is shared. The software library will take care of scheduling.</p>
+
+<h2 id="posix-thread-standard">POSIX Thread Standard</h2>
+
+<p>Some useful calls:</p>
 
 <ul>
-  <li>Each function have their own <strong>stack frame</strong>.
-    <ul>
-      <li>Stack frames are destroyed once method returns.</li>
-    </ul>
-  </li>
+  <li>pthread_create: New thread</li>
+  <li>pthread_exit: Quite the calling thread</li>
+  <li>pthread_join: Wait for a thread to exit</li>
+  <li>pthread_yield: Give up CPU for another thread</li>
+  <li>pthread_attr_init: Create a thread attribute structure</li>
+  <li>pthread_attr_destroy: Remove a thread’s attribute structure</li>
 </ul>
 
-<h2 id="heap">Heap</h2>
+<h2 id="user-space-thread-implementation">User Space Thread Implementation</h2>
 
-<ul>
-  <li>Objects are on the heap, they are created using <code class="highlighter-rouge">new</code> keyword.</li>
-  <li>Only destroyed if garbage collector collects it.</li>
-  <li>Object with all its instance members (variables/methods) are put on the heap.</li>
-  <li>Can be shared by multiple threads.</li>
-</ul>
+<p>If implemented in user space, then the library have to take care of scheduling and switching. However if hardware do support store/load registers, this operation can be done very quickly, which is much faster than trapping to kernel.</p>
 
-<h2 id="static-variables">Static Variables</h2>
+<p>And since everything is local, no context switch is needed, no kernel calls, it is very fast. Each process can also have its own scheduling algorithm.</p>
 
-<ul>
-  <li>The heap is divided into two parts:
-    <ul>
-      <li><code class="highlighter-rouge">Object Heap Space</code> where all instances live.</li>
-      <li><code class="highlighter-rouge">Static Heap Space</code> where all static members live.</li>
-    </ul>
-  </li>
-</ul>
+<h3 id="drawbacks">Drawbacks</h3>
 
-<p><img src="https://www.evernote.com/l/Aq0hoi4ftghMtowCxNW0fcYUZr7Jzqy-7TwB/image.png" alt="" /></p>
+<p>Thread cannot make blocking kernel calls, since that will halt all threads. Sometimes library will wrap the actual system call, but it is not really that nice to do.</p>
+
+<p>Another issue is page fault. Which will be discussed in memory management (basically blocking the process because it needs to read instructions from disk).</p>
+
+<p>In user space thread implementations, there is no clock interrupts. So a thread must give up the CPU before another thread can be run.</p>
+
+<h2 id="kernel-space-thread-implementation">Kernel Space Thread Implementation</h2>
+
 
     </div>
 </div>

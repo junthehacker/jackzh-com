@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCC69 Operating Systems - Processes - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=02321d6_20190301_132221" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=02321d6_20190301_132221" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCC69 Operating Systems - Processes</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscc69</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <h2 id="overview">Overview</h2>
+
+<p>Processes allows computers to do multiple things at once.</p>
+
+<p>In multiprogramming system, CPU switches from process to process very quickly, make it seem that it is running them concurrently. This is usually called pseudoparallelism, in contrast to real-parallelism with multiprocessor.</p>
+
+<p><em>In any given instant, only one process is running on one CPU.</em></p>
+
+<blockquote>
+  <p><em>Context Switch</em>: a context switch is the process of storing the state of a process or of a thread so that it can be restored and resumed later.</p>
+</blockquote>
+
+<h2 id="drawbacks">Drawbacks</h2>
+
+<ul>
+  <li>Programs cannot have assumption of timing. Say if you know 1 loop takes 0.01 millisec, you loop 1000 times to get 10 millisec. However, while in the loop, OS might already switched to another process.</li>
+</ul>
+
+<h2 id="program-vs-process">Program vs Process</h2>
+
+<p>An analogy:</p>
+
+<ul>
+  <li>Recepe: Program</li>
+  <li>Ingredients: Input Data</li>
+  <li>Process: Reading the recepe, getting ingredients and baking the cake.</li>
+</ul>
+
+<p>Now the guy’s son runs into room and says he has been stung by a bee. The guy records where he was in the recipe, gets first aid book and following that. After first aid has been done, he goes back to cooking. This is basically how OS switches processes.</p>
+
+<p>In real OS this is called scheduling. And if a programming is running twice, it is two processes.</p>
+
+<h2 id="process-creation">Process Creation</h2>
+
+<p>There are 4 principal events that cause processes to be created:</p>
+
+<ul>
+  <li>System initialization</li>
+  <li>Execution of a process creation system call by a running process</li>
+  <li>A user request to create a new process</li>
+  <li>Initiation of a batch job</li>
+</ul>
+
+<p>There are 2 main types: foreground and background (daemons).</p>
+
+<p>Technically, for all these cases, a new process is created by an existing process. In UNIX, only <code class="highlighter-rouge">fork</code> can be used to create new processes. After fork, the child may change its memory image using <code class="highlighter-rouge">execve</code>. Reason is so we can redirect IO before <code class="highlighter-rouge">execve</code>.</p>
+
+<p>Parent and child have different address space. However they may share text.</p>
+
+<h2 id="process-termination">Process Termination</h2>
+
+<p>There are 4 ways for a process to terminate.</p>
+
+<ul>
+  <li>Normal exit</li>
+  <li>Error exit</li>
+  <li>Fatal error</li>
+  <li>Killed by another process</li>
+</ul>
+
+<h2 id="process-hierarchies">Process Hierarchies</h2>
+
+<p>In UNIX, a process and all of its children form a process group. When a user sends a signal from the keyboard, all members are notified.</p>
+
+<p>In UNIX, all processes belong to a single tree, which <code class="highlighter-rouge">init</code> at the root. Processes cannot change parent (unless parent is killed by some reason).</p>
+
+<h2 id="process-states">Process States</h2>
+
+<p>There are 3 main states:</p>
+
+<ul>
+  <li>Running: Actually using the CPU</li>
+  <li>Ready: Can run, but temp stopped for another process to run</li>
+  <li>Blocked: Cannot run until some external event happens</li>
+</ul>
+
+<p>In UNIX, a process is automatically blocked if trying to read from an empty pipe.</p>
+
+<h2 id="process-implementation">Process Implementation</h2>
+
+<p>People use process table (PCB) to implement processes. Usually a table includes:</p>
+
+<ul>
+  <li>State</li>
+  <li>Memory allocation</li>
+  <li>Open files</li>
+  <li>Scheduling info</li>
+  <li>Registers</li>
+  <li>etc.</li>
+</ul>
+
+<h3 id="interrupt-vector">Interrupt Vector</h3>
+
+<p>Usually located at the bottom of the memory, when an interrupt happens, the hardware pushes process info onto stack, and jumps to interrupt vector. Then the interrupt procedure runs.</p>
+
+<p>All interrupts start by saving registers, this is usually done in assembly since C cannot access these information. Then the access is handed over to interrupt handler (stack is also reset).</p>
+
+<p>After the handler is done, the control is back to assembly to load the registers again.</p>
+
+<p>Overview of the basic procedures are listed below:</p>
+
+<ul>
+  <li>Hardware stacks basic program information</li>
+  <li>Hardware loads PC from IV.</li>
+  <li>Assembly saves registers</li>
+  <li>Assembly set up new stack.</li>
+  <li>Runs C interrupt service.</li>
+  <li>Scheduler decides which to run next.</li>
+  <li>C procedure returns to assembly code.</li>
+  <li>Assembly runs new process.</li>
+</ul>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 02321d6_20190301_132221</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=02321d6_20190301_132221"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

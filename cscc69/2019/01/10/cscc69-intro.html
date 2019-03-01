@@ -4,13 +4,13 @@
         <title>CSCC69 Operating Systems - Lecture 1 - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=36e5b7b_20190211_013256" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=02321d6_20190301_132221" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=36e5b7b_20190211_013256" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=02321d6_20190301_132221" />
     </head>
     <body>
 <header>
@@ -40,7 +40,80 @@
         <span class="post-tag">course-notes</span>
     
     <div class="post-content">
-        <h2 id="what-is-an-os">What is an OS</h2>
+        <h2 id="operating-system-boot-process">Operating System Boot Process</h2>
+
+<p>This is just a basic description of how a Pentium computer boots.</p>
+
+<ul>
+  <li>First the BIOS is loaded from motherboard RAM.
+    <ul>
+      <li>BIOS checks how much RAM is installed.</li>
+      <li>Other devices like keyboard / mouse are checked.</li>
+      <li>Then checks ISA and PCI busses.</li>
+    </ul>
+  </li>
+  <li>BIOS then determines the boot device listed in CMOS memory.
+    <ul>
+      <li>Usually floppy -&gt; CD -&gt; HDD</li>
+    </ul>
+  </li>
+  <li>The first sector of boot device is read and loaded
+    <ul>
+      <li>Examines the partition table at end of the boot sector, to determine which partition to use.</li>
+    </ul>
+  </li>
+  <li>The boot loader is read from that partition.
+    <ul>
+      <li>Boot loader loads the OS</li>
+    </ul>
+  </li>
+</ul>
+
+<!--more-->
+
+<h2 id="major-os-types">Major OS Types</h2>
+
+<h3 id="mainframe-os">Mainframe OS</h3>
+
+<p>Heavily oriented towards processing many jobs at once. However nowdays it is being slowly replaced by UNIX.</p>
+
+<h3 id="server-os">Server OS</h3>
+
+<p>They run on servers, usually very large PCs or even mainframes. They serve multiple users at once.</p>
+
+<p>Common server OSes: Solaris, FreeBSD, Linux and Windows Server.</p>
+
+<h3 id="multiprocessor-os">Multiprocessor OS</h3>
+
+<p>Nowdays most OSes are multiprocessor, for example Windows and Linux. Since most PCs have multiple cores, or even multiple CPUs.</p>
+
+<h3 id="personal-computer-os">Personal Computer OS</h3>
+
+<p>This is widely known, for example macOS, Windows and Linux. They usually support multiprogramming, and aims to provide the best experience for a single user.</p>
+
+<h3 id="handheld-os">Handheld OS</h3>
+
+<p>Old school Symbian OS and Palm OS, nowdays it is Android, which is Linux, and iOS, which is UNIX.</p>
+
+<h3 id="embedded-os">Embedded OS</h3>
+
+<p>Major difference between embedded OS and others is: It does not need to run untrusted software. That leads to simplifications. For example, a MP3 player.</p>
+
+<h3 id="sensor-node-os">Sensor Node OS</h3>
+
+<p>TinyOS is one of the wellknown ones. These OS are found on sensors, which usually wirelessly communicate with eachother and protect building parameters.</p>
+
+<h3 id="real-time-os">Real-Time OS</h3>
+
+<p>These are used in assembly lines. Time is critical, for hard real-time systems, deadlines must be met. Soft real-time systems can miss some deadlines.</p>
+
+<p>Because time is critical, usually there is no protection.</p>
+
+<h3 id="smart-card-os">Smart Card OS</h3>
+
+<p>The smallest you can get is smart card OSes. Sometimes smart card OSes runs JVM (Java). They are usually powered by the machine they are in contact with.</p>
+
+<h2 id="what-is-an-os">What is an OS</h2>
 
 <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-----------------
 Applications
@@ -74,7 +147,7 @@ Hardware
 
 <footer>
     <div class="container">
-        <div class="build">[production] 36e5b7b_20190211_013256</div>
+        <div class="build">[production] 02321d6_20190301_132221</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -91,7 +164,7 @@ Hardware
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=36e5b7b_20190211_013256"></script>
+<script src="/assets/js/app.js?v=02321d6_20190301_132221"></script>
 </body>
 </html>
 

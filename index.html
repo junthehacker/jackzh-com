@@ -4,13 +4,13 @@
         <title>Home - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=36e5b7b_20190211_013256" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=02321d6_20190301_132221" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=36e5b7b_20190211_013256" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=02321d6_20190301_132221" />
     </head>
     <body>
 <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.9"></script>
@@ -51,76 +51,78 @@
     <section class="csod">
         <div class="container">
             <h2>Code snippet of the day...</h2>
-            <pre class="code-collapsed"><code># Recursive fibbonachi sequence generator in assembly.
+            <pre class="code-collapsed"><code>// Verilog module to display character A on your screen.
+// Contains a LUT and an output module.
 
-main:       li      $t1, 10               # Load N
-            sw      $t1, 0($sp)           # Call fib(N)
-            jal     fib
-            lw      $s1, 0($sp)           # Load result to $s1
-            addi    $sp, $sp, 4
+module char_a_lut(x, y, out);
+	input [7:0] x;
+	input [7:0] y;
+	output reg [6:0] out;
 
-            add     $a0, $zero, $s1       # Print out the result
-            li      $v0, 1
-            syscall
-            li      $v0, 10               # Exit
-            syscall
+	always@(*)
+	begin
+		out[6] <= 1'b1;
+		case({x, y})
+			16'h0400: out[5:0] <= 6'b111111;
+			16'h0500: out[5:0] <= 6'b111111;
+			
+			16'h0401: out[5:0] <= 6'b111111;
+			16'h0501: out[5:0] <= 6'b111111;
+			
+			16'h0302: out[5:0] <= 6'b111111;
+			16'h0402: out[5:0] <= 6'b111111;
+			16'h0502: out[5:0] <= 6'b111111;
+			16'h0602: out[5:0] <= 6'b111111;
+			
+			16'h0303: out[5:0] <= 6'b111111;
+			16'h0603: out[5:0] <= 6'b111111;
+			
+			16'h0304: out[5:0] <= 6'b111111;
+			16'h0604: out[5:0] <= 6'b111111;
+			
+			16'h0205: out[5:0] <= 6'b111111;
+			16'h0305: out[5:0] <= 6'b111111;
+			16'h0605: out[5:0] <= 6'b111111;
+			16'h0705: out[5:0] <= 6'b111111;
+			
+			16'h0206: out[5:0] <= 6'b111111;
+			16'h0306: out[5:0] <= 6'b111111;
+			16'h0406: out[5:0] <= 6'b111111;
+			16'h0506: out[5:0] <= 6'b111111;
+			16'h0606: out[5:0] <= 6'b111111;
+			16'h0706: out[5:0] <= 6'b111111;
+			
+			16'h0207: out[5:0] <= 6'b111111;
+			16'h0707: out[5:0] <= 6'b111111;
+			
+			16'h0208: out[5:0] <= 6'b111111;
+			16'h0708: out[5:0] <= 6'b111111;
+			
+			16'h0109: out[5:0] <= 6'b111111;
+			16'h0209: out[5:0] <= 6'b111111;
+			16'h0709: out[5:0] <= 6'b111111;
+			16'h0809: out[5:0] <= 6'b111111;
+			default: out[6] <= 1'b0;
+		endcase
+	end
+endmodule
 
-fib:        lw      $t3, 0($sp)           # Pop input value from stack
-            addi    $sp, $sp, 4
-            addi    $t5, $zero, 1
-            beq     $t3, $zero, fib_b1    # Base case where N=0
-            beq     $t3, $t5, fib_b2      # Base case where N=1
-
-fib_nb:     addi    $t3, $t3, -1
-            addi    $sp, $sp, -4
-            sw      $t3, 0($sp)           # Save $t3
-            addi    $sp, $sp, -4
-            sw      $ra, 0($sp)           # Save $ra
-
-            addi    $sp, $sp, -4
-            sw      $t3, 0($sp)
-            jal     fib                   # Call fib
-
-            lw      $t7, 0($sp)           # Load result to $t7
-            addi    $sp, $sp, 4
-
-            lw      $ra, 0($sp)           # Restore $ra
-            addi    $sp, $sp, 4
-            lw      $t3, 0($sp)           # Restore $t3
-            addi    $sp, $sp, 4
-            addi    $t3, $t3, -1          # Decrement N
-
-            addi    $sp, $sp, -4
-            sw      $ra, 0($sp)           # Save $ra
-            addi    $sp, $sp, -4
-            sw      $t7, 0($sp)           # Save $t7
-
-            addi    $sp, $sp, -4
-            sw      $t3, 0($sp)
-            jal     fib                   # Call fib
-
-            lw      $t8, 0($sp)           # Load result to $t8
-            addi    $sp, $sp, 4
-
-            lw      $t7, 0($sp)           # Restore $t7
-            addi    $sp, $sp, 4
-            lw      $ra, 0($sp)           # Restore $ra
-            addi    $sp, $sp, 4
-
-            add    $t9, $t7, $t8
-            addi    $sp, $sp, -4
-            sw      $t9, 0($sp)           # Store result
-
-            jr  $ra
-
-fib_b1:     addi    $sp, $sp, -4
-            sw      $zero, 0($sp)         # Return 0
-            jr $ra
-
-fib_b2:     addi    $t4, $zero, 1
-            addi    $sp, $sp, -4
-            sw      $t4, 0($sp)           # Return 1
-            jr $ra</code></pre>
+module char_a(x, y, flush_x, flush_y, colour, enable);
+	input [7:0] x;
+	input [7:0] y;
+	input [7:0] flush_x;
+	input [7:0] flush_y;
+	
+	output [5:0] colour;
+	output enable;
+	
+	wire [6:0] lut_out;
+	
+	char_a_lut(flush_x - x, flush_y - y, lut_out);
+	
+	assign colour = lut_out[5:0];
+	assign enable = lut_out[6];
+endmodule</code></pre>
             <button onClick="toggleCsod()" class="toggle-button"><i class="fa fa-angle-down" aria-hidden="true"></i></button>
         </div>
     </section>
@@ -156,6 +158,6 @@ fib_b2:     addi    $t4, $zero, 1
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=36e5b7b_20190211_013256"></script>
+<script src="/assets/js/app.js?v=02321d6_20190301_132221"></script>
 </body>
 </html>
