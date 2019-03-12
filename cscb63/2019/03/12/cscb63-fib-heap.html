@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCB63 Data Structure Design and Analysis - Fibonacci Heaps - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=4d40411_20190312_135141" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=4d40411_20190312_135141" />
+    </head>
+    <body>
+<header>
+    <div class="container">
+        <h1>Jun Zheng <small>CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</small></h1>
+    </div>
+</header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="js-toc"></div>
+    <br/>
+    
+        <span class="post-tag">cscb63</span>
+    
+        <span class="post-tag">course-notes</span>
+    
+    <div class="post-content">
+        <p>Basic introduction to fibonacci heaps and some comparson with regular heaps.</p>
+
+<!--more-->
+
+<h2 id="operations-supported">Operations Supported</h2>
+
+<ul>
+  <li><code class="highlighter-rouge">make_heap</code> - Create a new heap.</li>
+  <li><code class="highlighter-rouge">insert(H, x)</code> - Insert <code class="highlighter-rouge">x</code> into heap <code class="highlighter-rouge">H</code>.</li>
+  <li><code class="highlighter-rouge">min(H)</code> - Return minimum element in <code class="highlighter-rouge">H</code>.</li>
+  <li><code class="highlighter-rouge">extract_min(H)</code> - Return minimum element in <code class="highlighter-rouge">H</code> and removes it.</li>
+  <li><code class="highlighter-rouge">union(H1, H2)</code> - Creates and returns a new heap containing all elements in <code class="highlighter-rouge">H1</code> and <code class="highlighter-rouge">H2</code>.</li>
+  <li><code class="highlighter-rouge">decrease_key(H, x, k)</code> - Assigns <code class="highlighter-rouge">x</code> in <code class="highlighter-rouge">H</code> a new key <code class="highlighter-rouge">k</code>. <code class="highlighter-rouge">k</code> must be less then the current key.</li>
+  <li><code class="highlighter-rouge">delete(H, x)</code> - Delete element <code class="highlighter-rouge">x</code> from heap <code class="highlighter-rouge">H</code>.</li>
+</ul>
+
+<h3 id="complexity-comparsions-with-binary-heaps">Complexity Comparsions With Binary-Heaps</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>Binary Heap Worse-Case</th>
+      <th>Fib-Heap Amortized</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>insert</td>
+      <td>$\Theta(lgn)$</td>
+      <td>$\Theta(1)$</td>
+    </tr>
+    <tr>
+      <td>extract-min</td>
+      <td>$\Theta(lgn)$</td>
+      <td>$O(lgn)$</td>
+    </tr>
+    <tr>
+      <td>decrease-priority</td>
+      <td>$\Theta(lgn)$</td>
+      <td>$\Theta(1)$</td>
+    </tr>
+    <tr>
+      <td>union</td>
+      <td>$\Theta(n)$</td>
+      <td>$\Theta(1)$</td>
+    </tr>
+  </tbody>
+</table>
+
+<h2 id="structure">Structure</h2>
+
+<p>A fibonnacci heap includes the following components:</p>
+
+<ul>
+  <li>A forest of heap-ordered trees.</li>
+  <li>Roots of these trees are stored in a circular doubly-linked list.</li>
+  <li>Pointer to minimum root, and total number of nodes.</li>
+  <li>Siblings in a circular doubly-linked list, parent only knows one child.</li>
+  <li><code class="highlighter-rouge">deg(x)</code> is number of children is <code class="highlighter-rouge">x</code>’s child list.</li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq1GyqY27zVE5YwiM4e_BM9NY38465L1RhEB/image.png" alt="" /></p>
+
+<p>For each node, it contains following fields:</p>
+
+<ul>
+  <li>key: Priority</li>
+  <li>left, right, parent: Pointers</li>
+  <li>child: Pointer to one child</li>
+  <li>degree: Num of children</li>
+  <li>mark: Boolean, useful for <code class="highlighter-rouge">decrease-priority</code></li>
+</ul>
+
+<h2 id="operations">Operations</h2>
+
+<h3 id="insert">Insert</h3>
+
+<p>Insert is very simple, you simply insert into the root linked-list. This takes $O(1)$.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>insert(H, x) {
+    node = new Node(x);
+    node.marked = false;
+    // Insert right after H.min
+    node.right = H.min.right;
+    node.left = H.min;
+    H.min.right = node;
+    node.right.left = node;
+}
+</code></pre></div></div>
+
+<h3 id="union">Union</h3>
+
+<p>Just merge two root lists and it is done. This also takes $O(1)$.</p>
+
+<p>Of course if you want to make a copy this takes longer.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>union(H1, H2) {
+    connect H1.min and H2.min
+}
+</code></pre></div></div>
+
+    </div>
+</div>
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 4d40411_20190312_135141</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=4d40411_20190312_135141"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>

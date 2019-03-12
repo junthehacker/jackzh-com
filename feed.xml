@@ -1,4 +1,104 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-03-01T13:22:22-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCC69 Operating Systems - Threads</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Threads" /><published>2019-02-13T12:50:00-05:00</published><updated>2019-02-13T12:50:00-05:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-threads</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-03-12T13:51:42-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;operations-supported&quot;&gt;Operations Supported&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;make_heap&lt;/code&gt; - Create a new heap.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;insert(H, x)&lt;/code&gt; - Insert &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; into heap &lt;code class=&quot;highlighter-rouge&quot;&gt;H&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;min(H)&lt;/code&gt; - Return minimum element in &lt;code class=&quot;highlighter-rouge&quot;&gt;H&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;extract_min(H)&lt;/code&gt; - Return minimum element in &lt;code class=&quot;highlighter-rouge&quot;&gt;H&lt;/code&gt; and removes it.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;union(H1, H2)&lt;/code&gt; - Creates and returns a new heap containing all elements in &lt;code class=&quot;highlighter-rouge&quot;&gt;H1&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;H2&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;decrease_key(H, x, k)&lt;/code&gt; - Assigns &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; in &lt;code class=&quot;highlighter-rouge&quot;&gt;H&lt;/code&gt; a new key &lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;k&lt;/code&gt; must be less then the current key.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;delete(H, x)&lt;/code&gt; - Delete element &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt; from heap &lt;code class=&quot;highlighter-rouge&quot;&gt;H&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;complexity-comparsions-with-binary-heaps&quot;&gt;Complexity Comparsions With Binary-Heaps&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;Binary Heap Worse-Case&lt;/th&gt;
+      &lt;th&gt;Fib-Heap Amortized&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;insert&lt;/td&gt;
+      &lt;td&gt;$\Theta(lgn)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(1)$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;extract-min&lt;/td&gt;
+      &lt;td&gt;$\Theta(lgn)$&lt;/td&gt;
+      &lt;td&gt;$O(lgn)$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;decrease-priority&lt;/td&gt;
+      &lt;td&gt;$\Theta(lgn)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(1)$&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;union&lt;/td&gt;
+      &lt;td&gt;$\Theta(n)$&lt;/td&gt;
+      &lt;td&gt;$\Theta(1)$&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h2 id=&quot;structure&quot;&gt;Structure&lt;/h2&gt;
+
+&lt;p&gt;A fibonnacci heap includes the following components:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A forest of heap-ordered trees.&lt;/li&gt;
+  &lt;li&gt;Roots of these trees are stored in a circular doubly-linked list.&lt;/li&gt;
+  &lt;li&gt;Pointer to minimum root, and total number of nodes.&lt;/li&gt;
+  &lt;li&gt;Siblings in a circular doubly-linked list, parent only knows one child.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deg(x)&lt;/code&gt; is number of children is &lt;code class=&quot;highlighter-rouge&quot;&gt;x&lt;/code&gt;’s child list.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq1GyqY27zVE5YwiM4e_BM9NY38465L1RhEB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For each node, it contains following fields:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;key: Priority&lt;/li&gt;
+  &lt;li&gt;left, right, parent: Pointers&lt;/li&gt;
+  &lt;li&gt;child: Pointer to one child&lt;/li&gt;
+  &lt;li&gt;degree: Num of children&lt;/li&gt;
+  &lt;li&gt;mark: Boolean, useful for &lt;code class=&quot;highlighter-rouge&quot;&gt;decrease-priority&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;operations&quot;&gt;Operations&lt;/h2&gt;
+
+&lt;h3 id=&quot;insert&quot;&gt;Insert&lt;/h3&gt;
+
+&lt;p&gt;Insert is very simple, you simply insert into the root linked-list. This takes $O(1)$.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;insert(H, x) {
+    node = new Node(x);
+    node.marked = false;
+    // Insert right after H.min
+    node.right = H.min.right;
+    node.left = H.min;
+    H.min.right = node;
+    node.right.left = node;
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;union&quot;&gt;Union&lt;/h3&gt;
+
+&lt;p&gt;Just merge two root lists and it is done. This also takes $O(1)$.&lt;/p&gt;
+
+&lt;p&gt;Of course if you want to make a copy this takes longer.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;union(H1, H2) {
+    connect H1.min and H2.min
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Basic introduction to fibonacci heaps and some comparson with regular heaps.</summary></entry><entry><title type="html">CSCC69 Operating Systems - Threads</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Threads" /><published>2019-02-13T12:50:00-05:00</published><updated>2019-02-13T12:50:00-05:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-threads</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
 
 &lt;p&gt;Threads are basically mini-processes within a process. However they share the same address space.&lt;/p&gt;
 
@@ -1016,84 +1116,4 @@ Hardware
 
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Unit Testing</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Unit Testing" /><published>2018-12-14T13:01:00-05:00</published><updated>2018-12-14T13:01:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-unit-testing.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Introduction to JUnit.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;unit-testing-overview&quot;&gt;Unit Testing Overview&lt;/h2&gt;
-
-&lt;p&gt;Unit testing is testing bits of your code in isolation.&lt;/p&gt;
-
-&lt;p&gt;A unit can be viewed as the smallest testable part of an application.&lt;/p&gt;
-
-&lt;h3 id=&quot;benefits&quot;&gt;Benefits&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Allows you to make big changes quickly.
-    &lt;ul&gt;
-      &lt;li&gt;You know everything works now because tests pass.&lt;/li&gt;
-      &lt;li&gt;As you refactor the code, you know what breaks since you continuously running tests.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;Helps with code design.
-    &lt;ul&gt;
-      &lt;li&gt;Instead of directly writing code, you first outline all the conditions your code must met.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;test-suites&quot;&gt;Test Suites&lt;/h3&gt;
-
-&lt;p&gt;There are two main ways to test:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Ad Hoc - Test whatever occurs to you at the moment.&lt;/li&gt;
-  &lt;li&gt;Test Suite - Write a thorough set of tests.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;There is a major disadvantage of writing a test suite:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;A LOT of extra programming&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;terminologies&quot;&gt;Terminologies&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Test fixture - Sets up the data that are needed to run tests.&lt;/li&gt;
-  &lt;li&gt;Unit test - Test of a single class.&lt;/li&gt;
-  &lt;li&gt;Test case - Test the response of a single method to a set of inputs.&lt;/li&gt;
-  &lt;li&gt;Test suite - Collection of test cases.&lt;/li&gt;
-  &lt;li&gt;Test runner - Software to run all tests.&lt;/li&gt;
-  &lt;li&gt;Integration test - Test how well classes work together.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;assertequals&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;assertEquals&lt;/code&gt;&lt;/h2&gt;
-
-&lt;p&gt;Nice function to use, but just a warning, if inputs are primitives, it will use &lt;code class=&quot;highlighter-rouge&quot;&gt;==&lt;/code&gt;, however if are objects, it will use the &lt;code class=&quot;highlighter-rouge&quot;&gt;.equals&lt;/code&gt; method.&lt;/p&gt;
-
-&lt;h2 id=&quot;sample-unit-test&quot;&gt;Sample Unit Test&lt;/h2&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;org&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;junit&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;Assert&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;org.junit.Test&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;ComparisonTypeTest&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;nd&quot;&gt;@Test&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;testShouldHaveMIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;assertEquals&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to JUnit.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry></feed>
