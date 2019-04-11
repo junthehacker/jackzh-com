@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-03-12T13:51:42-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-04-11T16:35:10-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -370,7 +370,78 @@ minsize(1) = 1,
 minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search.</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Complexity</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Complexity" /><published>2019-01-14T09:13:00-05:00</published><updated>2019-01-14T09:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-complexity</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html">&lt;h2 id=&quot;useful-manipulations&quot;&gt;Useful Manipulations&lt;/h2&gt;
+&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search.</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Complexity</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Complexity" /><published>2019-01-14T09:13:00-05:00</published><updated>2019-01-14T09:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-complexity</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html">&lt;p&gt;Notes takes for complexity module of CSCB63 course at UTSC.&lt;/p&gt;
+
+&lt;h2 id=&quot;ordered-dictionary&quot;&gt;Ordered Dictionary&lt;/h2&gt;
+
+&lt;p&gt;Finite map from keys to values, assume keys are comparable.&lt;/p&gt;
+
+&lt;p&gt;Some operations supported:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;insert(k, v)&lt;/li&gt;
+  &lt;li&gt;lookup(k)&lt;/li&gt;
+  &lt;li&gt;delete(k)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Ordered set is the same, just with no values, only keys.&lt;/p&gt;
+
+&lt;p&gt;If we implement this using a binary tree, lookup can be very slow if we insert all data within sorted order. We will learn how to improve this.&lt;/p&gt;
+
+&lt;h2 id=&quot;hashed-dictionary--table&quot;&gt;Hashed Dictionary / Table&lt;/h2&gt;
+
+&lt;p&gt;Finite map from keys to values, assume keys can be hashed.&lt;/p&gt;
+
+&lt;p&gt;Same operations as ordered dictionaries.&lt;/p&gt;
+
+&lt;p&gt;Hashed set is the same, just with no values, only keys.&lt;/p&gt;
+
+&lt;p&gt;Hash table is an array of size $L$, put key $k$ in $A[h(k) \% L]$&lt;/p&gt;
+
+&lt;p&gt;We will learn how to choose the hash function, and what to do if there is a collision.&lt;/p&gt;
+
+&lt;h2 id=&quot;priority-queue&quot;&gt;Priority Queue&lt;/h2&gt;
+
+&lt;p&gt;Collection of priority-job pairs, priority is comparable.&lt;/p&gt;
+
+&lt;p&gt;Operations supported:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;insert(p, j)&lt;/li&gt;
+  &lt;li&gt;max()&lt;/li&gt;
+  &lt;li&gt;extract-max()&lt;/li&gt;
+  &lt;li&gt;increase-priority(j, k)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Using heap to implement this can be super fast and easy.&lt;/p&gt;
+
+&lt;h2 id=&quot;graph&quot;&gt;Graph&lt;/h2&gt;
+
+&lt;p&gt;Includes vertices and edges.&lt;/p&gt;
+
+&lt;p&gt;Will learn how to compute reachability, cycles, connected components, and spanning tree/forest.&lt;/p&gt;
+
+&lt;h2 id=&quot;disjoint-sets&quot;&gt;Disjoint Sets&lt;/h2&gt;
+
+&lt;p&gt;Collection of disjoint sets.&lt;/p&gt;
+
+&lt;p&gt;Operations supported:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;make-set(x)&lt;/li&gt;
+  &lt;li&gt;union(S, S’)&lt;/li&gt;
+  &lt;li&gt;find(x)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If we implement this using trees, amortized time can be almost constant.&lt;/p&gt;
+
+&lt;h2 id=&quot;amortized-time-analysis&quot;&gt;Amortized Time Analysis&lt;/h2&gt;
+
+&lt;p&gt;Some operations might be slow in the worst case, but rarely happens. We might not be interesting in only the worst case.&lt;/p&gt;
+
+&lt;p&gt;$at = \frac{\text{total time of calls}}{\# calls}$&lt;/p&gt;
+
+&lt;h2 id=&quot;useful-manipulations&quot;&gt;Useful Manipulations&lt;/h2&gt;
 
 &lt;!--more--&gt;
 
@@ -539,7 +610,7 @@ $n \leq 2^c$&lt;/p&gt;
 
 &lt;p&gt;$n(3-b) \geq 4$&lt;/p&gt;
 
-&lt;p&gt;$n \geq \frac{4}{3-b}$&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Useful Manipulations</summary></entry><entry><title type="html">CSCC69 Operating Systems - Lecture 1</title><link href="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Lecture 1" /><published>2019-01-10T16:25:00-05:00</published><updated>2019-01-10T16:25:00-05:00</updated><id>https://jackzh.com/cscc69/2019/01/10/cscc69-intro</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html">&lt;h2 id=&quot;operating-system-boot-process&quot;&gt;Operating System Boot Process&lt;/h2&gt;
+&lt;p&gt;$n \geq \frac{4}{3-b}$&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Notes takes for complexity module of CSCB63 course at UTSC. Ordered Dictionary Finite map from keys to values, assume keys are comparable. Some operations supported: insert(k, v) lookup(k) delete(k) Ordered set is the same, just with no values, only keys. If we implement this using a binary tree, lookup can be very slow if we insert all data within sorted order. We will learn how to improve this. Hashed Dictionary / Table Finite map from keys to values, assume keys can be hashed. Same operations as ordered dictionaries. Hashed set is the same, just with no values, only keys. Hash table is an array of size $L$, put key $k$ in $A[h(k) \% L]$ We will learn how to choose the hash function, and what to do if there is a collision. Priority Queue Collection of priority-job pairs, priority is comparable. Operations supported: insert(p, j) max() extract-max() increase-priority(j, k) Using heap to implement this can be super fast and easy. Graph Includes vertices and edges. Will learn how to compute reachability, cycles, connected components, and spanning tree/forest. Disjoint Sets Collection of disjoint sets. Operations supported: make-set(x) union(S, S’) find(x) If we implement this using trees, amortized time can be almost constant. Amortized Time Analysis Some operations might be slow in the worst case, but rarely happens. We might not be interesting in only the worst case. $at = \frac{\text{total time of calls}}{\# calls}$ Useful Manipulations</summary></entry><entry><title type="html">CSCC69 Operating Systems - Lecture 1</title><link href="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Lecture 1" /><published>2019-01-10T16:25:00-05:00</published><updated>2019-01-10T16:25:00-05:00</updated><id>https://jackzh.com/cscc69/2019/01/10/cscc69-intro</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/01/10/cscc69-intro.html">&lt;h2 id=&quot;operating-system-boot-process&quot;&gt;Operating System Boot Process&lt;/h2&gt;
 
 &lt;p&gt;This is just a basic description of how a Pentium computer boots.&lt;/p&gt;
 
@@ -773,88 +844,7 @@ Hardware
 &lt;ul&gt;
   &lt;li&gt;Provides a flexible alternative to using inheritance to extend functionality.&lt;/li&gt;
   &lt;li&gt;Objects can be decorated dynamically at runtime.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Decorator pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
-
-&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
-    &lt;ul&gt;
-      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;When something changes in publisher.
-    &lt;ul&gt;
-      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
-      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
-
-&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
-
-&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
-  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
-  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Decorator pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
 
 &lt;p&gt;Iterator and Builder design pattern.&lt;/p&gt;
 
@@ -1116,4 +1106,85 @@ Hardware
 
   &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry></feed>
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Pub/Sub Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Pub/Sub Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-pub-sub.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Publish and Subscribe Pattern.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;p&gt;Design patterns are template or a recipe to solve a problem. They are repeatable solution to common software engineering problems.&lt;/p&gt;
+
+&lt;h2 id=&quot;publish-subscribe-pattern&quot;&gt;Publish Subscribe Pattern&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;One or more subscribers are interested in the state of a publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Register their interest by attaching themselves with the publisher.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When something changes in publisher.
+    &lt;ul&gt;
+      &lt;li&gt;Notify message is sent to each subscriber.&lt;/li&gt;
+      &lt;li&gt;Each subscriber responds to the notification in way it chooses.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;When subscriber is no longer insterested in publisher state, just detatch.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Publisher is also called Observable&lt;/p&gt;
+
+&lt;p&gt;Subscriber is called Observer&lt;/p&gt;
+
+&lt;h3 id=&quot;observer-interface&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observer&lt;/code&gt; Interface&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;update(Observable o, Object arg) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;observable-class&quot;&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Observable&lt;/code&gt; Class&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;addObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;deleteObserver(Observer o) -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;notifyObservers() -&amp;gt; void&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Note THIS IS A CLASS!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;example&quot;&gt;Example&lt;/h3&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;OperatingSystem&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;shutDown&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;setChanged&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;event&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;I am about to shut down&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;notifyObservers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;event&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;File&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Observer&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;modify&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;content&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;addObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;os&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;deleteObserver&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+
+    &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;update&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Observable&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;o&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;arg&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Save the file&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;advantages&quot;&gt;Advantages&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Loosely coupled systems&lt;/li&gt;
+  &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
+  &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry></feed>
