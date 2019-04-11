@@ -6,6 +6,70 @@ tags: cscb63 course-notes
 category: cscb63
 ---
 
+Notes takes for complexity module of CSCB63 course at UTSC.
+
+## Ordered Dictionary
+
+Finite map from keys to values, assume keys are comparable.
+
+Some operations supported:
+
+* insert(k, v)
+* lookup(k)
+* delete(k)
+
+Ordered set is the same, just with no values, only keys.
+
+If we implement this using a binary tree, lookup can be very slow if we insert all data within sorted order. We will learn how to improve this.
+
+## Hashed Dictionary / Table
+
+Finite map from keys to values, assume keys can be hashed.
+
+Same operations as ordered dictionaries.
+
+Hashed set is the same, just with no values, only keys.
+
+Hash table is an array of size $L$, put key $k$ in $A[h(k) \% L]$
+
+We will learn how to choose the hash function, and what to do if there is a collision.
+
+## Priority Queue
+
+Collection of priority-job pairs, priority is comparable.
+
+Operations supported:
+
+* insert(p, j)
+* max()
+* extract-max()
+* increase-priority(j, k)
+
+Using heap to implement this can be super fast and easy.
+
+## Graph
+
+Includes vertices and edges.
+
+Will learn how to compute reachability, cycles, connected components, and spanning tree/forest.
+
+## Disjoint Sets
+
+Collection of disjoint sets.
+
+Operations supported:
+
+* make-set(x)
+* union(S, S')
+* find(x)
+
+If we implement this using trees, amortized time can be almost constant.
+
+## Amortized Time Analysis
+
+Some operations might be slow in the worst case, but rarely happens. We might not be interesting in only the worst case.
+
+$at = \frac{\text{total time of calls}}{\\# calls}$
 
 ## Useful Manipulations
 
