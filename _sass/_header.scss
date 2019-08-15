@@ -2,13 +2,22 @@
 @import 'variables';
 
 header {
-    border-bottom: rgba(0,0,0,0.1) 1px solid;
     h1 {
         small {
             color: rgba(0,0,0,0.5);
             font-size: 20px;
         }
     }
+}
+
+.head-wrapper {
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    background-color: white;
+    z-index: 2;
+    box-shadow: rgba(0,0,0,0.1) 0 0 30px;
 }
 
 @include media-query($on-medium) {
