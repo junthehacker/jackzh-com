@@ -1,4 +1,143 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-10-17T20:18:52-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2019-10-18T13:42:49-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCD58 Computer Networks - Link Layer</title><link href="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Link Layer" /><published>2019-10-17T20:22:00-04:00</published><updated>2019-10-17T20:22:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html">&lt;h2 id=&quot;introduction&quot;&gt;Introduction&lt;/h2&gt;
+
+&lt;p&gt;How do we send messages across a wire?&lt;/p&gt;
+
+&lt;p&gt;Hosts and routers are called &lt;em&gt;nodes&lt;/em&gt;, and the communication path are called &lt;em&gt;links&lt;/em&gt;. A frame encapsulates the datagram and sends the data through a link.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Application
+Presentation
+Session
+Transport
+Network
+Data Link       &amp;lt;- Network cards etc.
+Physical        &amp;lt;- Ethernet cables, wireless signals
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;em&gt;data link&lt;/em&gt; layer is responsible for transferring datagram from one node to physically adjacent node over a physical link.&lt;/p&gt;
+
+&lt;p&gt;A datagram maybe transferred to final destination using many different links, and they may have different protocols. &lt;em&gt;Routing algorithm&lt;/em&gt; decides which path to take to get the datagram to final destination.&lt;/p&gt;
+
+&lt;h2 id=&quot;common-link-layer-services&quot;&gt;Common Link Layer Services&lt;/h2&gt;
+
+&lt;p&gt;&lt;em&gt;Note: link layers may provide more services, these are just examples.&lt;/em&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;framing&quot;&gt;Framing&lt;/h3&gt;
+
+&lt;p&gt;Encapsulate datagram into frames, adding header, trailer (for example addresses and error-correction bits).&lt;/p&gt;
+
+&lt;h3 id=&quot;link-access&quot;&gt;Link Access&lt;/h3&gt;
+
+&lt;p&gt;Allows upper layers to access links, channel if shared medium.&lt;/p&gt;
+
+&lt;p&gt;MAC (Media Access Control) address is used to identify source, destination. This address uniquely identifies each device on a network.&lt;/p&gt;
+
+&lt;h3 id=&quot;reliable-delivery&quot;&gt;Reliable Delivery&lt;/h3&gt;
+
+&lt;p&gt;Usually error correction is not implemented on low error links (fiber, some twisted pairs).&lt;/p&gt;
+
+&lt;p&gt;But wireless has high error-rate, so error correction is implemented on link layer.&lt;/p&gt;
+
+&lt;h2 id=&quot;common-physical-media&quot;&gt;Common Physical Media&lt;/h2&gt;
+
+&lt;h3 id=&quot;twisted-pairs&quot;&gt;Twisted Pairs&lt;/h3&gt;
+
+&lt;p&gt;Usually max 100m.&lt;/p&gt;
+
+&lt;p&gt;CAT5 (most common), supports up to Gigabit ethernet.&lt;/p&gt;
+
+&lt;p&gt;CAT6, 6a, 7 can support 10Gbps, 40Gbps, 100Gbps.&lt;/p&gt;
+
+&lt;h3 id=&quot;coaxial-cable&quot;&gt;Coaxial Cable&lt;/h3&gt;
+
+&lt;p&gt;Usually max 200m.&lt;/p&gt;
+
+&lt;p&gt;But very slow, usually just 10Mbps (why would anyone use this???).&lt;/p&gt;
+
+&lt;h3 id=&quot;fibre-optic-cables&quot;&gt;Fibre Optic Cables&lt;/h3&gt;
+
+&lt;h4 id=&quot;single-mode&quot;&gt;Single-Mode&lt;/h4&gt;
+
+&lt;p&gt;Very narrow core. 10um, light can’t even bounce around within the core.&lt;/p&gt;
+
+&lt;p&gt;Used with lasers for long distances (100km).&lt;/p&gt;
+
+&lt;h4 id=&quot;multi-mode&quot;&gt;Multi-Mode&lt;/h4&gt;
+
+&lt;p&gt;Light can bounce within the core (50um). Used with LEDs for shorter distances, cannot go longer because modal dispersion.&lt;/p&gt;
+
+&lt;h3 id=&quot;fiber&quot;&gt;Fiber&lt;/h3&gt;
+
+&lt;p&gt;Long, thin, pure strand of glass.&lt;/p&gt;
+
+&lt;p&gt;Light propogated through internal reflection, huge bandwidth, can reach 100 petabits/kilometer/sec (Bell Labs).&lt;/p&gt;
+
+&lt;h3 id=&quot;wireless&quot;&gt;Wireless&lt;/h3&gt;
+
+&lt;p&gt;Different frequencies have different properties, and are subject to environmental effects.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Signals decrease as it propogates through matter.&lt;/li&gt;
+  &lt;li&gt;Other sources can interfere (for example 2.4Ghz, worst garbage ever).&lt;/li&gt;
+  &lt;li&gt;Multipath propogation, signal reflects off objects, so they can arrive at destination at slightly different times.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;bandwidth-of-a-channel&quot;&gt;Bandwidth of a Channel&lt;/h2&gt;
+
+&lt;p&gt;There are two main definitions of bandwidths:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;B, in Hz, is the width of the pass-band in the frequency domain&lt;/li&gt;
+  &lt;li&gt;bps, is the information carrying capacity of the channel&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;They are related to noise, noise limits how many signal levels can we safely distinguish.&lt;/p&gt;
+
+&lt;h2 id=&quot;encoding-bits&quot;&gt;Encoding Bits&lt;/h2&gt;
+
+&lt;p&gt;Generate analog waveform from transmitter and sample at receiver.&lt;/p&gt;
+
+&lt;p&gt;Signal transition rate = Baud rate / Versus bit rate&lt;/p&gt;
+
+&lt;h3 id=&quot;nrz&quot;&gt;NRZ&lt;/h3&gt;
+
+&lt;p&gt;Simplest encoding, Non-Return to Zero. High = 1, Low = 0.&lt;/p&gt;
+
+&lt;h3 id=&quot;nrzi&quot;&gt;NRZI&lt;/h3&gt;
+
+&lt;p&gt;Transition for 1s, no transition for 0s.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://i.imgur.com/zAXrdUb.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;clock-recovery&quot;&gt;Clock Recovery&lt;/h2&gt;
+
+&lt;p&gt;How can we distinguish consecutive 0s or 1s?&lt;/p&gt;
+
+&lt;p&gt;Sender and receivers won’t always have the same clock&lt;/p&gt;
+
+&lt;p&gt;There are a few solutions to this problem:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Send a seperate clock signal -&amp;gt; Expensive&lt;/li&gt;
+  &lt;li&gt;Keep messages short -&amp;gt; Limits data rate&lt;/li&gt;
+  &lt;li&gt;Embed clock signal in data signal&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;manchester-coding&quot;&gt;Manchester Coding&lt;/h3&gt;
+
+&lt;p&gt;Make transition in the middle of every bit period.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Low-to-High is 0, High-to-Low is 1.&lt;/li&gt;
+  &lt;li&gt;Used in 10Mbps ethernet.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;It is self-clocking, XOR of NRZ encoding. However it has 50% efficiency.&lt;/p&gt;
+
+&lt;h3 id=&quot;4b5b-codes&quot;&gt;4B/5B Codes&lt;/h3&gt;
+
+&lt;p&gt;Maps 4 bits to 5 bits, and ensures never 3 consecutive 0s back-to-back. 80% efficiency.&lt;/p&gt;
+
+&lt;p&gt;Used in LANs (FDDI, 100Mbps ethernet).&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Introduction How do we send messages across a wire? Hosts and routers are called nodes, and the communication path are called links. A frame encapsulates the datagram and sends the data through a link. Application Presentation Session Transport Network Data Link &amp;lt;- Network cards etc. Physical &amp;lt;- Ethernet cables, wireless signals The data link layer is responsible for transferring datagram from one node to physically adjacent node over a physical link. A datagram maybe transferred to final destination using many different links, and they may have different protocols. Routing algorithm decides which path to take to get the datagram to final destination. Common Link Layer Services Note: link layers may provide more services, these are just examples. Framing Encapsulate datagram into frames, adding header, trailer (for example addresses and error-correction bits). Link Access Allows upper layers to access links, channel if shared medium. MAC (Media Access Control) address is used to identify source, destination. This address uniquely identifies each device on a network. Reliable Delivery Usually error correction is not implemented on low error links (fiber, some twisted pairs). But wireless has high error-rate, so error correction is implemented on link layer. Common Physical Media Twisted Pairs Usually max 100m. CAT5 (most common), supports up to Gigabit ethernet. CAT6, 6a, 7 can support 10Gbps, 40Gbps, 100Gbps. Coaxial Cable Usually max 200m. But very slow, usually just 10Mbps (why would anyone use this???). Fibre Optic Cables Single-Mode Very narrow core. 10um, light can’t even bounce around within the core. Used with lasers for long distances (100km). Multi-Mode Light can bounce within the core (50um). Used with LEDs for shorter distances, cannot go longer because modal dispersion. Fiber Long, thin, pure strand of glass. Light propogated through internal reflection, huge bandwidth, can reach 100 petabits/kilometer/sec (Bell Labs). Wireless Different frequencies have different properties, and are subject to environmental effects. Signals decrease as it propogates through matter. Other sources can interfere (for example 2.4Ghz, worst garbage ever). Multipath propogation, signal reflects off objects, so they can arrive at destination at slightly different times. Bandwidth of a Channel There are two main definitions of bandwidths: B, in Hz, is the width of the pass-band in the frequency domain bps, is the information carrying capacity of the channel They are related to noise, noise limits how many signal levels can we safely distinguish. Encoding Bits Generate analog waveform from transmitter and sample at receiver. Signal transition rate = Baud rate / Versus bit rate NRZ Simplest encoding, Non-Return to Zero. High = 1, Low = 0. NRZI Transition for 1s, no transition for 0s. Clock Recovery How can we distinguish consecutive 0s or 1s? Sender and receivers won’t always have the same clock There are a few solutions to this problem: Send a seperate clock signal -&amp;gt; Expensive Keep messages short -&amp;gt; Limits data rate Embed clock signal in data signal Manchester Coding Make transition in the middle of every bit period. Low-to-High is 0, High-to-Low is 1. Used in 10Mbps ethernet. It is self-clocking, XOR of NRZ encoding. However it has 50% efficiency. 4B/5B Codes Maps 4 bits to 5 bits, and ensures never 3 consecutive 0s back-to-back. 80% efficiency. Used in LANs (FDDI, 100Mbps ethernet).</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -925,266 +1064,4 @@ Hardware
   &lt;li&gt;Loosely coupled systems&lt;/li&gt;
   &lt;li&gt;Encouages us to know about the relationships between different parts of our app&lt;/li&gt;
   &lt;li&gt;One of the best tool to design decoupled systems&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry><entry><title type="html">CSCB07 Software Design - Iterator and Builder Pattern</title><link href="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Iterator and Builder Pattern" /><published>2018-12-14T14:06:00-05:00</published><updated>2018-12-14T14:06:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/14/cscb07-iterator-builder.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
-
-&lt;p&gt;Iterator and Builder design pattern.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;h2 id=&quot;iterator-pattern&quot;&gt;Iterator Pattern&lt;/h2&gt;
-
-&lt;p&gt;Iterator pattern allows traversal of the elements of a collection without exposing the underlying implementation.&lt;/p&gt;
-
-&lt;p&gt;To use iterator pattern, we can utilize Java’s &lt;code class=&quot;highlighter-rouge&quot;&gt;Iterator&lt;/code&gt; interface.&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;MyIterator&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Object&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we simply construct this iterator within the actual class.&lt;/p&gt;
-
-&lt;p&gt;There is also &lt;code class=&quot;highlighter-rouge&quot;&gt;Iterable&lt;/code&gt; interface&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;vector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;java.util.Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util.NumberFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;vector.exceptions.IncompatibleVectorTypeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;vector.exceptions.InvalidIndexException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;vector.exceptions.InvalidVectorSizeException&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/**
- * An vector contains real numbers.
- */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;RealVector&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;implements&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IVector&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Iterable&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Stores all data.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Get the iterator.
-   *
-   * @return The number iterator.
-   */&lt;/span&gt;
-  &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Iterator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-      &lt;span class=&quot;cm&quot;&gt;/**
-       * Current iterator index.
-       */&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-      &lt;span class=&quot;cm&quot;&gt;/**
-       * If iterator has next item.
-       * @return True if has next item.
-       */&lt;/span&gt;
-      &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;boolean&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentIndex&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-      &lt;span class=&quot;cm&quot;&gt;/**
-       * Get iterator next item.
-       * @return Next item.
-       */&lt;/span&gt;
-      &lt;span class=&quot;nd&quot;&gt;@Override&lt;/span&gt;
-      &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Number&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-        &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;currentIndex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;currentIndex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;++;&lt;/span&gt;
-        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;tmp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;];&lt;/span&gt;
-      &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;};&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h2 id=&quot;nested-classes&quot;&gt;Nested Classes&lt;/h2&gt;
-
-&lt;p&gt;It is a good way to group classes that are only used in one place.&lt;/p&gt;
-
-&lt;p&gt;Nesting helper classes can make package more streamlined.&lt;/p&gt;
-
-&lt;p&gt;It also increases encapsulation and creates more readable and maintainable code.&lt;/p&gt;
-
-&lt;h3 id=&quot;static--non-static&quot;&gt;Static / Non-Static&lt;/h3&gt;
-
-&lt;p&gt;Nested classes that are declared static are called static nested classes.&lt;/p&gt;
-
-&lt;p&gt;Non-static nested classes are called inner classes.&lt;/p&gt;
-
-&lt;p&gt;Static nested class is really just a class, but for package organizing convinence.&lt;/p&gt;
-
-&lt;h2 id=&quot;builder-pattern&quot;&gt;Builder Pattern&lt;/h2&gt;
-
-&lt;p&gt;Consider builder when have a lot of constructor parameters.&lt;/p&gt;
-
-&lt;p&gt;Static factories and constructors have problems:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Does not work well with large number of optional parameters.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Advantage of builder:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Very easy to read and write.&lt;/li&gt;
-  &lt;li&gt;Can simulate named optional params in python.&lt;/li&gt;
-  &lt;li&gt;The class is immutable!&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Sample builder directly taken from A3&lt;/p&gt;
-
-&lt;div class=&quot;language-java highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;package&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cfiltering&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;io.IOutputIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;io.StreamOutputIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.RealMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.RealSquareMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;matrix.comparator.DistanceComparator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;parser.IParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util.NumberFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;util.SimilarityScore&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-&lt;span class=&quot;cm&quot;&gt;/**
- * Filtering instance, calculates all scores.
- */&lt;/span&gt;
-&lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;CFilter&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Used to parse files to matrix.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IParser&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Used to write output content.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOutputIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * User movie rating matrix.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RealMatrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userMovieMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Similarity score matrix.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;RealSquareMatrix&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Create a new filter instance.
-   *
-   * @param b Builder instance.
-   * @throws Exception When fatal error.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;matrixParser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;userMovieMatrix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;RealMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;parse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;userUserMatrix&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SimilarityScore&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;calculateSimilarityMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;userMovieMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Print the result of this filtering.
-   *
-   * @throws Exception When fatal error.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-    &lt;span class=&quot;c1&quot;&gt;// Print userUserMatrix&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\n\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Print most similar pairs&lt;/span&gt;
-    &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[][]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DistanceComparator&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findPairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MAX&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;writeLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The most similar pairs of users from &quot;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;above userUserMatrix are:&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;UserPair&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userPair&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UserPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\nwith similarity score of &quot;&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;NumberFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;formatFloatForPrinting&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]))&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\n\n\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-
-    &lt;span class=&quot;c1&quot;&gt;// Print most dissimilar pairs&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;DistanceComparator&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;findPairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ComparisonType&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;MIN&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;writeLine&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;The most dissimilar pairs of users from &quot;&lt;/span&gt;
-        &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;above userUserMatrix are:&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;UserPair&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userPair&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;UserPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userPair&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;toString&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-    &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
-        &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;substring&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;length&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\nwith similarity score of &quot;&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;
-            &lt;span class=&quot;n&quot;&gt;NumberFormatter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;formatFloatForPrinting&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;
-                &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;float&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;userUserMatrix&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;getValue&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;],&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pairs&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;][&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]))&lt;/span&gt;
-            &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;\n\n\n&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;cm&quot;&gt;/**
-   * Builder class.
-   */&lt;/span&gt;
-  &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;static&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * Used to parse file to matrix.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;final&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IParser&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * Used to write outputs.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;private&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;IOutputIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * Create a new builder instance.
-     *
-     * @param matrixParser Parser instance to use.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;Builder&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IParser&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;matrixParser&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;matrixParser&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;c1&quot;&gt;// Default values.&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;StreamOutputIO&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;createWithStdOut&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;();&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * Set output stream.
-     *
-     * @param outputStream Stream to use.
-     * @return The builder.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Builder&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOutputIO&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;outputStream&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;outputStream&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-    &lt;span class=&quot;cm&quot;&gt;/**
-     * Build the filtering instance.
-     *
-     * @return Built instance.
-     * @throws Exception When fatal error.
-     */&lt;/span&gt;
-    &lt;span class=&quot;kd&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;CFilter&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;build&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;kd&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Exception&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;CFilter&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;);&lt;/span&gt;
-    &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-
-  &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Iterator and Builder design pattern.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Publish and Subscribe Pattern.</summary></entry></feed>

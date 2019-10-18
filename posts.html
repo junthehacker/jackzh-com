@@ -4,13 +4,13 @@
         <title>Posts - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=2aca3a8_20191017_201851" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=2aca3a8_20191018_134248" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=2aca3a8_20191017_201851" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=2aca3a8_20191018_134248" />
     </head>
     <body>
 <div class="head-wrapper">
@@ -37,6 +37,157 @@
 <div class="page-wrapper">
 <section>
     <div class="container">
+        
+        <div class="post-item">
+            <a href="/cscd58/2019/10/17/cscd58-link-layer.html"><h3>CSCD58 Computer Networks - Link Layer</h3></a>
+            
+                <span class="post-tag">cscd58</span>
+            
+                <span class="post-tag">course-notes</span>
+            
+            <h2 id="introduction">Introduction</h2>
+
+<p>How do we send messages across a wire?</p>
+
+<p>Hosts and routers are called <em>nodes</em>, and the communication path are called <em>links</em>. A frame encapsulates the datagram and sends the data through a link.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Application
+Presentation
+Session
+Transport
+Network
+Data Link       &lt;- Network cards etc.
+Physical        &lt;- Ethernet cables, wireless signals
+</code></pre></div></div>
+
+<p>The <em>data link</em> layer is responsible for transferring datagram from one node to physically adjacent node over a physical link.</p>
+
+<p>A datagram maybe transferred to final destination using many different links, and they may have different protocols. <em>Routing algorithm</em> decides which path to take to get the datagram to final destination.</p>
+
+<h2 id="common-link-layer-services">Common Link Layer Services</h2>
+
+<p><em>Note: link layers may provide more services, these are just examples.</em></p>
+
+<h3 id="framing">Framing</h3>
+
+<p>Encapsulate datagram into frames, adding header, trailer (for example addresses and error-correction bits).</p>
+
+<h3 id="link-access">Link Access</h3>
+
+<p>Allows upper layers to access links, channel if shared medium.</p>
+
+<p>MAC (Media Access Control) address is used to identify source, destination. This address uniquely identifies each device on a network.</p>
+
+<h3 id="reliable-delivery">Reliable Delivery</h3>
+
+<p>Usually error correction is not implemented on low error links (fiber, some twisted pairs).</p>
+
+<p>But wireless has high error-rate, so error correction is implemented on link layer.</p>
+
+<h2 id="common-physical-media">Common Physical Media</h2>
+
+<h3 id="twisted-pairs">Twisted Pairs</h3>
+
+<p>Usually max 100m.</p>
+
+<p>CAT5 (most common), supports up to Gigabit ethernet.</p>
+
+<p>CAT6, 6a, 7 can support 10Gbps, 40Gbps, 100Gbps.</p>
+
+<h3 id="coaxial-cable">Coaxial Cable</h3>
+
+<p>Usually max 200m.</p>
+
+<p>But very slow, usually just 10Mbps (why would anyone use this???).</p>
+
+<h3 id="fibre-optic-cables">Fibre Optic Cables</h3>
+
+<h4 id="single-mode">Single-Mode</h4>
+
+<p>Very narrow core. 10um, light can’t even bounce around within the core.</p>
+
+<p>Used with lasers for long distances (100km).</p>
+
+<h4 id="multi-mode">Multi-Mode</h4>
+
+<p>Light can bounce within the core (50um). Used with LEDs for shorter distances, cannot go longer because modal dispersion.</p>
+
+<h3 id="fiber">Fiber</h3>
+
+<p>Long, thin, pure strand of glass.</p>
+
+<p>Light propogated through internal reflection, huge bandwidth, can reach 100 petabits/kilometer/sec (Bell Labs).</p>
+
+<h3 id="wireless">Wireless</h3>
+
+<p>Different frequencies have different properties, and are subject to environmental effects.</p>
+
+<ul>
+  <li>Signals decrease as it propogates through matter.</li>
+  <li>Other sources can interfere (for example 2.4Ghz, worst garbage ever).</li>
+  <li>Multipath propogation, signal reflects off objects, so they can arrive at destination at slightly different times.</li>
+</ul>
+
+<h2 id="bandwidth-of-a-channel">Bandwidth of a Channel</h2>
+
+<p>There are two main definitions of bandwidths:</p>
+
+<ul>
+  <li>B, in Hz, is the width of the pass-band in the frequency domain</li>
+  <li>bps, is the information carrying capacity of the channel</li>
+</ul>
+
+<p>They are related to noise, noise limits how many signal levels can we safely distinguish.</p>
+
+<h2 id="encoding-bits">Encoding Bits</h2>
+
+<p>Generate analog waveform from transmitter and sample at receiver.</p>
+
+<p>Signal transition rate = Baud rate / Versus bit rate</p>
+
+<h3 id="nrz">NRZ</h3>
+
+<p>Simplest encoding, Non-Return to Zero. High = 1, Low = 0.</p>
+
+<h3 id="nrzi">NRZI</h3>
+
+<p>Transition for 1s, no transition for 0s.</p>
+
+<p><img src="https://i.imgur.com/zAXrdUb.png" alt="" /></p>
+
+<h2 id="clock-recovery">Clock Recovery</h2>
+
+<p>How can we distinguish consecutive 0s or 1s?</p>
+
+<p>Sender and receivers won’t always have the same clock</p>
+
+<p>There are a few solutions to this problem:</p>
+
+<ul>
+  <li>Send a seperate clock signal -&gt; Expensive</li>
+  <li>Keep messages short -&gt; Limits data rate</li>
+  <li>Embed clock signal in data signal</li>
+</ul>
+
+<h3 id="manchester-coding">Manchester Coding</h3>
+
+<p>Make transition in the middle of every bit period.</p>
+
+<ul>
+  <li>Low-to-High is 0, High-to-Low is 1.</li>
+  <li>Used in 10Mbps ethernet.</li>
+</ul>
+
+<p>It is self-clocking, XOR of NRZ encoding. However it has 50% efficiency.</p>
+
+<h3 id="4b5b-codes">4B/5B Codes</h3>
+
+<p>Maps 4 bits to 5 bits, and ensures never 3 consecutive 0s back-to-back. 80% efficiency.</p>
+
+<p>Used in LANs (FDDI, 100Mbps ethernet).</p>
+
+
+        </div>
         
         <div class="post-item">
             <a href="/cscb63/2019/03/12/cscb63-fib-heap.html"><h3>CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</h3></a>
@@ -744,7 +895,7 @@
 
 <footer>
     <div class="container">
-        <div class="build">[production] 2aca3a8_20191017_201851</div>
+        <div class="build">[production] 2aca3a8_20191018_134248</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -761,6 +912,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=2aca3a8_20191017_201851"></script>
+<script src="/assets/js/app.js?v=2aca3a8_20191018_134248"></script>
 </body>
 </html>
