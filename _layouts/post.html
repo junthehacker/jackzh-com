@@ -2,16 +2,19 @@
 {% include partials/header.html %}
 {% include partials/navigation.html %}
 
-<div class="container">
-    <div class="js-toc"></div>
-    <br/>
-    {% for tag in page.tags %}
-        <span class="post-tag">{{ tag }}</span>
-    {% endfor %}
-    <div class="post-content">
-        {{ content }}
+<div class="page-wrapper">
+    <div class="container">
+        <div class="js-toc"></div>
+        <br/>
+        {% for tag in page.tags %}
+            <span class="post-tag">{{ tag }}</span>
+        {% endfor %}
+        <div class="post-content">
+            {{ content }}
+        </div>
     </div>
 </div>
+
 
 {% include partials/footer.html %}
 {% include partials/foot.html %}
