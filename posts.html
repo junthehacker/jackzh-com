@@ -4,13 +4,13 @@
         <title>Posts - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=2aca3a8_20191018_134248" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=02e7952_20191019_130839" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=2aca3a8_20191018_134248" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=02e7952_20191019_130839" />
     </head>
     <body>
 <div class="head-wrapper">
@@ -186,6 +186,216 @@ Physical        &lt;- Ethernet cables, wireless signals
 
 <p>Used in LANs (FDDI, 100Mbps ethernet).</p>
 
+<h2 id="framing-1">Framing</h2>
+
+<p>We need to send messages, not bits (requires synchronization). Adaptors allows hosts to exchange frames through links.</p>
+
+<h3 id="ppp-point-to-point-protocol">PPP Point-to-Point Protocol</h3>
+
+<p>Flag is <code class="highlighter-rouge">0x7E</code>, it indicate the start and end of of frames.</p>
+
+<p>If payload contains this flag, it must be “stuffed” (escaped).</p>
+
+<ul>
+  <li>0x7E -&gt; 0x7D, 0x5E</li>
+  <li>0x7D -&gt; 0x7D, 0x5D</li>
+</ul>
+
+<h2 id="latency">Latency</h2>
+
+<p>How long does it take to send a message.</p>
+
+<ul>
+  <li>Propagation delay = distance / speed of light in media
+    <ul>
+      <li>How long does it take for 1 bit to travel.</li>
+    </ul>
+  </li>
+  <li>Transmission delay = message size / rate
+    <ul>
+      <li>How quickly can you get the message onto the wire.</li>
+    </ul>
+  </li>
+</ul>
+
+<p>Latency = Propogation Delay + Transmission Delay</p>
+
+<p><img src="https://i.imgur.com/jISgrP1.png" alt="" /></p>
+
+<p>RTT (Round-Trip-Time) is just twice the one way delay.</p>
+
+<h2 id="throughput">Throughput</h2>
+
+<p>Measure of system’s ability to pumpout data (not bandwidth).</p>
+
+<p>Throughput = Transfer Size / Transfer Time.</p>
+
+<h2 id="bandwidth-delay-product">Bandwidth Delay Product</h2>
+
+<p>This indicates how many bits can the network “store” in any given time.</p>
+
+<p>Suppose latency is 16 seconds, and the bandwidth is 1b/s, then the BDP is 1b/s * 16s = 16 bits.</p>
+
+<p>Tells us how much data can be sent before a receiver sees any of it. 2x BDP means how much data we could send before hearing back about the first bit. Rule of thumb for sizing router buffers.</p>
+
+<h2 id="packet-switching">Packet Switching</h2>
+
+<p>End to end latency is latency of all routers added together.</p>
+
+<p>Packet switching allows parallel transmission across all links, reducing latendy while also prevents a link from being “hogged” for a long time by one message. This is essentially the exact same idea as memory paging.</p>
+
+<h3 id="queueing-delay">Queueing Delay</h3>
+
+<p>Network might be busy when a packet arrives, so the actual end to end latency is</p>
+
+<p>Transmission Delay + Propogation Delay + Queueing Delay</p>
+
+<h2 id="error-detection-and-correction">Error Detection and Correction</h2>
+
+<p>Link may transmit garbage, how can we detect errors when it arrives?</p>
+
+<p>This is the responsibility of multiple layers:</p>
+
+<ul>
+  <li>Transport</li>
+  <li>Network</li>
+  <li>Data Link</li>
+</ul>
+
+<p>Physical is not included because ofc, physical is what causes error.</p>
+
+<p>We can add redundant data</p>
+
+<ul>
+  <li>Error detection codes: Allows errors to be recognized</li>
+  <li>Error correction codes: Allows errors to be repaired</li>
+</ul>
+
+<p>Basic block codes????? page 42</p>
+
+<h3 id="strategies-to-correct-errors">Strategies to Correct Errors</h3>
+
+<p>There are two main strategies</p>
+
+<ul>
+  <li>Detect and retransmit, or Automatic Repeat Request (ARQ)</li>
+  <li>Use error correcting codes, or Forward Error Correction (FEC)</li>
+</ul>
+
+<p>Real-time media tend to use error correction because it is faster.</p>
+
+<p>Higher levels (network+) may use retransmissions (less error, doesn’t make sense to include codes).</p>
+
+<p>Most data networks today use error detection, not correction, because less overhead. But really depends on the application and error characteristics.</p>
+
+<h4 id="common-correction-codes">Common Correction Codes</h4>
+<ul>
+  <li>Hamming Codes</li>
+  <li>Binary Convolutional Codes</li>
+  <li>Reed-Solomon and Low-Density Parity Check Codes
+    <ul>
+      <li>Complex, but widely used</li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="common-detection-codes">Common Detection Codes</h4>
+<ul>
+  <li>Parity</li>
+  <li>Checksums</li>
+  <li>Cyclic redundancy codes</li>
+</ul>
+
+<h3 id="the-hamming-distance">The Hamming Distance</h3>
+
+<p>If an error turns one valid codeword into another valid one, then we cannot detect/correct them.</p>
+
+<p>Hamming distance of a code is the smallest number of bit differences that turn any one codeword into another.</p>
+
+<p>So for example 000/111 has HD of 3.</p>
+
+<p>If we define our error detection code as a simple duplication, then the HD is 2 because all valid words must have at least 2 bits different.</p>
+
+<ul>
+  <li>HD d+1
+    <ul>
+      <li>d errors can be detected</li>
+    </ul>
+  </li>
+  <li>HD 2d+1
+    <ul>
+      <li>d errors can be corrected</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="parity">Parity</h3>
+
+<p>Start with n bits and add another so that total number of 1s is even (even parity).</p>
+
+<p>Cannot detect even number of bit errors. Pretty bad, don’t use this garbage.</p>
+
+<p>Random errors are detected with probability of 1/2.</p>
+
+<h4 id="2d-parity">2D Parity</h4>
+
+<p>Make the message a grid of bits, and add parity bits to each row and column.</p>
+
+<p>n-D parity can usually correct n-1 errors.</p>
+
+<p>2D parity detects all 1,2,3 bit errors, and many with &gt;3 bits.</p>
+
+<p><img src="https://www.evernote.com/l/Aq2gGg1AeyBPrbWI1-XhWweMYrvIZ9ESY9sB/image.png" alt="" /></p>
+
+<h3 id="checksums">Checksums</h3>
+
+<p>Widely used in IP, ICMP, TCP, UDP.</p>
+
+<p>Checksum is the 1s complement of the 1s complement sum of the data interpreted 16 bits at a time (for 16-bit checksums).</p>
+
+<p>Example: 4-bit checksum</p>
+
+<p>Say we have the message 101101111010, first we divide it up to 4 bits segments</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1011
+0111
+1010
+</code></pre></div></div>
+
+<p>and then we add them</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  1011
++ 0111
+  0010  with 1 carry
+  0011
++ 1010
+  1101
+</code></pre></div></div>
+
+<p>Then the 1s complement of 1101, which is 0010 is our checksum.</p>
+
+<p>On the receiver, we just add all of them</p>
+
+<p>1011 + 0111 + 1010 + 0010 = 1111, we are all good!</p>
+
+<h3 id="crcs-cyclic-redundancy-check">CRCs (Cyclic Redundancy Check)</h3>
+
+<p>Stronger then checksums, widely used in ethernet</p>
+
+<p>Given n bits of data, generate a k bit check sequence that gives a combined n + k bits that are divisible by a chosen divisor C(x).</p>
+
+<p>If we have 1001, interpret it as x^3 + x^0</p>
+
+<p>Following example uses message 10011010 and generator 1101 or x^3 + x^2 + x^0</p>
+
+<p><img src="https://www.evernote.com/l/Aq3s-J8p2TBPpL1-4c8CnMaf0NRk-otyz3gB/image.png" alt="" /></p>
+
+<p>Message to be sent is 10011010101, and it is divisible by 1101.</p>
+
+<h3 id="reed-solomon--bch-codes">Reed-Solomon / BCH Codes</h3>
+
+<p>Mainly used for magnetic disks.</p>
+
+<p>2t redundant bits can correct &lt;= t errors.</p>
 
         </div>
         
@@ -895,7 +1105,7 @@ Physical        &lt;- Ethernet cables, wireless signals
 
 <footer>
     <div class="container">
-        <div class="build">[production] 2aca3a8_20191018_134248</div>
+        <div class="build">[production] 02e7952_20191019_130839</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -912,6 +1122,6 @@ Physical        &lt;- Ethernet cables, wireless signals
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=2aca3a8_20191018_134248"></script>
+<script src="/assets/js/app.js?v=02e7952_20191019_130839"></script>
 </body>
 </html>
