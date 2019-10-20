@@ -6,6 +6,10 @@ tags: cscd58 course-notes
 category: cscd58
 ---
 
+Introduction to ethernet and IP
+
+<!--more-->
+
 ## Ethernet (Data Link Layer)
 
 Dominant wired LAN tech, first widely used as well.

@@ -6,6 +6,10 @@ tags: cscd58 course-notes
 category: cscd58
 ---
 
+Physical links and error correction/detection
+
+<!--more-->
+
 ## Introduction
 
 How do we send messages across a wire?
