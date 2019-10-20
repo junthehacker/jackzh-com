@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCD58 Computer Networks - Internet Protocol - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=293e1a2_20191020_101755" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=293e1a2_20191020_101755" />
+    </head>
+    <body>
+<div class="head-wrapper">
+    <header>
+        <div class="container">
+            <h1>Jun Zheng <small>CSCD58 Computer Networks - Internet Protocol</small></h1>
+        </div>
+    </header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+</div>
+
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="js-toc"></div>
+        <br/>
+        
+            <span class="post-tag">cscd58</span>
+        
+            <span class="post-tag">course-notes</span>
+        
+        <div class="post-content">
+            <h2 id="ethernet-data-link-layer">Ethernet (Data Link Layer)</h2>
+
+<p>Dominant wired LAN tech, first widely used as well.</p>
+
+<p>Simpler and cheaper than token LANs and ATM. Pretty fast as well.</p>
+
+<h3 id="csmacd">CSMA/CD</h3>
+
+<p>Carrier sense multiple access</p>
+<ul>
+  <li>Wait until channel is idle to start transmission</li>
+</ul>
+
+<p>Collision detection</p>
+<ul>
+  <li>Listen while transmitting, if there is a colltion, then abort and send jam signal</li>
+</ul>
+
+<p>Usually ethernet do exponential back-off, if there was a collision, it waits for a random time before trying again.</p>
+<ul>
+  <li>After mth collision, chookse K randomly from {0, …., 2^m-1}</li>
+  <li>and wait for k*512 bit times.</li>
+</ul>
+
+<h3 id="limitation-on-length">Limitation on Length</h3>
+
+<p>Suppose the latency on a network is <code class="highlighter-rouge">d</code>. And host A sends a packet to B, B will not see that packet until t+d, if a collision happens, then the earliest time A can know is t+2d.</p>
+
+<p>This imposes some restriction on ethernet:</p>
+<ul>
+  <li>Maximum length of the wire 2500m</li>
+  <li>Minimum length of the packet 512 bits</li>
+</ul>
+
+<h3 id="frame-structure">Frame Structure</h3>
+
+<ul>
+  <li>Addresses: Source and destination MAC addresses
+    <ul>
+      <li>If destination address matches the adaptor, then all good, otherwise drop.</li>
+    </ul>
+  </li>
+  <li>Type: Indicates higher layer protocol
+    <ul>
+      <li>Usually IP</li>
+    </ul>
+  </li>
+  <li>CRC: Error checking bits</li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq0xupKW_spOgq5Qa9lLak8WWp-qf0s_rr4B/image.png" alt="" /></p>
+
+<h2 id="connectionless-service">Connectionless Service</h2>
+
+<h3 id="connectionless">Connectionless</h3>
+<ul>
+  <li>No handshaking</li>
+</ul>
+
+<h3 id="unreliable">Unreliable</h3>
+<ul>
+  <li>Receiving adapter doesn’t send ACKs or NACKs</li>
+  <li>Packets can have gaps</li>
+  <li>TCP will fill the gaps, otherwise the application will see them</li>
+</ul>
+
+<h2 id="switching-data">Switching Data</h2>
+
+<p>Different device switch different things</p>
+<ul>
+  <li>Physical layer: electrical signals</li>
+  <li>Link layer: frames</li>
+  <li>Network layer: packets</li>
+</ul>
+
+<h3 id="repeaters-physical">Repeaters (Physical)</h3>
+
+<p>It basically monitors electrical signals on each LAN, and transmits an amplified copy. Used to increase network distance.</p>
+
+<h3 id="hubs-physical">Hubs (Physical)</h3>
+
+<p>Joins multiple input lines, can hold multiple line cards. Doesn’t necessarily amplify the signal, but I don’t see why not.</p>
+
+<p>However, repeaters and hubs have problems</p>
+
+<ul>
+  <li>Huge collision domain</li>
+  <li>Cannot support multiple technologies</li>
+  <li>Still have limitations (still can’t go beyond 2500 meters on ethernet)
+    <ul>
+      <li>basically.. you are still in the same LAN!</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="bridges-link">Bridges (Link)</h3>
+
+<p>Connects two or more LANs at the link layer.</p>
+<ul>
+  <li>Extracts destination address from the frame</li>
+  <li>Looks up destination in its own table</li>
+  <li>Forwards the frame</li>
+</ul>
+
+<h3 id="switches-link">Switches (Link)</h3>
+
+<p>Basically bridges, but instead of connecting LANs it connects hosts.</p>
+
+<h3 id="dedicated-access-and-full-duplex">Dedicated Access and Full Duplex</h3>
+
+<ul>
+  <li>Dedicated access
+    <ul>
+      <li>Direct connection with the switch</li>
+    </ul>
+  </li>
+  <li>Full duplex
+    <ul>
+      <li>Connection can go both directions</li>
+      <li>So no more collision issue</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="hubs-vs-switches">Hubs vs Switches</h3>
+
+<h4 id="advantages">Advantages</h4>
+<ul>
+  <li>Only forwards frames to the correct host</li>
+  <li>Can extend the geographic span of the network</li>
+  <li>Improves privacy</li>
+  <li>Applies CSMA/CD</li>
+  <li>Can have different technologies</li>
+</ul>
+
+<h4 id="disadvantages">Disadvantages</h4>
+<ul>
+  <li>Slower
+    <ul>
+      <li>Solution is cut-through switching</li>
+    </ul>
+  </li>
+  <li>Need to learn where to forward frames</li>
+  <li>Higher cost</li>
+</ul>
+
+<h3 id="cut-through-switching">Cut-Through Switching</h3>
+
+<p>Buffering a frame takes time, and the delay can be quite large compared to network delays.</p>
+
+<p>Basically two main points</p>
+<ul>
+  <li>Start transmitting as soon as possible</li>
+  <li>Transmit the head of the packet while still receiving the tail (because head already tells you where to forward)</li>
+</ul>
+
+<h3 id="self-learning">Self Learning</h3>
+
+<p>We want to construct the switch table automatically.</p>
+
+<p>When a packet arrives, switch inpects the MAC address and associates that MAC with the incoming interface. Now the switch knows how to reach that host.</p>
+
+<p>If the switch doesn’t know where to send the packet, then it will just flood the network (send to every host).</p>
+
+<h4 id="flooding-and-loops">Flooding and Loops</h4>
+
+<p>Switches sometimes needs to broadcast frames. Which just means flooding.</p>
+
+<p>Flooding can lead to loops if there is a cycle of switches.</p>
+
+<h4 id="spanning-trees">Spanning Trees</h4>
+
+<p>A spanning tree makes sure the topology has no loops, switches needs to cooperate to build the spanning tree.</p>
+
+<p>The basic idea:</p>
+<ul>
+  <li>Elect a root (switch with smallest identifier)</li>
+  <li>Each switch checks if its interface is on the shortest path from the root
+    <ul>
+      <li>Excludes it from the tree if not</li>
+    </ul>
+  </li>
+</ul>
+
+<p>The algorithm:</p>
+<ul>
+  <li>Initially, each switch thinks it is the root
+    <ul>
+      <li>Sends out a message to every interface identifying itself as the root with distance of 0</li>
+    </ul>
+  </li>
+  <li>Upon receiving a message
+    <ul>
+      <li>Check root id, if smaller</li>
+      <li>Start viewing that switch as root</li>
+    </ul>
+  </li>
+  <li>Adds 1 to the distance received from a neighbor
+    <ul>
+      <li>Checks to see which interface is not on a shortest path to root</li>
+      <li>Exclude them</li>
+    </ul>
+  </li>
+</ul>
+
+<p>However algorithms can fail, here are some important things to note:</p>
+
+<ul>
+  <li>Failure of the root node
+    <ul>
+      <li>Must elect a new root</li>
+    </ul>
+  </li>
+  <li>Failure of other switches
+    <ul>
+      <li>Must recompute</li>
+    </ul>
+  </li>
+  <li>Root switch should periodically reannouncing itself as the root</li>
+  <li>Detecting failure through timeout
+    <ul>
+      <li>Wait to hear from others</li>
+      <li>If takes too long, just claims itself to be root</li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="switches-vs-routers">Switches vs Routers</h3>
+
+<h4 id="advantages-1">Advantages</h4>
+
+<ul>
+  <li>Plug and play</li>
+  <li>Fast filtering and forwarding</li>
+</ul>
+
+<h4 id="disadvantages-1">Disadvantages</h4>
+<ul>
+  <li>Topology is restricted to spanning tree</li>
+  <li>Large networks require large ARP (address resolution protocol) tables</li>
+  <li>Broadcast storms can cause the network to collapse</li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq1fMD0eDtlNAY3rRYYncgP2CCNMdVpTMXEB/image.png" alt="" /></p>
+
+<h2 id="the-internet-protocol-ip">The Internet Protocol (IP)</h2>
+
+<ul>
+  <li>Connectionless</li>
+  <li>Unreliable</li>
+  <li>Best effort</li>
+  <li>Uses datagram</li>
+</ul>
+
+<p><img src="https://www.evernote.com/l/Aq0FEwPq2T5LaLDipyBS3DqEY2w8Ub4t-PcB/image.png" alt="" /></p>
+
+<h3 id="fragmentation">Fragmentation</h3>
+
+<p>A router may receive a packet larger than the maximum MTU of the outgoing link.</p>
+
+<p>Then it must seperate the datagram into multiple smaller ones.</p>
+
+<ul>
+  <li>Fragments are re-assembled by destination host, not intermediate routers.</li>
+  <li>Usually we use path MTU discovery to find the smallest MTU along the path.</li>
+</ul>
+
+<h3 id="ip-addresses">IP Addresses</h3>
+
+<p>IPv4 are 32 bits long, every interface has a unique IP address. IPv6 are 128 bits long.</p>
+
+<p>IP addresses maybe assigned statically or dynamically (DHCP).</p>
+
+<h4 id="classes">Classes</h4>
+
+<p>Originally there were 5 classes</p>
+
+<ul>
+  <li>A: Starts with <code class="highlighter-rouge">0</code>, 7 bit ID</li>
+  <li>B: Starts with <code class="highlighter-rouge">10</code>, 14 bit ID</li>
+  <li>C: Starts with <code class="highlighter-rouge">110</code>, 21 bit ID</li>
+  <li>D: Starts with <code class="highlighter-rouge">1110</code>, 28 bit multicast group ID</li>
+  <li>E: Starts with <code class="highlighter-rouge">11110</code>, 27 bit reserved</li>
+</ul>
+
+<p>But this leads to many problems</p>
+
+<ul>
+  <li>Address classes are too “regid”, A is too large, B is too small.</li>
+  <li>Internally might need a seperate network ID for each link.</li>
+  <li>Then the public needs to know them as well, very inefficient.</li>
+  <li>Small organizations wanted class B, but there are only 16,000 class B network IDs.</li>
+</ul>
+
+<p>There are two main solutions</p>
+
+<h4 id="subnetting">Subnetting</h4>
+
+<p>Subdivide the organization’s network ID</p>
+
+<p>Basically you go over your net ID and use first few bits of the host ID to divide up the network.</p>
+
+<p>Subnets are usually represented via an address plus a subet mask. <code class="highlighter-rouge">ffffff00</code> if first 24 bits are the subnet ID, last 8 bits are the host ID.</p>
+
+<h4 id="classless-inter-domain-routing-cidr">Classless Inter-Domain Routing (CIDR)</h4>
+
+<p>IP space is broken into line segments.</p>
+
+<p>128.9.0.0/16 basically means the line segment containing addresses in teh range 128.9.0.0 - 128.9.255.255.</p>
+
+<p>Longer the prefix, smaller the network, thus more specific.</p>
+
+<p>Sometimes if an ISP serves two organizations with similar prefixes, it can sometimes aggregate them to form a shorter prefix, so other routers can have smaller tables.</p>
+
+<p>In principle, an organization can keep its prefix if it changes service providers.</p>
+
+<h4 id="ipv6">IPv6</h4>
+
+<p>128 bits, it uses 8 groups of 4 hex digits.</p>
+
+<p>Omit leading zeros and groups of zeros.</p>
+
+<p>so <code class="highlighter-rouge">2001:0db8:0000:0000:0000:ff00:0042:8329</code> is basically <code class="highlighter-rouge">2001:0db8::ff00:0042:8329</code></p>
+
+<h3 id="ipv6-transition">IPv6 Transition</h3>
+
+<p>How do we deploy IPv6? It is fundamentally incompatible with IPv4.</p>
+
+<p>There are many approaches</p>
+
+<ul>
+  <li>Dual stack (both v4 and v6)</li>
+  <li>Translators (converts packets)</li>
+  <li>Tunnels (carrys IPv6 over IPv4)</li>
+</ul>
+
+<h4 id="tunneling">Tunneling</h4>
+
+<p>Basically, tunnel carries IPv6 packets across IPv4 network.</p>
+
+<p><img src="https://www.evernote.com/l/Aq0Zh9eH4CtMSqfFsiBHJhGI5WQIXhusb-8B/image.png" alt="" /></p>
+
+<p>However it is hard to setup tunnel endpoints and routing.</p>
+
+<h2 id="dns">DNS</h2>
+
+<p>Names are hierarchical and belong to a domain. Top-level domains are assigned by the Internet Corporation of Assigned Names and Numbers (ICANN).</p>
+
+<h3 id="dns-query">DNS Query</h3>
+
+<ul>
+  <li>Client asks local server</li>
+  <li>If local doesn’t have address, asks the root server of the requested domain</li>
+  <li>Addresses are usually cached</li>
+</ul>
+
+<h3 id="icmp-internet-control-message-protocol">ICMP (Internet Control Message Protocol)</h3>
+
+<p>Used by hosts and routers to communicate network-level information.</p>
+
+<p>ICMP is carried in IP datagrams.</p>
+
+<p>It includes type, code plus first 8 bytes of IP datagram causing error.</p>
+
+<h3 id="traceroute">Traceroute</h3>
+
+<p>The source sends series of UDP segments to destination</p>
+<ul>
+  <li>TTL = 1,2,3…</li>
+</ul>
+
+<p>When datagram in nth set arrives to nth router, the router discards datagram and sends source an ICMP message of type 11, code 0, also includes name and IP.</p>
+
+<p>When ICMP arrives, source records RTT.</p>
+
+<p>It will eventually arrive at destination host. Destination will return ICMP port unreachable (type 3, code 3), then source stops.</p>
+
+
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <div class="build">[production] 293e1a2_20191020_101755</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=293e1a2_20191020_101755"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
