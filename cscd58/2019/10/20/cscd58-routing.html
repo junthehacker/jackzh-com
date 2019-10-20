@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSCD58 Computer Networks - Routing - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=f4e4ed6_20191020_113049" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=f4e4ed6_20191020_113049" />
+    </head>
+    <body>
+<div class="head-wrapper">
+    <header>
+        <div class="container">
+            <h1>Jun Zheng <small>CSCD58 Computer Networks - Routing</small></h1>
+        </div>
+    </header>
+
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/contact.html">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+</div>
+
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="js-toc"></div>
+        <br/>
+        
+            <span class="post-tag">cscd58</span>
+        
+            <span class="post-tag">course-notes</span>
+        
+        <div class="post-content">
+            <p>Routers</p>
+
+<!--more-->
+
+<h2 id="introduction">Introduction</h2>
+
+<p>With routers, computer network do hop-by-hop packet forwarding.</p>
+
+<p>Which means each router has a forwarding table that maps destination addresses to outgoing interfaces. And upon receiving a packet, it checks the table and sends out the packet. Next router in the path repeats.</p>
+
+<h2 id="forwarding">Forwarding</h2>
+
+<h3 id="forwarding-in-ip-router">Forwarding in IP Router</h3>
+
+<ul>
+  <li>Lookup packet destination address in table.
+    <ul>
+      <li>If unknown, drop the packet</li>
+    </ul>
+  </li>
+  <li>Decrement TTL, update header checksum</li>
+  <li>Forward packet to outgoing interface</li>
+  <li>Transmit packet onto link</li>
+</ul>
+
+<p>There are many ways to construct the forwarding table.</p>
+
+<h3 id="seperate-table-entries-per-address">Seperate Table Entries Per Address</h3>
+
+<p>Matches destination address of incoming packet to the forwarding table entry, and it should always points directly to an interface.</p>
+
+<p>But this can lead to very large tables.</p>
+
+<h3 id="seperate-entry-class-based-address">Seperate Entry Class-Based Address</h3>
+
+<p>We can easily identify the mask from the address</p>
+
+<ul>
+  <li><code class="highlighter-rouge">0</code>, class A /8</li>
+  <li><code class="highlighter-rouge">10</code>, class B /16</li>
+  <li><code class="highlighter-rouge">110</code>, class C /24</li>
+</ul>
+
+<p>We can then just look in the forwarding table for matches.</p>
+
+<p>For example 1.2.3.4 matches to 1.2.3.0/8, then we lookup for 1.0.0.0/8</p>
+
+<h3 id="longest-prefix-match-forwarding">Longest Prefix Match Forwarding</h3>
+
+<p>With CIDR, an address can match multiple masks. Usually inside IP router, we map each IP prefix to next-hop links.</p>
+
+<p>We always do the logest match, for example 1.2.3.4 would match both 1.2.0.0/16 and 1.2.3.0/24, in this case we always match /24.</p>
+
+<h4 id="linear-algorithm">Linear Algorithm</h4>
+
+<p>We can simply scan each entry and see if address matches, however this is way too slow. With 10Gbps network and 40B packet, we need 31.25 Mpps performance!</p>
+
+<h4 id="fast-lookups">Fast Lookups</h4>
+
+<p>There are algorithms that is faster, but we can also use hardware</p>
+
+<p>Content Addressable Memories is one of them, it allows very fast lookups on a key.</p>
+
+<h3 id="other-technologies">Other Technologies</h3>
+
+<p>Routers have forwarding tables, and you can manually configure each entry.</p>
+
+<p>However it doesn’t adapt to failures, new equipment and the need to balance load etc.</p>
+
+<p>That is where routing protocols, DHCP and ARP comes in.</p>
+
+<h2 id="routing-techniques">Routing Techniques</h2>
+
+<p>How do we choose the shortest and fastest path?</p>
+
+<p>Forwarding simply forwards a data packet to an outgoing link, but routing is much more complex, routers have to talk to each other to compute the path.</p>
+
+<h3 id="why-optimize-routing">Why Optimize Routing</h3>
+
+<p>End-to-End Performance</p>
+<ul>
+  <li>Quality of the path affects user performance</li>
+  <li>Delays, throughputs and packet losses</li>
+</ul>
+
+<p>Use of network resources</p>
+<ul>
+  <li>You prob don’t want to route through a jammed route</li>
+</ul>
+
+<p>Transient disruptions during changes</p>
+<ul>
+  <li>Allows us to route through other routes when changes happen</li>
+</ul>
+
+<h3 id="naive-approach-flood">Naive Approach (Flood)</h3>
+
+<p>Just send packets to all ports.</p>
+
+<p>It is pretty inefficient, and has the problem with spanning tree again.</p>
+
+<h3 id="distance-vector-distributed-bellman-ford-algorithm">Distance Vector Distributed Bellman-Ford Algorithm</h3>
+
+<p>Define distances at each node x such that d_x(y) is the cost of least-cost path from x to y.</p>
+
+<p>d_x(y) = min{c(x,v) = d_v(y)} over all neighbors v.</p>
+
+<p>Essentially, node x maintains costs of direct links from x to v.</p>
+
+<p>Node x also maintains the distance vector from x to y, which is an estimate of least cost.</p>
+
+<p>Node x maintains its neighbors’ distance vectors to y.</p>
+
+<p>Each node v periodically sends its own distance vector x to y to its neighbors, ad neighbors updates their estimate.</p>
+
+<p>Overtime the distance vector will converge.</p>
+
+<h4 id="properties">Properties</h4>
+
+<ul>
+  <li>Iterative, asynchronous, each local iteration is caused by
+    <ul>
+      <li>Local link cost change</li>
+      <li>Distnace vector update message from neighbor</li>
+    </ul>
+  </li>
+  <li>Distributed
+    <ul>
+      <li>Each node notifies neighbors only when its DV changes</li>
+      <li>Neighbors then notify their neighbors if necessary</li>
+    </ul>
+  </li>
+</ul>
+
+<p>But have couting to infinity problem.
+<strong>TODO: Have to double check this</strong></p>
+
+<h3 id="link-state-dijkstra">Link State (Dijkstra)</h3>
+
+<p>Routers send out update messages whenever the state of an incident link changes.</p>
+
+<p>Based on all link state updates, each router calculates lowest cost path to all others.</p>
+
+<p>It will eventually find a spanning tree rooted at the router.</p>
+
+<p><img src="https://www.evernote.com/l/Aq1WjntGw9dOao0VmDCmKiEyd0KJ10GKRSIB/image.png" alt="" /></p>
+
+<h4 id="how-do-we-flood-lsp">How do we flood LSP?</h4>
+
+<p>LSP = Link State Packet</p>
+
+<ul>
+  <li>It includes the ID of the router that created the LSP</li>
+  <li>List of directly connected neighbors and cost</li>
+  <li>Sequence number</li>
+  <li>TTL</li>
+</ul>
+
+<p>To reliable flood the LSP we resend LSP over all links other than the incident link, if the sequence number is newer. Otherwise drop it.</p>
+
+<h3 id="ls-vs-dv">LS vs DV</h3>
+
+<ul>
+  <li>LS = Link State</li>
+  <li>DV = Distance Vector</li>
+</ul>
+
+<p>LS have more messages sent, DV only exchanges between neighbors.</p>
+
+<p>LS requires O(nE) messages and a O(n^2) algorithm. DV is usually slower tho, also have counting to infinity issue.</p>
+
+<p>LS advertise incorrect link cost, each node then simply update its own table.</p>
+
+<p>DV advertises incorrect path cost, which means error propogates, and might be slow to recover.</p>
+
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <div class="build">[production] f4e4ed6_20191020_113049</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=f4e4ed6_20191020_113049"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
