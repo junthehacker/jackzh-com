@@ -55,7 +55,9 @@ header h1 small {
     outline: none;
     padding-top: 0;
     padding-bottom: 10px;
-    transition: all ease 0.3s; }
+    transition: all ease 0.3s;
+    border: none;
+    background-color: white; }
     #mobile-nav-button.expanded {
       background-color: #141414;
       color: white;
