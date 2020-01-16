@@ -39,6 +39,8 @@
         padding-top: 0;
         padding-bottom: 10px;
         transition: all ease 0.3s;
+        border: none;
+        background-color: white;
         &.expanded {
             background-color: rgb(20, 20, 20);
             color: white;
