@@ -5,17 +5,31 @@ permalink: /experience.html
 experiences:
     - title: Work Experiences
       items:
-        - title: Teaching Assistant
-          company: University of Toronto
-          company_link: https://www.utoronto.ca/
-          duration: September 2019 - Present
+        - title: Software Engineering Intern (Incoming)
+          company: Unity Technologies
+          company_link: https://unity.com/
+          company_logo: https://upload.wikimedia.org/wikipedia/commons/thumb/1/19/Unity_Technologies_logo.svg/1200px-Unity_Technologies_logo.svg.png
+          duration: May 2019
+        - title: Software Engineering Intern (Incoming)
+          company: Google
+          company_link: https://www.google.ca
+          company_logo: https://itac.ca/wp-content/uploads/2019/11/Google-logo.png
+          duration: January 2019
+        - title: Co-Founder / Developer
+          company: CheaprEats
+          company_link: https://cheapreats.com/
+          company_logo: https://i.imgur.com/yGVPJF7.png
+          duration: Jan 2018 - Present
           skills:
-            - python
-          description: >
-            TA for CSCA20 (Introduction to Programming), responsible for leading tutorials and marking exams.
+            - javascript
+            - react
+            - graphql
+            - node-js
+            - mongodb
         - title: Software Developer Intern
           company: Royal Bank of Canada
           company_link: https://www.rbcroyalbank.com/personal.html
+          company_logo: https://cdn.freebiesupply.com/logos/large/2x/rbc-royal-bank-logo-png-transparent.png
           duration: May 2019 - August 2019
           skills:
             - java
@@ -24,59 +38,6 @@ experiences:
             - jenkins
             - mssql
             - ucd
-          description: >
-            Built mission-critical systems for Business Financial Services to support business loan transformation. <br/>
-            Worked with a development team of six to create a software using Java Spring and Angular 8 that replaces an ancient financial statement analyzation tool, saving the bank $1 million per year.  <br/>
-            Practiced TDD (Test-Driven-Development) throughout the term. With all core systems reaching over 90% test coverage, one of the highest in RBC. 
-        - title: Co-Founder / Developer
-          company: CheaprEats
-          company_link: https://cheapreats.com/
-          duration: Jan 2018 - Present
-          skills:
-            - javascript
-            - react
-            - graphql
-            - node-js
-            - mongodb
-          description: >
-            Co-founded CheaprEats, responsible for designing and maintaining software systems.
-        - title: Workshop Instructor / MSLC Facilitator
-          company: University of Toronto
-          company_link: https://www.utoronto.ca/
-          duration: May 2018 - February 2019
-          skills:
-            - python
-          description: >
-            Lead a 2 session Python workshop for M.Env.Sci students at UTSC, mainly focus on Python, NumPy and Matplotlib. The workshop is certified for graduate student professional development credit. <br/>
-            Facilitate study groups weekly at the Math & Statistics Learning Centre at UofT, help students with math & stat problems.
-        - title: Website Developer - Contract
-          company: University of Toronto
-          company_link: https://www.utoronto.ca/
-          duration: April 2018 - September 2018
-          skills:
-            - php
-          description: >
-            Developed a competition management system using PHP Laravel and MySQL for the Statistical Society of Canada.
-            Worked with IT operations team to ensure fast and reliable deployment of the application.
-        - title: Software Developer Intern (RA)
-          company: Trent University
-          company_link: https://www.trentu.ca/
-          duration: Oct 2017 - May 2018
-          skills:
-            - javascript
-            - socket-io
-            - angular
-          description: >
-            Developed key features for a math collaboration software at UofT & TrentU using Angular.js and Socket.io.
-        - title: Website Developer
-          company: University of Saskatchewan
-          company_link: https://www.usask.ca/
-          duration: Dec 2013 - Jan 2015
-          skills:
-            - php
-            - mysql
-          description: >
-            Worked as a web application developer for Catalysis Division of Chemical Institute of Canada.
     - title: Volunteer Experiences
       items:
         - title: Director of IT
@@ -87,16 +48,12 @@ experiences:
             - javascript
             - react
             - node-js
-          description: >
-            One of the primary signing authority of Hack The Valley. Responsible for designing and implementing IT systems.
         - title: Director of IT
           company: TEDxUTSC
           company_link: https://tedxutsc.com
           duration: Aug 2018 - February 2019
           skills:
             - scss
-          description: >
-            Responsible for developing and maintaining the website. Manage associates, and develop the conference IT infrastructure.
 ---
 
 <section>
@@ -105,6 +62,7 @@ experiences:
             <h2>{{ section.title }}</h2>
             {% for item in section.items %}
                 <div class="experience-item">
+                    <img class="company-logo" src="{{ item.company_logo }}" height="30px" />
                     <h3>{{ item.title }} <a href="{{ item.company_link }}"><small>{{ item.company }}</small></a></h3>
                     <div class="skills-row">
                         {% for icon in item.skills %}
