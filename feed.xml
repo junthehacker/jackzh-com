@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-01-16T16:54:27-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Cscc37 Coding Samples</title><link href="https://jackzh.com/2019/12/05/cscc37-coding-samples.html" rel="alternate" type="text/html" title="Cscc37 Coding Samples" /><published>2019-12-05T00:00:00-05:00</published><updated>2019-12-05T00:00:00-05:00</updated><id>https://jackzh.com/2019/12/05/cscc37-coding-samples</id><content type="html" xml:base="https://jackzh.com/2019/12/05/cscc37-coding-samples.html"></content><author><name></name></author><summary type="html"></summary></entry><entry><title type="html">CSCD58 Computer Networks - Routing</title><link href="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Routing" /><published>2019-10-20T10:26:00-04:00</published><updated>2019-10-20T10:26:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/20/cscd58-routing</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html">&lt;p&gt;Routers&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-01-16T16:56:57-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCD58 Computer Networks - Routing</title><link href="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Routing" /><published>2019-10-20T10:26:00-04:00</published><updated>2019-10-20T10:26:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/20/cscd58-routing</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html">&lt;p&gt;Routers&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1615,4 +1615,55 @@ Hardware
   &lt;li&gt;Set of general-purpose registers with current values&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;h2 id=&quot;what-is-a-context-switch&quot;&gt;What is a Context Switch&lt;/h2&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Operating System Boot Process This is just a basic description of how a Pentium computer boots. First the BIOS is loaded from motherboard RAM. BIOS checks how much RAM is installed. Other devices like keyboard / mouse are checked. Then checks ISA and PCI busses. BIOS then determines the boot device listed in CMOS memory. Usually floppy -&amp;gt; CD -&amp;gt; HDD The first sector of boot device is read and loaded Examines the partition table at end of the boot sector, to determine which partition to use. The boot loader is read from that partition. Boot loader loads the OS</summary></entry></feed>
+&lt;h2 id=&quot;what-is-a-context-switch&quot;&gt;What is a Context Switch&lt;/h2&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Operating System Boot Process This is just a basic description of how a Pentium computer boots. First the BIOS is loaded from motherboard RAM. BIOS checks how much RAM is installed. Other devices like keyboard / mouse are checked. Then checks ISA and PCI busses. BIOS then determines the boot device listed in CMOS memory. Usually floppy -&amp;gt; CD -&amp;gt; HDD The first sector of boot device is read and loaded Examines the partition table at end of the boot sector, to determine which partition to use. The boot loader is read from that partition. Boot loader loads the OS</summary></entry><entry><title type="html">CSCB07 Software Design - Intro to Refactoring</title><link href="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html" rel="alternate" type="text/html" title="CSCB07 Software Design - Intro to Refactoring" /><published>2018-12-15T10:42:00-05:00</published><updated>2018-12-15T10:42:00-05:00</updated><id>https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring</id><content type="html" xml:base="https://jackzh.com/cscb07/2018/12/15/cscb07-refactoring.html">&lt;p&gt;Course notes taken for CSCB07/CSC207 at UofT (Software Design).&lt;/p&gt;
+
+&lt;p&gt;Introduction to refactoring.&lt;/p&gt;
+
+&lt;!--more--&gt;
+
+&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+
+&lt;p&gt;Refactoring is restructuring code in a series of small, semantics-preserving transformations in order to make the code easier to maintain and modify.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Code must still work&lt;/li&gt;
+  &lt;li&gt;Small steps only so the semantics are preserved&lt;/li&gt;
+  &lt;li&gt;Unit tests to prove the code still works&lt;/li&gt;
+  &lt;li&gt;Code should be
+    &lt;ul&gt;
+      &lt;li&gt;More loosely coupled&lt;/li&gt;
+      &lt;li&gt;More cohesive modules&lt;/li&gt;
+      &lt;li&gt;More comprehensible&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;when-to-refactor&quot;&gt;When to Refactor&lt;/h2&gt;
+
+&lt;p&gt;You should refactor any time you see better way to do things.&lt;/p&gt;
+
+&lt;p&gt;You can do it without breaking the code (unit tests).&lt;/p&gt;
+
+&lt;p&gt;You should not refactor if code is already stable and doesn’t need to change, or if it is someone else’s code.&lt;/p&gt;
+
+&lt;h2 id=&quot;refactoring-process&quot;&gt;Refactoring Process&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Make small change&lt;/li&gt;
+  &lt;li&gt;Run all tests to make sure it still works&lt;/li&gt;
+  &lt;li&gt;If it works, go to next refactoring&lt;/li&gt;
+  &lt;li&gt;If not, fix it, or undo so you still have a working system&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;code-smells&quot;&gt;Code Smells&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Duplicate code&lt;/li&gt;
+  &lt;li&gt;Long methods&lt;/li&gt;
+  &lt;li&gt;Big classes&lt;/li&gt;
+  &lt;li&gt;Big switch statements&lt;/li&gt;
+  &lt;li&gt;Long navigations &lt;code class=&quot;highlighter-rouge&quot;&gt;a.b().c().d()&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Lots of checking for null&lt;/li&gt;
+  &lt;li&gt;Data clumps&lt;/li&gt;
+  &lt;li&gt;Data classes&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscb07" /><category term="cscb07" /><category term="course-notes" /><summary type="html">Course notes taken for CSCB07/CSC207 at UofT (Software Design). Introduction to refactoring.</summary></entry></feed>
