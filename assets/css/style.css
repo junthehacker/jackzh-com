@@ -84,11 +84,13 @@ footer {
 
 .experience-item {
   border-top: rgba(0, 0, 0, 0.1) 1px solid; }
-  .experience-item h3 a:link,
-  .experience-item h3 a:visited {
-    color: black; }
-  .experience-item h3 small {
-    opacity: 0.7; }
+  .experience-item h3 {
+    margin-top: 5px; }
+    .experience-item h3 a:link,
+    .experience-item h3 a:visited {
+      color: black; }
+    .experience-item h3 small {
+      opacity: 0.7; }
   .experience-item .skills-row .skill-icon {
     width: 30px;
     transition: all ease 0.3s;
@@ -101,6 +103,8 @@ footer {
   .experience-item .description.collapsed {
     opacity: 0;
     height: 0; }
+  .experience-item .company-logo {
+    margin-top: 20px; }
 
 .post-content {
   padding-right: 260px;
