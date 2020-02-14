@@ -44,6 +44,13 @@ title: Home
         </div>
     </section>
 
+    <!-- Sammi section -->
+    <div class="valentines">
+        <img src="https://i.imgur.com/54nu6YH.png" />
+    </div>
+    <div class="valentines-hidden"></div>
+    <iframe src="https://junthehacker.github.io/journey-map/" class="sammi"></iframe>
+
 </div>
 
 <script>
@@ -61,5 +68,20 @@ title: Home
             $(".toggle-button").html('<i class="fa fa-angle-up" aria-hidden="true"></i>');
         }
         $(".code-collapsed").toggleClass("expanded");
+    }
+    let leftClicked = 0;
+    let rightClicked = 0;
+    $(".valentines").click(function() {
+        rightClicked++;
+        maybeShowJourneyMap();
+    });
+    $(".valentines-hidden").click(function() {
+        leftClicked++;
+        maybeShowJourneyMap();
+    });
+    function maybeShowJourneyMap() {
+        if(leftClicked > 5 && rightClicked > 5) {
+            $(".sammi").addClass("shown");
+        }
     }
 </script>
