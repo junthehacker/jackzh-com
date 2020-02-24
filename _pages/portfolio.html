@@ -1,0 +1,63 @@
+---
+layout: page
+title: Portfolio
+permalink: /portfolio.html
+experiences:
+    - title: Professional Experiences
+      items:
+        - title: Software Engineering Intern
+          company: Google
+          company_link: https://www.google.ca
+          company_logo: google
+          duration: Jan 2020 - Present
+          description: Enterprise Chat Platform - Gmail Add-ons and Chatbots
+        - title: Co-Founder - CTO
+          company: CheaprEats
+          company_link: https://cheapreats.com/
+          company_logo: cheapreats
+          duration: Jan 2018 - Jan 2020
+        - title: Software Developer Intern
+          company: Royal Bank of Canada
+          company_link: https://www.rbcroyalbank.com/personal.html
+          company_logo: rbc
+          duration: May 2019 - August 2019
+          description: Business Financial Services - Internal Tooling
+---
+
+<section>
+    <div class="container">
+        {% for section in page.experiences %}
+            <h2>{{ section.title }}</h2>
+            {% for item in section.items %}
+                <div class="experience-item">
+                    <img class="company-logo" src="{% real_path /assets/icons/companies %}/{{item.company_logo}}.png" height="30px" />
+                    <h3>{{ item.title }} <a href="{{ item.company_link }}"><small>{{ item.company }}</small></a></h3>
+                    <small>{{ item.duration }}</small>
+                    <div class="description">
+                      <p>{{ item.description }}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% endfor %}
+
+        <br/><br/>
+
+        <div class="coding-practices">
+          <h2>Coding Practices</h2>
+          <p>Recently I have decided that I will do at least one hard coding question per-day. Just to see how it goes. I am not a competitive programmer, but interested in getting into it.</p>
+
+          {% for post in site.categories.codingpractices %}
+            <h3>
+              <a href="{{ post.url }}">
+                {{ post.title }}
+              </a>
+              <small>{{post.date}}</small>
+              <small>{{post.language}}</small>
+              <small>{{post.type}}</small>
+            </h3>
+          {% endfor %}
+
+          
+        </div>
+    </div>
+</section>
