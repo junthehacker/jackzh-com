@@ -4,13 +4,13 @@
         <title>Posts - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=1d3b77a_20200213_225624?v=1d3b77a_20200213_225624" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=fc46876_20200223_223100?v=fc46876_20200223_223100" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=1d3b77a_20200213_225624" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=fc46876_20200223_223100" />
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -29,10 +29,10 @@
     <div class="container">
         <ul>
             <li><a href="/">Home</a></li>
-            <li><a href="/experience.html">Experience</a></li>
+            <li><a href="/portfolio.html">Portfolio</a></li>
             <li><a href="/education.html">Education</a></li>
             <li><a href="/posts.html">Posts</a></li>
-            <li><a href="/contact.html">Contact</a></li>
+            <li><a href="/about.html">About</a></li>
         </ul>
     </div>
 </nav>
@@ -41,6 +41,86 @@
 <div class="page-wrapper">
 <section>
     <div class="container">
+        
+        <div class="post-item">
+            <a href="/codingpractices/2020/02/23/recover-from-preorder-traversal.html"><h3>Recover From Preorder Traversal</h3></a>
+            
+                <span class="post-tag">codingpractices</span>
+            
+            <p>The actual question can be found <a href="https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/">here</a></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cm">/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */</span>
+<span class="kd">class</span> <span class="nc">Solution</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="n">TreeNode</span> <span class="nf">recoverFromPreorder</span><span class="o">(</span><span class="n">String</span> <span class="n">S</span><span class="o">)</span> <span class="o">{</span>
+        <span class="c1">// This is a recursive solution</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">()</span> <span class="o">==</span> <span class="mi">0</span><span class="o">)</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="k">if</span><span class="o">(!</span><span class="n">S</span><span class="o">.</span><span class="na">contains</span><span class="o">(</span><span class="s">"-"</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="k">new</span> <span class="nf">TreeNode</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">S</span><span class="o">));</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="kt">int</span> <span class="n">numericStartingIndex</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="n">String</span> <span class="n">rootVal</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'-'</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">numericStartingIndex</span> <span class="o">=</span> <span class="n">i</span><span class="o">;</span>
+                    <span class="k">break</span><span class="o">;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="n">rootVal</span> <span class="o">+=</span> <span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">TreeNode</span> <span class="n">node</span> <span class="o">=</span> <span class="k">new</span> <span class="n">TreeNode</span><span class="o">(</span><span class="n">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">rootVal</span><span class="o">));</span>
+            
+            <span class="kt">boolean</span> <span class="n">foundDepthOne</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="kt">int</span> <span class="n">currDepth</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+            <span class="kt">boolean</span> <span class="n">atRight</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+            <span class="n">String</span> <span class="n">left</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+            <span class="n">String</span> <span class="n">right</span> <span class="o">=</span> <span class="s">""</span><span class="o">;</span>
+            <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="n">numericStartingIndex</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">S</span><span class="o">.</span><span class="na">length</span><span class="o">();</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+                <span class="k">if</span><span class="o">(</span><span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">)</span> <span class="o">==</span> <span class="sc">'-'</span><span class="o">)</span> <span class="o">{</span>
+                    <span class="n">currDepth</span><span class="o">++;</span>
+                <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                    <span class="kt">char</span> <span class="n">value</span> <span class="o">=</span> <span class="n">S</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+                    <span class="c1">// If this depth is the same or less than max depth</span>
+                    <span class="c1">// then we have to switch from left to right</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">currDepth</span> <span class="o">==</span> <span class="mi">1</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="k">if</span><span class="o">(!</span><span class="n">foundDepthOne</span><span class="o">)</span> <span class="o">{</span>
+                            <span class="n">foundDepthOne</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                            <span class="n">atRight</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+                        <span class="o">}</span>
+                    <span class="o">}</span>
+                    <span class="k">if</span><span class="o">(</span><span class="n">atRight</span><span class="o">)</span> <span class="o">{</span>
+                        <span class="n">right</span> <span class="o">=</span> <span class="n">addNodeToString</span><span class="o">(</span><span class="n">right</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">currDepth</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+                        <span class="n">left</span> <span class="o">=</span> <span class="n">addNodeToString</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">currDepth</span> <span class="o">-</span> <span class="mi">1</span><span class="o">);</span>
+                    <span class="o">}</span>
+                    <span class="n">currDepth</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+                <span class="o">}</span>
+            <span class="o">}</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">left</span> <span class="o">=</span> <span class="n">recoverFromPreorder</span><span class="o">(</span><span class="n">left</span><span class="o">);</span>
+            <span class="n">node</span><span class="o">.</span><span class="na">right</span> <span class="o">=</span> <span class="n">recoverFromPreorder</span><span class="o">(</span><span class="n">right</span><span class="o">);</span>
+            <span class="k">return</span> <span class="n">node</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    
+    <span class="kd">public</span> <span class="n">String</span> <span class="nf">addNodeToString</span><span class="o">(</span><span class="n">String</span> <span class="n">curr</span><span class="o">,</span> <span class="kt">char</span> <span class="n">value</span><span class="o">,</span> <span class="kt">int</span> <span class="n">depth</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">depth</span><span class="o">;</span> <span class="n">i</span><span class="o">++)</span> <span class="o">{</span>
+            <span class="n">curr</span> <span class="o">+=</span> <span class="sc">'-'</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">curr</span> <span class="o">+=</span> <span class="n">value</span><span class="o">;</span>
+        <span class="k">return</span> <span class="n">curr</span><span class="o">;</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+        </div>
         
         <div class="post-item">
             <a href="/cscd58/2019/10/20/cscd58-routing.html"><h3>CSCD58 Computer Networks - Routing</h3></a>
@@ -784,7 +864,7 @@
 
 <footer>
     <div class="container">
-        <div class="build">[production] 1d3b77a_20200213_225624</div>
+        <div class="build">[production] fc46876_20200223_223100</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -797,6 +877,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=1d3b77a_20200213_225624?v=1d3b77a_20200213_225624"></script>
+<script src="/assets/js/app.js?v=fc46876_20200223_223100?v=fc46876_20200223_223100"></script>
 </body>
 </html>

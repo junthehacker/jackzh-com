@@ -106,6 +106,14 @@ footer {
   .experience-item .company-logo {
     margin-top: 20px; }
 
+.coding-practices h3 small {
+  font-size: 12px;
+  margin-left: 10px;
+  padding: 5px;
+  display: inline-block;
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 5px; }
+
 .post-content {
   padding-right: 260px;
   padding-bottom: 50px; }
