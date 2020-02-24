@@ -10,6 +10,8 @@ type: LC Hard
 
 The actual question can be found [here](https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/)
 
+Coded in less than 30 minutes, don't expect it to be very good, I might optimize this later.
+
 ```java
 /**
  * Definition for a binary tree node.
