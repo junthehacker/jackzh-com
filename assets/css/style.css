@@ -80,7 +80,11 @@ footer {
   padding-top: 20px;
   padding-bottom: 20px;
   opacity: 0.5;
-  font-size: 12px; }
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: lowercase; }
+  footer a {
+    color: black; }
 
 .experience-item {
   border-top: rgba(0, 0, 0, 0.1) 1px solid; }

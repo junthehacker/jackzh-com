@@ -1,4 +1,179 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-02-24T18:14:50-05:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">Word Break II</title><link href="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html" rel="alternate" type="text/html" title="Word Break II" /><published>2020-02-24T17:12:00-05:00</published><updated>2020-02-24T17:12:00-05:00</updated><id>https://jackzh.com/codingpractices/2020/02/24/word-break-ii</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html">&lt;p&gt;The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-09-20T19:39:19-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSC384 Artificial Intelligence - Search</title><link href="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html" rel="alternate" type="text/html" title="CSC384 Artificial Intelligence - Search" /><published>2020-09-20T17:17:00-04:00</published><updated>2020-09-20T17:17:00-04:00</updated><id>https://jackzh.com/csc384/2020/09/20/csc384-ai-search</id><content type="html" xml:base="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html">&lt;!--more--&gt;
+
+&lt;p&gt;&lt;strong&gt;Search lecture 1&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;hypothetical-reasoning&quot;&gt;Hypothetical Reasoning&lt;/h2&gt;
+
+&lt;p&gt;What state will I be in after taking certain actions, or after certain sequences of events?&lt;/p&gt;
+
+&lt;p&gt;From this we can reason about particular sequences of actions one should execute to achieve a desirable state.&lt;/p&gt;
+
+&lt;p&gt;Search is a computational method for capturing a particular version of ths kind of reasoning.&lt;/p&gt;
+
+&lt;h2 id=&quot;modeling-a-problem-as-a-search-problem&quot;&gt;Modeling a problem as a search problem&lt;/h2&gt;
+
+&lt;p&gt;We need&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;State space
+    &lt;ul&gt;
+      &lt;li&gt;A state is a representation of a configuration of the problem domain. The state space is a set of states included in our model of the problem.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Actions or state space transitions
+    &lt;ul&gt;
+      &lt;li&gt;Actions these model the actions of the problem domain. In our model the domain actions are modeled as allowed transitions between state.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Initial or start state and goal
+    &lt;ul&gt;
+      &lt;li&gt;The initial state and the finial goal state (or goal condition)&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Heuristics
+    &lt;ul&gt;
+      &lt;li&gt;Things to guide the search process&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;algorithms&quot;&gt;Algorithms&lt;/h2&gt;
+
+&lt;p&gt;Once the problem has been formulated, we can use various algorithms to solve the problem.&lt;/p&gt;
+
+&lt;h2 id=&quot;knowledge-states&quot;&gt;Knowledge States&lt;/h2&gt;
+
+&lt;p&gt;States need not map directly to world configurations. Instead, a state could map to knowledge states. A knowledge state is a set of world states, every world state that you believe to be possible.&lt;/p&gt;
+
+&lt;p&gt;If you look at every world state in a knowledge state, and ask what is true in every one of them, that that is the fact you know.&lt;/p&gt;
+
+&lt;p&gt;If the agent knows nothing, the every world state is within the knowledge state.&lt;/p&gt;
+
+&lt;h2 id=&quot;more-complex-situations&quot;&gt;More Complex Situations&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Actions can lead to multiple states: flip a coin
+    &lt;ul&gt;
+      &lt;li&gt;This lead to probabilistic models that we will discuss later&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Agent might be equipped with sensing actions
+    &lt;ul&gt;
+      &lt;li&gt;Solution could contain branches, for example if dirt then suck.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;strong&gt;Search lecture 2&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;algorithms-for-search&quot;&gt;Algorithms for Search&lt;/h2&gt;
+
+&lt;p&gt;AI search algorithms work with implicitly defined state spaces. There are typically an exponential number of states, which means we are impossible to explicitly define them all.&lt;/p&gt;
+
+&lt;p&gt;Usually we only construct states we need to. Hence the actions are given as compact successor state functions that when given a state x return the set of state S can be transformed to by the available actions.
+    * This means that the state must contain enough information to allow the successor state function to perform its computation.&lt;/p&gt;
+
+&lt;p&gt;Inputs for search&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;a specified initial state I&lt;/li&gt;
+  &lt;li&gt;a successor function S(x) yields the set of all states action pairs (y,a) such that state y can be reached from x by applying an action a. The successor function returns all states reachable by a single action from state x.&lt;/li&gt;
+  &lt;li&gt;a goal test function G(x) that can be applied to a state x and returns true if x satisfies the goal condition.&lt;/li&gt;
+  &lt;li&gt;an action cost function C(x,a,y) which determines the cost of moving from state x to state y using action a.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Output of search&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;a sequence of actions that transforms the initial state to a state satisfying the goal test.
+    &lt;ul&gt;
+      &lt;li&gt;or just the sequence of states that arise from these actions.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Depending on the algorithm, different output maybe outputted.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;A path in the search space is a sequence of states connected by actions. The cost of the path is simply the sum of all costs (the cost function C).&lt;/p&gt;
+
+&lt;p&gt;Paths can be stored as a pair containing the final state of the path and a pointer to the previous state.&lt;/p&gt;
+
+&lt;p&gt;We maintain a set of paths called the OPEN set (or frontier). Initially we set OPEN = {\&amp;lt;Start State\&amp;gt;}.&lt;/p&gt;
+
+&lt;p&gt;At each step we select a path p from OPEN.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Check if p.final() satisfies the goal.&lt;/li&gt;
+  &lt;li&gt;If not we add all extensions of p to OPEN
+    &lt;ul&gt;
+      &lt;li&gt;for all successor states y in S(p.final()), create a new path p_y = \&amp;lt;p,y\&amp;gt; (extend the path p to include a transition to the state y).&lt;/li&gt;
+      &lt;li&gt;Remember to remove p&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;Search&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;goal&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;empty&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extract&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;# remove path from OPEN
+&lt;/span&gt;        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;goal&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;?&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;final&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()):&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;succ&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;final&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()):&lt;/span&gt;
+                &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;insert&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;succ&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;false&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;When a path p is extracted from open, we say that the algorithm expands p.&lt;/p&gt;
+
+&lt;p&gt;The order paths are selected from OPEN has a critical effect on the operation of the search:
+    * Whether or not a solution is found
+    * The cost of the solution found
+    * The time and space required by the search&lt;/p&gt;
+
+&lt;p&gt;Basically we are asking how to order the OPEN set.&lt;/p&gt;
+
+&lt;h2 id=&quot;critical-properties-of-search&quot;&gt;Critical Properties of Search&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Completeness
+    &lt;ul&gt;
+      &lt;li&gt;Will the search always find a solution if a solution exists?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Optimality
+    &lt;ul&gt;
+      &lt;li&gt;will the search always find the least cost solution?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Time complexity
+    &lt;ul&gt;
+      &lt;li&gt;what is the maximum number of paths that can be expanded or generated?&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Space complexity
+    &lt;ul&gt;
+      &lt;li&gt;maximum number of path that are put on OPEN&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;uninformed-search-strategies&quot;&gt;Uninformed Search Strategies&lt;/h2&gt;
+
+&lt;p&gt;These are strategies that adopt a fixed rule for selecting the next state to be expanded.&lt;/p&gt;
+
+&lt;p&gt;For example: BFS, Uniform Cost, DFS, Depth Limited, Iterative Deepening Search.&lt;/p&gt;
+
+&lt;h3 id=&quot;breadth-first-search&quot;&gt;Breadth First Search&lt;/h3&gt;
+
+&lt;p&gt;Place the new paths that extend the current path at the end of OPEN. OPEN is a queue. Always extract first element of OPEN.&lt;/p&gt;
+
+&lt;p&gt;Completeness? Yes, we will examine all paths, so we will find a solution if it exists. (but we might have a infinite layer).&lt;/p&gt;
+
+&lt;p&gt;Optimality? Not really, however we do always find the shortest solution.&lt;/p&gt;
+
+&lt;p&gt;Time complexity? Let b be the maximum number of successors of any state (maximal branching factor). Let d be the depth of the shortest solution. The time complexity is $O(b^{d+1})$.&lt;/p&gt;
+
+&lt;p&gt;Space complexity? $O(b^{d+1})$&lt;/p&gt;
+
+&lt;p&gt;BFS typically run out of space before we run out of time in most applications.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0mSXpyo69P7qnaHI0j6qRmpcDEXXFk2o0B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="csc384" /><category term="csc384" /><category term="course-notes" /><summary type="html"></summary></entry><entry><title type="html">Word Break II</title><link href="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html" rel="alternate" type="text/html" title="Word Break II" /><published>2020-02-24T17:12:00-05:00</published><updated>2020-02-24T17:12:00-05:00</updated><id>https://jackzh.com/codingpractices/2020/02/24/word-break-ii</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html">&lt;p&gt;The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems.&lt;/p&gt;
 
 &lt;p&gt;Actual problem can be found &lt;a href=&quot;https://leetcode.com/problems/word-break-ii/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -1375,244 +1550,4 @@ minsize(1) = 1,
 minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search.</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Complexity</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Complexity" /><published>2019-01-14T09:13:00-05:00</published><updated>2019-01-14T09:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-complexity</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-complexity.html">&lt;p&gt;Notes takes for complexity module of CSCB63 course at UTSC.&lt;/p&gt;
-
-&lt;h2 id=&quot;ordered-dictionary&quot;&gt;Ordered Dictionary&lt;/h2&gt;
-
-&lt;p&gt;Finite map from keys to values, assume keys are comparable.&lt;/p&gt;
-
-&lt;p&gt;Some operations supported:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;insert(k, v)&lt;/li&gt;
-  &lt;li&gt;lookup(k)&lt;/li&gt;
-  &lt;li&gt;delete(k)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Ordered set is the same, just with no values, only keys.&lt;/p&gt;
-
-&lt;p&gt;If we implement this using a binary tree, lookup can be very slow if we insert all data within sorted order. We will learn how to improve this.&lt;/p&gt;
-
-&lt;h2 id=&quot;hashed-dictionary--table&quot;&gt;Hashed Dictionary / Table&lt;/h2&gt;
-
-&lt;p&gt;Finite map from keys to values, assume keys can be hashed.&lt;/p&gt;
-
-&lt;p&gt;Same operations as ordered dictionaries.&lt;/p&gt;
-
-&lt;p&gt;Hashed set is the same, just with no values, only keys.&lt;/p&gt;
-
-&lt;p&gt;Hash table is an array of size $L$, put key $k$ in $A[h(k) \% L]$&lt;/p&gt;
-
-&lt;p&gt;We will learn how to choose the hash function, and what to do if there is a collision.&lt;/p&gt;
-
-&lt;h2 id=&quot;priority-queue&quot;&gt;Priority Queue&lt;/h2&gt;
-
-&lt;p&gt;Collection of priority-job pairs, priority is comparable.&lt;/p&gt;
-
-&lt;p&gt;Operations supported:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;insert(p, j)&lt;/li&gt;
-  &lt;li&gt;max()&lt;/li&gt;
-  &lt;li&gt;extract-max()&lt;/li&gt;
-  &lt;li&gt;increase-priority(j, k)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;Using heap to implement this can be super fast and easy.&lt;/p&gt;
-
-&lt;h2 id=&quot;graph&quot;&gt;Graph&lt;/h2&gt;
-
-&lt;p&gt;Includes vertices and edges.&lt;/p&gt;
-
-&lt;p&gt;Will learn how to compute reachability, cycles, connected components, and spanning tree/forest.&lt;/p&gt;
-
-&lt;h2 id=&quot;disjoint-sets&quot;&gt;Disjoint Sets&lt;/h2&gt;
-
-&lt;p&gt;Collection of disjoint sets.&lt;/p&gt;
-
-&lt;p&gt;Operations supported:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;make-set(x)&lt;/li&gt;
-  &lt;li&gt;union(S, S’)&lt;/li&gt;
-  &lt;li&gt;find(x)&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;If we implement this using trees, amortized time can be almost constant.&lt;/p&gt;
-
-&lt;h2 id=&quot;amortized-time-analysis&quot;&gt;Amortized Time Analysis&lt;/h2&gt;
-
-&lt;p&gt;Some operations might be slow in the worst case, but rarely happens. We might not be interesting in only the worst case.&lt;/p&gt;
-
-&lt;p&gt;$at = \frac{\text{total time of calls}}{\# calls}$&lt;/p&gt;
-
-&lt;h2 id=&quot;useful-manipulations&quot;&gt;Useful Manipulations&lt;/h2&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;$log_b(x) = log_b(a) * log_a(x)$&lt;/p&gt;
-
-&lt;p&gt;$lim_{n \to \infty} \frac{2^{3n}}{2^n} = lim_{n \to \infty} {2^{2n}} = \infty$&lt;/p&gt;
-
-&lt;h2 id=&quot;complexity-table&quot;&gt;Complexity Table&lt;/h2&gt;
-
-&lt;table&gt;
-  &lt;thead&gt;
-    &lt;tr&gt;
-      &lt;th&gt;in Big O of&lt;/th&gt;
-      &lt;th&gt;$ln(n)$&lt;/th&gt;
-      &lt;th&gt;lg_2(n)&lt;/th&gt;
-      &lt;th&gt;lg_2(n^2)&lt;/th&gt;
-      &lt;th&gt;(lg_2(n))^2&lt;/th&gt;
-      &lt;th&gt;n&lt;/th&gt;
-      &lt;th&gt;n lg_2 n&lt;/th&gt;
-      &lt;th&gt;2^n&lt;/th&gt;
-      &lt;th&gt;2^{3n}&lt;/th&gt;
-    &lt;/tr&gt;
-  &lt;/thead&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;ln(n)&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;log(n)&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;log(n^2)&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;(lg_2(n))^2&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;n&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;n log n&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2^n&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2^{3n}&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;N&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;h2 id=&quot;complexity-proofs&quot;&gt;Complexity Proofs&lt;/h2&gt;
-
-&lt;h3 id=&quot;prove-n-in-on-lg-n&quot;&gt;Prove $n \in O(n lg n)$&lt;/h3&gt;
-
-&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$&lt;/p&gt;
-
-&lt;p&gt;$n \leq 1n$&lt;/p&gt;
-
-&lt;p&gt;$n \leq n \cdot log(n), n \geq 2$&lt;/p&gt;
-
-&lt;p&gt;$n \leq c \cdot n \cdot log(n)$&lt;/p&gt;
-
-&lt;p&gt;Therefore we have c = 1, and n_0 = 2.&lt;/p&gt;
-
-&lt;h3 id=&quot;prove-n-logn-notin-on&quot;&gt;Prove $n log(n) \notin O(n)$&lt;/h3&gt;
-
-&lt;p&gt;Assume for a contradiction that $nlog(n) \in O(n)$, so&lt;/p&gt;
-
-&lt;p&gt;$\exists c, \exists n_0, \forall n, n \geq n_0 \implies nlog(n) \leq c \cdot n$.&lt;/p&gt;
-
-&lt;p&gt;$log(n) \leq c$
-$n \leq 2^c$&lt;/p&gt;
-
-&lt;p&gt;Suppose $n &amp;gt; 2^c$, then $n \geq n_0 \implies n \leq 2^c$. Which is a contradiction.&lt;/p&gt;
-
-&lt;h3 id=&quot;prove-6n5--n2---n3-in-thetan5&quot;&gt;Prove $6n^5 + n^2 - n^3 \in \Theta(n^5)$&lt;/h3&gt;
-
-&lt;p&gt;First prove $6n^5 + n^2 - n^3 \in O(n^5)$&lt;/p&gt;
-
-&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \leq c \cdot g(n)$&lt;/p&gt;
-
-&lt;p&gt;$6n^5 + n^2 - n^3 \leq 6n^5 + n^2 \leq 6n^5 + n^5 \leq 7n^5$&lt;/p&gt;
-
-&lt;p&gt;Let c = 7, and n = 1.&lt;/p&gt;
-
-&lt;p&gt;Then prove $6n^5 + n^2 - n^3 \in \Omega(n^5)$&lt;/p&gt;
-
-&lt;p&gt;$\exists n_0, \exists c, \forall n, n \geq n_0 \implies f(n) \geq c \cdot g(n)$&lt;/p&gt;
-
-&lt;p&gt;$6n^5 + n^2 - n^3 \geq 6n^5 - n^3 \geq 5n^5$&lt;/p&gt;
-
-&lt;p&gt;Let c = 5, and n != 1.&lt;/p&gt;
-
-&lt;h3 id=&quot;prove-3n2---4n-in-omegan2&quot;&gt;Prove $3n^2 - 4n \in \Omega(n^2)$&lt;/h3&gt;
-
-&lt;p&gt;$3n^2 - 4n \geq bn^2$&lt;/p&gt;
-
-&lt;p&gt;$3n - 4 \geq bn$&lt;/p&gt;
-
-&lt;p&gt;$3n - bn \geq 4$&lt;/p&gt;
-
-&lt;p&gt;$n(3-b) \geq 4$&lt;/p&gt;
-
-&lt;p&gt;$n \geq \frac{4}{3-b}$&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Notes takes for complexity module of CSCB63 course at UTSC. Ordered Dictionary Finite map from keys to values, assume keys are comparable. Some operations supported: insert(k, v) lookup(k) delete(k) Ordered set is the same, just with no values, only keys. If we implement this using a binary tree, lookup can be very slow if we insert all data within sorted order. We will learn how to improve this. Hashed Dictionary / Table Finite map from keys to values, assume keys can be hashed. Same operations as ordered dictionaries. Hashed set is the same, just with no values, only keys. Hash table is an array of size $L$, put key $k$ in $A[h(k) \% L]$ We will learn how to choose the hash function, and what to do if there is a collision. Priority Queue Collection of priority-job pairs, priority is comparable. Operations supported: insert(p, j) max() extract-max() increase-priority(j, k) Using heap to implement this can be super fast and easy. Graph Includes vertices and edges. Will learn how to compute reachability, cycles, connected components, and spanning tree/forest. Disjoint Sets Collection of disjoint sets. Operations supported: make-set(x) union(S, S’) find(x) If we implement this using trees, amortized time can be almost constant. Amortized Time Analysis Some operations might be slow in the worst case, but rarely happens. We might not be interesting in only the worst case. $at = \frac{\text{total time of calls}}{\# calls}$ Useful Manipulations</summary></entry></feed>
+&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search.</summary></entry></feed>

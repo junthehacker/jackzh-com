@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>CSC384 Artificial Intelligence - Search - Jun Zheng</title>
+        <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=a709f8a_20200920_193917?v=a709f8a_20200920_193917" rel="stylesheet" />
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=a709f8a_20200920_193917" />
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.min.js"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+            crossorigin="anonymous"></script>
+    </head>
+    <body>
+<div class="head-wrapper">
+    <header>
+        <div class="container">
+            <h1>Jun Zheng <small>CSC384 Artificial Intelligence - Search</small></h1>
+        </div>
+    </header>
+
+<button id="mobile-nav-button"><i class="fa fa-angle-down" aria-hidden="true"></i> Navigation</button>
+<nav class="navbar">
+    <div class="container">
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/portfolio.html">Portfolio</a></li>
+            <li><a href="/education.html">Education</a></li>
+            <li><a href="/posts.html">Posts</a></li>
+            <li><a href="/about.html">About</a></li>
+        </ul>
+    </div>
+</nav>
+</div>
+
+<div class="page-wrapper">
+    <div class="container">
+        <div class="js-toc"></div>
+        <br/>
+        
+            <span class="post-tag">csc384</span>
+        
+            <span class="post-tag">course-notes</span>
+        
+        <div class="post-content">
+            <!--more-->
+
+<p><strong>Search lecture 1</strong></p>
+
+<h2 id="hypothetical-reasoning">Hypothetical Reasoning</h2>
+
+<p>What state will I be in after taking certain actions, or after certain sequences of events?</p>
+
+<p>From this we can reason about particular sequences of actions one should execute to achieve a desirable state.</p>
+
+<p>Search is a computational method for capturing a particular version of ths kind of reasoning.</p>
+
+<h2 id="modeling-a-problem-as-a-search-problem">Modeling a problem as a search problem</h2>
+
+<p>We need</p>
+<ul>
+  <li>State space
+    <ul>
+      <li>A state is a representation of a configuration of the problem domain. The state space is a set of states included in our model of the problem.</li>
+    </ul>
+  </li>
+  <li>Actions or state space transitions
+    <ul>
+      <li>Actions these model the actions of the problem domain. In our model the domain actions are modeled as allowed transitions between state.</li>
+    </ul>
+  </li>
+  <li>Initial or start state and goal
+    <ul>
+      <li>The initial state and the finial goal state (or goal condition)</li>
+    </ul>
+  </li>
+  <li>Heuristics
+    <ul>
+      <li>Things to guide the search process</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="algorithms">Algorithms</h2>
+
+<p>Once the problem has been formulated, we can use various algorithms to solve the problem.</p>
+
+<h2 id="knowledge-states">Knowledge States</h2>
+
+<p>States need not map directly to world configurations. Instead, a state could map to knowledge states. A knowledge state is a set of world states, every world state that you believe to be possible.</p>
+
+<p>If you look at every world state in a knowledge state, and ask what is true in every one of them, that that is the fact you know.</p>
+
+<p>If the agent knows nothing, the every world state is within the knowledge state.</p>
+
+<h2 id="more-complex-situations">More Complex Situations</h2>
+
+<ul>
+  <li>Actions can lead to multiple states: flip a coin
+    <ul>
+      <li>This lead to probabilistic models that we will discuss later</li>
+    </ul>
+  </li>
+  <li>Agent might be equipped with sensing actions
+    <ul>
+      <li>Solution could contain branches, for example if dirt then suck.</li>
+    </ul>
+  </li>
+</ul>
+
+<p><strong>Search lecture 2</strong></p>
+
+<h2 id="algorithms-for-search">Algorithms for Search</h2>
+
+<p>AI search algorithms work with implicitly defined state spaces. There are typically an exponential number of states, which means we are impossible to explicitly define them all.</p>
+
+<p>Usually we only construct states we need to. Hence the actions are given as compact successor state functions that when given a state x return the set of state S can be transformed to by the available actions.
+    * This means that the state must contain enough information to allow the successor state function to perform its computation.</p>
+
+<p>Inputs for search</p>
+<ul>
+  <li>a specified initial state I</li>
+  <li>a successor function S(x) yields the set of all states action pairs (y,a) such that state y can be reached from x by applying an action a. The successor function returns all states reachable by a single action from state x.</li>
+  <li>a goal test function G(x) that can be applied to a state x and returns true if x satisfies the goal condition.</li>
+  <li>an action cost function C(x,a,y) which determines the cost of moving from state x to state y using action a.</li>
+</ul>
+
+<p>Output of search</p>
+<ul>
+  <li>a sequence of actions that transforms the initial state to a state satisfying the goal test.
+    <ul>
+      <li>or just the sequence of states that arise from these actions.</li>
+    </ul>
+  </li>
+  <li>Depending on the algorithm, different output maybe outputted.</li>
+</ul>
+
+<p>A path in the search space is a sequence of states connected by actions. The cost of the path is simply the sum of all costs (the cost function C).</p>
+
+<p>Paths can be stored as a pair containing the final state of the path and a pointer to the previous state.</p>
+
+<p>We maintain a set of paths called the OPEN set (or frontier). Initially we set OPEN = {\&lt;Start State\&gt;}.</p>
+
+<p>At each step we select a path p from OPEN.</p>
+<ul>
+  <li>Check if p.final() satisfies the goal.</li>
+  <li>If not we add all extensions of p to OPEN
+    <ul>
+      <li>for all successor states y in S(p.final()), create a new path p_y = \&lt;p,y\&gt; (extend the path p to include a transition to the state y).</li>
+      <li>Remember to remove p</li>
+    </ul>
+  </li>
+</ul>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">Search</span><span class="p">(</span><span class="nb">open</span><span class="p">,</span> <span class="n">S</span><span class="p">,</span> <span class="n">goal</span><span class="err">?</span><span class="p">):</span>
+    <span class="nb">open</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">&lt;</span><span class="n">start</span><span class="o">&gt;</span><span class="p">):</span>
+    <span class="k">while</span> <span class="ow">not</span> <span class="nb">open</span><span class="o">.</span><span class="n">empty</span><span class="p">():</span>
+        <span class="n">p</span> <span class="o">=</span> <span class="nb">open</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span> <span class="c1"># remove path from OPEN
+</span>        <span class="k">if</span> <span class="n">goal</span><span class="err">?</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">final</span><span class="p">()):</span>
+            <span class="k">return</span> <span class="n">p</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">for</span> <span class="n">succ</span> <span class="ow">in</span> <span class="n">S</span><span class="p">(</span><span class="n">p</span><span class="o">.</span><span class="n">final</span><span class="p">()):</span>
+                <span class="nb">open</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="o">&lt;</span><span class="n">p</span><span class="p">,</span> <span class="n">succ</span><span class="o">&gt;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">false</span>
+</code></pre></div></div>
+
+<p>When a path p is extracted from open, we say that the algorithm expands p.</p>
+
+<p>The order paths are selected from OPEN has a critical effect on the operation of the search:
+    * Whether or not a solution is found
+    * The cost of the solution found
+    * The time and space required by the search</p>
+
+<p>Basically we are asking how to order the OPEN set.</p>
+
+<h2 id="critical-properties-of-search">Critical Properties of Search</h2>
+
+<ul>
+  <li>Completeness
+    <ul>
+      <li>Will the search always find a solution if a solution exists?</li>
+    </ul>
+  </li>
+  <li>Optimality
+    <ul>
+      <li>will the search always find the least cost solution?</li>
+    </ul>
+  </li>
+  <li>Time complexity
+    <ul>
+      <li>what is the maximum number of paths that can be expanded or generated?</li>
+    </ul>
+  </li>
+  <li>Space complexity
+    <ul>
+      <li>maximum number of path that are put on OPEN</li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="uninformed-search-strategies">Uninformed Search Strategies</h2>
+
+<p>These are strategies that adopt a fixed rule for selecting the next state to be expanded.</p>
+
+<p>For example: BFS, Uniform Cost, DFS, Depth Limited, Iterative Deepening Search.</p>
+
+<h3 id="breadth-first-search">Breadth First Search</h3>
+
+<p>Place the new paths that extend the current path at the end of OPEN. OPEN is a queue. Always extract first element of OPEN.</p>
+
+<p>Completeness? Yes, we will examine all paths, so we will find a solution if it exists. (but we might have a infinite layer).</p>
+
+<p>Optimality? Not really, however we do always find the shortest solution.</p>
+
+<p>Time complexity? Let b be the maximum number of successors of any state (maximal branching factor). Let d be the depth of the shortest solution. The time complexity is $O(b^{d+1})$.</p>
+
+<p>Space complexity? $O(b^{d+1})$</p>
+
+<p>BFS typically run out of space before we run out of time in most applications.</p>
+
+<p><img src="https://www.evernote.com/l/Aq0mSXpyo69P7qnaHI0j6qRmpcDEXXFk2o0B/image.png" alt="" /></p>
+
+
+        </div>
+    </div>
+</div>
+
+
+<footer>
+    <div class="container">
+        <div class="build">[production] a709f8a_20200920_193917</div>
+        Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
+        If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
+        <a href="/opensource.html">Open Source</a>
+    </div>
+</footer>
+<script src="https://unpkg.com/tippy.js@3/dist/tippy.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.js" integrity="sha384-UP7zD+aGyuDvxWQEDSRYcvoTxJSD82C6VvuEBktJZGo25CVhDstY9sCDHvyceo9L" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.7.1/contrib/auto-render.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="/assets/js/app.js?v=a709f8a_20200920_193917?v=a709f8a_20200920_193917"></script>
+</body>
+</html>
+
+<script>
+    tocbot.init({
+        // Where to render the table of contents.
+        tocSelector: '.js-toc',
+        // Where to grab the headings to build the table of contents.
+        contentSelector: '.post-content',
+        // Which headings to grab inside of the contentSelector element.
+        headingSelector: 'h2, h3, h4, h5',
+        collapseDepth: 2
+    });
+    stickybits('.js-toc');
+</script>
