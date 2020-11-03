@@ -4,13 +4,13 @@
         <title>Posts - Jun Zheng</title>
         <link href="https://fonts.googleapis.com/css?family=Shanti" rel="stylesheet" />
         <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-        <link href="/assets/css/style.css?v=a709f8a_20200920_193917?v=a709f8a_20200920_193917" rel="stylesheet" />
+        <link href="/assets/css/style.css?v=c0073a5_20201103_154509?v=c0073a5_20201103_154509" rel="stylesheet" />
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.0/dist/katex.css" integrity="sha384-xNwWFq3SIvM4dq/1RUyWumk8nj/0KFg4TOnNcfzUU4X2gNn3WoRML69gO7waf3xh" crossorigin="anonymous">
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tocbot/4.4.2/tocbot.css">
         <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/styles/default.min.css">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="google-site-verification" content="3QG1yus3DT_i5qAC7SipJasW5cM13wwpNO1jesovSDY" />
-        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=a709f8a_20200920_193917" />
+        <link rel="shortcut icon" href="/assets/icons/favicon.png?v=c0073a5_20201103_154509" />
         <script
             src="https://code.jquery.com/jquery-3.3.1.min.js"
             integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -41,6 +41,216 @@
 <div class="page-wrapper">
 <section>
     <div class="container">
+        
+        <div class="post-item">
+            <a href="/cscc11/2020/10/25/cscc11-classification.html"><h3>CSCC11 Machine Learning and Data Mining</h3></a>
+            
+                <span class="post-tag">cscc11</span>
+            
+                <span class="post-tag">course-notes</span>
+            
+            <h2 id="classification">Classification</h2>
+
+<p>$y = f(\vec{x})$</p>
+
+<ul>
+  <li>Binary classification problems - $y$ is binary, for example y in [0,1] or y in [-1,1].
+    <ul>
+      <li>Examples
+        <ul>
+          <li>Spam detection (is this email a spam or not spam).</li>
+          <li>Face detection (given a small image, does it contain a face).</li>
+          <li>Diagnosis (input a list of symptoms, output be do they have COVID-19 or not).</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li>Multiclass classification problems
+    <ul>
+      <li>Examples
+        <ul>
+          <li>Recognition problems (given image, identify which object is it)</li>
+          <li>Voice recognition (given acoustic signal, determine who is speaking)</li>
+          <li>OCR</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<p>Our focus is going to be binary classification, then generalize to multiclass classification.</p>
+
+<h3 id="decision-boundary">Decision Boundary</h3>
+
+<p>For example given the following test points, we want to determine if a fruit is grape or apple.</p>
+
+<p><img src="https://www.evernote.com/l/Aq0o19F06W5GW5lybJ0QQrZrtnu-MXrFITUB/image.png" alt="" /></p>
+
+<blockquote>
+  <p>The red line here is the decision boundary, it is the line machine learning algorithm created, will be used to classify future inputs.</p>
+</blockquote>
+
+<ul>
+  <li>Boundary in the feature space that we learn to predict the class.</li>
+  <li>Linearly separable (the example above is linear separable)
+    <ul>
+      <li>Data can be separated by hyperplane.</li>
+      <li>For example the graph below is not linearly separable.
+<img src="https://www.evernote.com/l/Aq3bjfSTatZNEYqUdKNaW3kHyGtgbnCuc70B/image.png" alt="" /></li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="classification-by-regression">Classification by Regression</h3>
+
+<p>Data: $\{\vec{x}_i, y_i\}_{i=1}^N, \vec{x}_i \in R^d, y_i \in \{-1, 1\}$</p>
+
+<p>Squared Loss: $\vec{w}^* arg_{\vec{w}} min \sum_{i=1}^N (y_i - \vec{w}^T\vec{x}_i)^2$</p>
+
+<p>Classifier: $sgn(\vec{w}^T\vec{x})$</p>
+
+<blockquote>
+  <p>$sgn(z)$ = -1 if z $\leq$ -1, 1 if z &gt; 0</p>
+</blockquote>
+
+<p><img src="https://www.evernote.com/l/Aq2whVnaZOxL1LIvNFML0f_fVQPONVaFvnAB/image.png" alt="" /></p>
+
+<p>Signed distance from line $\vec{w}^T\vec{x} = 0$ is simply $\vec{x}^T\frac{\vec{w}}{||\vec{w}||}$ (x projected to the unit vector). So basically we will get positive on one side, and negative on another side.</p>
+
+<p>Problem with linear regression is it spends too much effort trying to get $\vec{w}^T\vec{x}$ to be close to -1 or 1. But all we care about is the sign of $\vec{w}^T\vec{x}$.</p>
+
+<blockquote>
+  <p>It is solving the wrong problem!</p>
+</blockquote>
+
+<p>For classifiers of form $sgn(f(x))$, a natural loss is in terms of $y \cdot f(x)$.</p>
+<ul>
+  <li>If $y \cdot f(x)$ is greater than 0, then we predicted correctly.</li>
+  <li>Otherwise we predicted wrongly since y and f(x) must have different signs.</li>
+</ul>
+
+<p>The issue is with the marked part of the error function, it will have penalty even for correct predictions.
+<img src="https://www.evernote.com/l/Aq3xn4WxjipIqqCRyzT31E9m7TR4HAbI02UB/image.png" alt="" /></p>
+
+<p>Why not use 0-1 loss for binary classification problem?</p>
+<ul>
+  <li>Can’t use gradient based optimization since the function is not smooth (gradient for all errors are zero and in origin the gradient is non-existent).</li>
+</ul>
+
+<h3 id="k-nn-classification">K-NN Classification</h3>
+
+<ul>
+  <li>Find $k$ training points closest to test input, and use their outputs to determine our prediction.</li>
+  <li>Data $\{(\vec{x}_i, y_i)\}_{i=1}^N, y_i \in \{-1, 1\}$</li>
+  <li>Test points $\vec{x}^*$</li>
+  <li>$N_k(\vec{x}^*)$: set of k training points where input are closest to $\vec{x^*}$</li>
+</ul>
+
+<p>The prediction is $sgn(\sum_{i\in N_k(x^*)} y_i)$ - voting of k nearest points.</p>
+
+<p>$sgn(\sum_{i\in N_k(x^*)} w(\vec{x}_i)y_i)$</p>
+
+<p>$w(\vec{x}_i) = e^{-||\vec{x}_i-\vec{x}^*||^{\frac{2}{2\sigma^2}}}$</p>
+
+<p>The question is how do we determine the hyper parameters k and $\sigma^2$.</p>
+
+<p>For this type of classification, we are basically saying if a test point is closer to a test points of one class than another, then we will predit the test point as that class.</p>
+
+<p>Decision boundary is piecewise lienar and very expressive.</p>
+
+<p>When $k&gt;1$ the decision boundary is blurred as we allow more nearest neighbours to vote instead of trusting one.</p>
+
+<h3 id="decision-tree">Decision Tree</h3>
+
+<p>Tree structured sequence of decision rules.</p>
+
+<p><img src="https://www.evernote.com/l/Aq31-q9oHn5EnahZNu79zIal3q4SN-3brrkB/image.png" alt="" /></p>
+
+<p>For the most part we will use binary decision trees.</p>
+<ul>
+  <li>$m$ internal (split) nodes.</li>
+  <li>$m+1$ leaf (terminal) nodes.</li>
+  <li>At each split node $j$ define a split function $t_j(\vec{x}): R^d \to \{-1, 1\}$
+    <ul>
+      <li>If -1 we go left, if 1 we go right.</li>
+    </ul>
+  </li>
+  <li>Each leaf node has categorical distribution over class label.
+    <ul>
+      <li>$P(y = c | node \ j)$
+        <ul>
+          <li>Let $N_j$ be the number of traning points that reach node $j$</li>
+          <li>$N_{j,c}$ number of points at node $j$ with class label c.</li>
+          <li>Then the probability is just $\frac{N_{j,c}}{N_j}$</li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h4 id="learning-decision-trees">Learning Decision Trees</h4>
+
+<p>Assume at node $j$ with $N_j$ data points that reaches $j$.</p>
+
+<p>Consider split functions $t_j(\vec{x})$ based on a single feature.</p>
+
+<ul>
+  <li>$t_j(\vec{x}) = \vec{e}_l^T \vec{x} &gt; \tau_j = x_l &gt; \tau_j$</li>
+</ul>
+
+<p>Assume $l$ is fixed (we know which feature to use).</p>
+
+<p>If we have $N_j$ data points, then $N_j-1$ possible thresholds.</p>
+
+<p>Then how do we choose the best threshold?</p>
+
+<p>Goal: Partition data so all points to the left and to the right have minimal class uncertainty.</p>
+
+<p>Entropy: Measure of uncertainty of distribution.</p>
+
+<p>Given categorical distribution over $k$ outcomes with probability $P_c, c \in {1…k}$, then the entropy is $-\sum_{c=1}^K P_c log_2 P_c$</p>
+
+<p>So our goal is to choose the threshold to minimize uncertainty in children. This is sometimes called information gain.</p>
+
+<p>Information gain is the reduction of the uncertainty as a result of a split.</p>
+
+<ul>
+  <li>Assume for $D$ we have $N_j$ points at node $j$.</li>
+  <li>$D_L$ have $N_L$ points.</li>
+  <li>$D_R$ have $N_R$ points.</li>
+</ul>
+
+<p>$IG(D, split) = H(D) - \frac{N_L}{N_j} H(D_L) - \frac{N_R}{N_j} H(D_R)$</p>
+
+<p>The algorithm</p>
+
+<ul>
+  <li>At node for each $l$, for each threashold $\tau$ compute the information gain $IG(D_j, l, \tau)$$</li>
+  <li>Selection of split with $l, \tau$ that maximizes the information gain.</li>
+  <li>Stop when $H(D_j) = 0$.</li>
+</ul>
+
+<h2 id="random-decision-forests">Random Decision Forests</h2>
+
+<ul>
+  <li>Build many trees with random subset of features.
+    <ul>
+      <li>Or randomly choose features at internal nodes.</li>
+    </ul>
+  </li>
+  <li>Each tree gives a different distribution over class labels for an test input.
+    <ul>
+      <li>$P(y=c|\vec{x}^*, treeId)$</li>
+    </ul>
+  </li>
+  <li>Use baggnig to combine the trees
+    <ul>
+      <li>Take the average of distributions over all trees.</li>
+    </ul>
+  </li>
+</ul>
+
+        </div>
         
         <div class="post-item">
             <a href="/csc384/2020/09/20/csc384-ai-search.html"><h3>CSC384 Artificial Intelligence - Search</h3></a>
@@ -912,7 +1122,7 @@
 
 <footer>
     <div class="container">
-        <div class="build">[production] a709f8a_20200920_193917</div>
+        <div class="build">[production] c0073a5_20201103_154509</div>
         Built and designed by myself 😝. GitHub: https://github.com/junthehacker/jackzh-com<br/>
         If you haven't done so, sign the <a href="http://manifesto.softwarecraftsmanship.org/#/en">Manifesto of Software Craftsmanship</a>.
         <a href="/opensource.html">Open Source</a>
@@ -925,6 +1135,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/stickybits/3.5.8/stickybits.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script>hljs.initHighlightingOnLoad();</script>
-<script src="/assets/js/app.js?v=a709f8a_20200920_193917?v=a709f8a_20200920_193917"></script>
+<script src="/assets/js/app.js?v=c0073a5_20201103_154509?v=c0073a5_20201103_154509"></script>
 </body>
 </html>

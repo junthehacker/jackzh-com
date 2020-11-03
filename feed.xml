@@ -1,4 +1,203 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-09-20T19:39:19-04:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSC384 Artificial Intelligence - Search</title><link href="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html" rel="alternate" type="text/html" title="CSC384 Artificial Intelligence - Search" /><published>2020-09-20T17:17:00-04:00</published><updated>2020-09-20T17:17:00-04:00</updated><id>https://jackzh.com/csc384/2020/09/20/csc384-ai-search</id><content type="html" xml:base="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html">&lt;!--more--&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.8.5">Jekyll</generator><link href="https://jackzh.com/feed.xml" rel="self" type="application/atom+xml" /><link href="https://jackzh.com/" rel="alternate" type="text/html" /><updated>2020-11-03T15:45:10-06:00</updated><id>https://jackzh.com/feed.xml</id><title type="html">Jun Zheng</title><subtitle>Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.</subtitle><entry><title type="html">CSCC11 Machine Learning and Data Mining</title><link href="https://jackzh.com/cscc11/2020/10/25/cscc11-classification.html" rel="alternate" type="text/html" title="CSCC11 Machine Learning and Data Mining" /><published>2020-10-25T16:17:00-05:00</published><updated>2020-10-25T16:17:00-05:00</updated><id>https://jackzh.com/cscc11/2020/10/25/cscc11-classification</id><content type="html" xml:base="https://jackzh.com/cscc11/2020/10/25/cscc11-classification.html">&lt;h2 id=&quot;classification&quot;&gt;Classification&lt;/h2&gt;
+
+&lt;p&gt;$y = f(\vec{x})$&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Binary classification problems - $y$ is binary, for example y in [0,1] or y in [-1,1].
+    &lt;ul&gt;
+      &lt;li&gt;Examples
+        &lt;ul&gt;
+          &lt;li&gt;Spam detection (is this email a spam or not spam).&lt;/li&gt;
+          &lt;li&gt;Face detection (given a small image, does it contain a face).&lt;/li&gt;
+          &lt;li&gt;Diagnosis (input a list of symptoms, output be do they have COVID-19 or not).&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Multiclass classification problems
+    &lt;ul&gt;
+      &lt;li&gt;Examples
+        &lt;ul&gt;
+          &lt;li&gt;Recognition problems (given image, identify which object is it)&lt;/li&gt;
+          &lt;li&gt;Voice recognition (given acoustic signal, determine who is speaking)&lt;/li&gt;
+          &lt;li&gt;OCR&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Our focus is going to be binary classification, then generalize to multiclass classification.&lt;/p&gt;
+
+&lt;h3 id=&quot;decision-boundary&quot;&gt;Decision Boundary&lt;/h3&gt;
+
+&lt;p&gt;For example given the following test points, we want to determine if a fruit is grape or apple.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0o19F06W5GW5lybJ0QQrZrtnu-MXrFITUB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;The red line here is the decision boundary, it is the line machine learning algorithm created, will be used to classify future inputs.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Boundary in the feature space that we learn to predict the class.&lt;/li&gt;
+  &lt;li&gt;Linearly separable (the example above is linear separable)
+    &lt;ul&gt;
+      &lt;li&gt;Data can be separated by hyperplane.&lt;/li&gt;
+      &lt;li&gt;For example the graph below is not linearly separable.
+&lt;img src=&quot;https://www.evernote.com/l/Aq3bjfSTatZNEYqUdKNaW3kHyGtgbnCuc70B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;classification-by-regression&quot;&gt;Classification by Regression&lt;/h3&gt;
+
+&lt;p&gt;Data: $\{\vec{x}_i, y_i\}_{i=1}^N, \vec{x}_i \in R^d, y_i \in \{-1, 1\}$&lt;/p&gt;
+
+&lt;p&gt;Squared Loss: $\vec{w}^* arg_{\vec{w}} min \sum_{i=1}^N (y_i - \vec{w}^T\vec{x}_i)^2$&lt;/p&gt;
+
+&lt;p&gt;Classifier: $sgn(\vec{w}^T\vec{x})$&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;$sgn(z)$ = -1 if z $\leq$ -1, 1 if z &amp;gt; 0&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq2whVnaZOxL1LIvNFML0f_fVQPONVaFvnAB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Signed distance from line $\vec{w}^T\vec{x} = 0$ is simply $\vec{x}^T\frac{\vec{w}}{||\vec{w}||}$ (x projected to the unit vector). So basically we will get positive on one side, and negative on another side.&lt;/p&gt;
+
+&lt;p&gt;Problem with linear regression is it spends too much effort trying to get $\vec{w}^T\vec{x}$ to be close to -1 or 1. But all we care about is the sign of $\vec{w}^T\vec{x}$.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It is solving the wrong problem!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;For classifiers of form $sgn(f(x))$, a natural loss is in terms of $y \cdot f(x)$.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;If $y \cdot f(x)$ is greater than 0, then we predicted correctly.&lt;/li&gt;
+  &lt;li&gt;Otherwise we predicted wrongly since y and f(x) must have different signs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The issue is with the marked part of the error function, it will have penalty even for correct predictions.
+&lt;img src=&quot;https://www.evernote.com/l/Aq3xn4WxjipIqqCRyzT31E9m7TR4HAbI02UB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Why not use 0-1 loss for binary classification problem?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Can’t use gradient based optimization since the function is not smooth (gradient for all errors are zero and in origin the gradient is non-existent).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;k-nn-classification&quot;&gt;K-NN Classification&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Find $k$ training points closest to test input, and use their outputs to determine our prediction.&lt;/li&gt;
+  &lt;li&gt;Data $\{(\vec{x}_i, y_i)\}_{i=1}^N, y_i \in \{-1, 1\}$&lt;/li&gt;
+  &lt;li&gt;Test points $\vec{x}^*$&lt;/li&gt;
+  &lt;li&gt;$N_k(\vec{x}^*)$: set of k training points where input are closest to $\vec{x^*}$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The prediction is $sgn(\sum_{i\in N_k(x^*)} y_i)$ - voting of k nearest points.&lt;/p&gt;
+
+&lt;p&gt;$sgn(\sum_{i\in N_k(x^*)} w(\vec{x}_i)y_i)$&lt;/p&gt;
+
+&lt;p&gt;$w(\vec{x}_i) = e^{-||\vec{x}_i-\vec{x}^*||^{\frac{2}{2\sigma^2}}}$&lt;/p&gt;
+
+&lt;p&gt;The question is how do we determine the hyper parameters k and $\sigma^2$.&lt;/p&gt;
+
+&lt;p&gt;For this type of classification, we are basically saying if a test point is closer to a test points of one class than another, then we will predit the test point as that class.&lt;/p&gt;
+
+&lt;p&gt;Decision boundary is piecewise lienar and very expressive.&lt;/p&gt;
+
+&lt;p&gt;When $k&amp;gt;1$ the decision boundary is blurred as we allow more nearest neighbours to vote instead of trusting one.&lt;/p&gt;
+
+&lt;h3 id=&quot;decision-tree&quot;&gt;Decision Tree&lt;/h3&gt;
+
+&lt;p&gt;Tree structured sequence of decision rules.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq31-q9oHn5EnahZNu79zIal3q4SN-3brrkB/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;For the most part we will use binary decision trees.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;$m$ internal (split) nodes.&lt;/li&gt;
+  &lt;li&gt;$m+1$ leaf (terminal) nodes.&lt;/li&gt;
+  &lt;li&gt;At each split node $j$ define a split function $t_j(\vec{x}): R^d \to \{-1, 1\}$
+    &lt;ul&gt;
+      &lt;li&gt;If -1 we go left, if 1 we go right.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Each leaf node has categorical distribution over class label.
+    &lt;ul&gt;
+      &lt;li&gt;$P(y = c | node \ j)$
+        &lt;ul&gt;
+          &lt;li&gt;Let $N_j$ be the number of traning points that reach node $j$&lt;/li&gt;
+          &lt;li&gt;$N_{j,c}$ number of points at node $j$ with class label c.&lt;/li&gt;
+          &lt;li&gt;Then the probability is just $\frac{N_{j,c}}{N_j}$&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h4 id=&quot;learning-decision-trees&quot;&gt;Learning Decision Trees&lt;/h4&gt;
+
+&lt;p&gt;Assume at node $j$ with $N_j$ data points that reaches $j$.&lt;/p&gt;
+
+&lt;p&gt;Consider split functions $t_j(\vec{x})$ based on a single feature.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;$t_j(\vec{x}) = \vec{e}_l^T \vec{x} &amp;gt; \tau_j = x_l &amp;gt; \tau_j$&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Assume $l$ is fixed (we know which feature to use).&lt;/p&gt;
+
+&lt;p&gt;If we have $N_j$ data points, then $N_j-1$ possible thresholds.&lt;/p&gt;
+
+&lt;p&gt;Then how do we choose the best threshold?&lt;/p&gt;
+
+&lt;p&gt;Goal: Partition data so all points to the left and to the right have minimal class uncertainty.&lt;/p&gt;
+
+&lt;p&gt;Entropy: Measure of uncertainty of distribution.&lt;/p&gt;
+
+&lt;p&gt;Given categorical distribution over $k$ outcomes with probability $P_c, c \in {1…k}$, then the entropy is $-\sum_{c=1}^K P_c log_2 P_c$&lt;/p&gt;
+
+&lt;p&gt;So our goal is to choose the threshold to minimize uncertainty in children. This is sometimes called information gain.&lt;/p&gt;
+
+&lt;p&gt;Information gain is the reduction of the uncertainty as a result of a split.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Assume for $D$ we have $N_j$ points at node $j$.&lt;/li&gt;
+  &lt;li&gt;$D_L$ have $N_L$ points.&lt;/li&gt;
+  &lt;li&gt;$D_R$ have $N_R$ points.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;$IG(D, split) = H(D) - \frac{N_L}{N_j} H(D_L) - \frac{N_R}{N_j} H(D_R)$&lt;/p&gt;
+
+&lt;p&gt;The algorithm&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;At node for each $l$, for each threashold $\tau$ compute the information gain $IG(D_j, l, \tau)$$&lt;/li&gt;
+  &lt;li&gt;Selection of split with $l, \tau$ that maximizes the information gain.&lt;/li&gt;
+  &lt;li&gt;Stop when $H(D_j) = 0$.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;random-decision-forests&quot;&gt;Random Decision Forests&lt;/h2&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Build many trees with random subset of features.
+    &lt;ul&gt;
+      &lt;li&gt;Or randomly choose features at internal nodes.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Each tree gives a different distribution over class labels for an test input.
+    &lt;ul&gt;
+      &lt;li&gt;$P(y=c|\vec{x}^*, treeId)$&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;Use baggnig to combine the trees
+    &lt;ul&gt;
+      &lt;li&gt;Take the average of distributions over all trees.&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="cscc11" /><category term="cscc11" /><category term="course-notes" /><summary type="html">Classification $y = f(\vec{x})$ Binary classification problems - $y$ is binary, for example y in [0,1] or y in [-1,1]. Examples Spam detection (is this email a spam or not spam). Face detection (given a small image, does it contain a face). Diagnosis (input a list of symptoms, output be do they have COVID-19 or not). Multiclass classification problems Examples Recognition problems (given image, identify which object is it) Voice recognition (given acoustic signal, determine who is speaking) OCR Our focus is going to be binary classification, then generalize to multiclass classification. Decision Boundary For example given the following test points, we want to determine if a fruit is grape or apple. The red line here is the decision boundary, it is the line machine learning algorithm created, will be used to classify future inputs. Boundary in the feature space that we learn to predict the class. Linearly separable (the example above is linear separable) Data can be separated by hyperplane. For example the graph below is not linearly separable. Classification by Regression Data: $\{\vec{x}_i, y_i\}_{i=1}^N, \vec{x}_i \in R^d, y_i \in \{-1, 1\}$ Squared Loss: $\vec{w}^* arg_{\vec{w}} min \sum_{i=1}^N (y_i - \vec{w}^T\vec{x}_i)^2$ Classifier: $sgn(\vec{w}^T\vec{x})$ $sgn(z)$ = -1 if z $\leq$ -1, 1 if z &amp;gt; 0 Signed distance from line $\vec{w}^T\vec{x} = 0$ is simply $\vec{x}^T\frac{\vec{w}}{||\vec{w}||}$ (x projected to the unit vector). So basically we will get positive on one side, and negative on another side. Problem with linear regression is it spends too much effort trying to get $\vec{w}^T\vec{x}$ to be close to -1 or 1. But all we care about is the sign of $\vec{w}^T\vec{x}$. It is solving the wrong problem! For classifiers of form $sgn(f(x))$, a natural loss is in terms of $y \cdot f(x)$. If $y \cdot f(x)$ is greater than 0, then we predicted correctly. Otherwise we predicted wrongly since y and f(x) must have different signs. The issue is with the marked part of the error function, it will have penalty even for correct predictions. Why not use 0-1 loss for binary classification problem? Can’t use gradient based optimization since the function is not smooth (gradient for all errors are zero and in origin the gradient is non-existent). K-NN Classification Find $k$ training points closest to test input, and use their outputs to determine our prediction. Data $\{(\vec{x}_i, y_i)\}_{i=1}^N, y_i \in \{-1, 1\}$ Test points $\vec{x}^*$ $N_k(\vec{x}^*)$: set of k training points where input are closest to $\vec{x^*}$ The prediction is $sgn(\sum_{i\in N_k(x^*)} y_i)$ - voting of k nearest points. $sgn(\sum_{i\in N_k(x^*)} w(\vec{x}_i)y_i)$ $w(\vec{x}_i) = e^{-||\vec{x}_i-\vec{x}^*||^{\frac{2}{2\sigma^2}}}$ The question is how do we determine the hyper parameters k and $\sigma^2$. For this type of classification, we are basically saying if a test point is closer to a test points of one class than another, then we will predit the test point as that class. Decision boundary is piecewise lienar and very expressive. When $k&amp;gt;1$ the decision boundary is blurred as we allow more nearest neighbours to vote instead of trusting one. Decision Tree Tree structured sequence of decision rules. For the most part we will use binary decision trees. $m$ internal (split) nodes. $m+1$ leaf (terminal) nodes. At each split node $j$ define a split function $t_j(\vec{x}): R^d \to \{-1, 1\}$ If -1 we go left, if 1 we go right. Each leaf node has categorical distribution over class label. $P(y = c | node \ j)$ Let $N_j$ be the number of traning points that reach node $j$ $N_{j,c}$ number of points at node $j$ with class label c. Then the probability is just $\frac{N_{j,c}}{N_j}$ Learning Decision Trees Assume at node $j$ with $N_j$ data points that reaches $j$. Consider split functions $t_j(\vec{x})$ based on a single feature. $t_j(\vec{x}) = \vec{e}_l^T \vec{x} &amp;gt; \tau_j = x_l &amp;gt; \tau_j$ Assume $l$ is fixed (we know which feature to use). If we have $N_j$ data points, then $N_j-1$ possible thresholds. Then how do we choose the best threshold? Goal: Partition data so all points to the left and to the right have minimal class uncertainty. Entropy: Measure of uncertainty of distribution. Given categorical distribution over $k$ outcomes with probability $P_c, c \in {1…k}$, then the entropy is $-\sum_{c=1}^K P_c log_2 P_c$ So our goal is to choose the threshold to minimize uncertainty in children. This is sometimes called information gain. Information gain is the reduction of the uncertainty as a result of a split. Assume for $D$ we have $N_j$ points at node $j$. $D_L$ have $N_L$ points. $D_R$ have $N_R$ points. $IG(D, split) = H(D) - \frac{N_L}{N_j} H(D_L) - \frac{N_R}{N_j} H(D_R)$ The algorithm At node for each $l$, for each threashold $\tau$ compute the information gain $IG(D_j, l, \tau)$$ Selection of split with $l, \tau$ that maximizes the information gain. Stop when $H(D_j) = 0$. Random Decision Forests Build many trees with random subset of features. Or randomly choose features at internal nodes. Each tree gives a different distribution over class labels for an test input. $P(y=c|\vec{x}^*, treeId)$ Use baggnig to combine the trees Take the average of distributions over all trees.</summary></entry><entry><title type="html">CSC384 Artificial Intelligence - Search</title><link href="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html" rel="alternate" type="text/html" title="CSC384 Artificial Intelligence - Search" /><published>2020-09-20T16:17:00-05:00</published><updated>2020-09-20T16:17:00-05:00</updated><id>https://jackzh.com/csc384/2020/09/20/csc384-ai-search</id><content type="html" xml:base="https://jackzh.com/csc384/2020/09/20/csc384-ai-search.html">&lt;!--more--&gt;
 
 &lt;p&gt;&lt;strong&gt;Search lecture 1&lt;/strong&gt;&lt;/p&gt;
 
@@ -173,7 +372,33 @@
 
 &lt;p&gt;BFS typically run out of space before we run out of time in most applications.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0mSXpyo69P7qnaHI0j6qRmpcDEXXFk2o0B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</content><author><name></name></author><category term="csc384" /><category term="csc384" /><category term="course-notes" /><summary type="html"></summary></entry><entry><title type="html">Word Break II</title><link href="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html" rel="alternate" type="text/html" title="Word Break II" /><published>2020-02-24T17:12:00-05:00</published><updated>2020-02-24T17:12:00-05:00</updated><id>https://jackzh.com/codingpractices/2020/02/24/word-break-ii</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html">&lt;p&gt;The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.evernote.com/l/Aq0mSXpyo69P7qnaHI0j6qRmpcDEXXFk2o0B/image.png&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Search lecture 3&lt;/strong&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;uniform-cost-search&quot;&gt;Uniform-Cost Search&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Keep OPEN ordered by increasing cost of the path.&lt;/li&gt;
+  &lt;li&gt;Always expand the least cost path.&lt;/li&gt;
+  &lt;li&gt;Identical to breadth first if each action has the same cost.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Can use a min-heap to achieve this.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Completeness?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;If each transition has costs $\geq \epsilon &amp;gt; 0$&lt;/li&gt;
+  &lt;li&gt;Argument for BFS holds here&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Optimality?&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Finds optimal solution if each transition has cost $\geq \epsilon &amp;gt; 0$&lt;/li&gt;
+  &lt;li&gt;Explores paths in the search space in increasing order of cost. So must find minimum cost path to a goal before finding any higher costs paths leading to a goal.&lt;/li&gt;
+&lt;/ul&gt;</content><author><name></name></author><category term="csc384" /><category term="csc384" /><category term="course-notes" /><summary type="html"></summary></entry><entry><title type="html">Word Break II</title><link href="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html" rel="alternate" type="text/html" title="Word Break II" /><published>2020-02-24T16:12:00-06:00</published><updated>2020-02-24T16:12:00-06:00</updated><id>https://jackzh.com/codingpractices/2020/02/24/word-break-ii</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/24/word-break-ii.html">&lt;p&gt;The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems.&lt;/p&gt;
 
 &lt;p&gt;Actual problem can be found &lt;a href=&quot;https://leetcode.com/problems/word-break-ii/&quot;&gt;here&lt;/a&gt;.&lt;/p&gt;
 
@@ -199,7 +424,7 @@
         &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;memo&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;start&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;result&lt;/span&gt;
 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="codingpractices" /><category term="codingpractices" /><summary type="html">The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems. Actual problem can be found here. class Solution: def wordBreak(self, s: str, wordDict: List[str]) -&amp;gt; List[str]: self.memo = {} return self.recursiveSolution(0, len(s), s, set(wordDict)) def recursiveSolution(self, start, end, s, wordSet): # Find all valid prefixes if start in self.memo: return self.memo[start] result = [] for i in range(start, end + 1): if s[start:i] in wordSet: # print(str(i) + &quot; &quot; + str(len(s)) + &quot; &quot; + s + &quot; &quot; + s[i:] + &quot; &quot; + s[:i]) if i == end: result.append(s[start:]) else: subResult = self.recursiveSolution(i, end, s, wordSet) for sub in subResult: result.append(s[start:i] + ' ' + sub) self.memo[start] = result return result</summary></entry><entry><title type="html">Recover From Preorder Traversal</title><link href="https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal.html" rel="alternate" type="text/html" title="Recover From Preorder Traversal" /><published>2020-02-23T09:26:00-05:00</published><updated>2020-02-23T09:26:00-05:00</updated><id>https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal.html">&lt;p&gt;The actual question can be found &lt;a href=&quot;https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="codingpractices" /><category term="codingpractices" /><summary type="html">The main optimization for this is the memo. Because the problem is recursive, we simply remember the result of sub-problems. Actual problem can be found here. class Solution: def wordBreak(self, s: str, wordDict: List[str]) -&amp;gt; List[str]: self.memo = {} return self.recursiveSolution(0, len(s), s, set(wordDict)) def recursiveSolution(self, start, end, s, wordSet): # Find all valid prefixes if start in self.memo: return self.memo[start] result = [] for i in range(start, end + 1): if s[start:i] in wordSet: # print(str(i) + &quot; &quot; + str(len(s)) + &quot; &quot; + s + &quot; &quot; + s[i:] + &quot; &quot; + s[:i]) if i == end: result.append(s[start:]) else: subResult = self.recursiveSolution(i, end, s, wordSet) for sub in subResult: result.append(s[start:i] + ' ' + sub) self.memo[start] = result return result</summary></entry><entry><title type="html">Recover From Preorder Traversal</title><link href="https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal.html" rel="alternate" type="text/html" title="Recover From Preorder Traversal" /><published>2020-02-23T08:26:00-06:00</published><updated>2020-02-23T08:26:00-06:00</updated><id>https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal</id><content type="html" xml:base="https://jackzh.com/codingpractices/2020/02/23/recover-from-preorder-traversal.html">&lt;p&gt;The actual question can be found &lt;a href=&quot;https://leetcode.com/problems/recover-a-tree-from-preorder-traversal/&quot;&gt;here&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;Coded in less than 30 minutes, don’t expect it to be very good, I might optimize this later.&lt;/p&gt;
 
@@ -272,7 +497,7 @@
         &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;curr&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;;&lt;/span&gt;
     &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="codingpractices" /><category term="codingpractices" /><summary type="html">The actual question can be found here Coded in less than 30 minutes, don’t expect it to be very good, I might optimize this later. /** * Definition for a binary tree node. * public class TreeNode { * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) { val = x; } * } */ class Solution { public TreeNode recoverFromPreorder(String S) { // This is a recursive solution if(S.length() == 0) return null; if(!S.contains(&quot;-&quot;)) { return new TreeNode(Integer.parseInt(S)); } else { int numericStartingIndex = 0; String rootVal = &quot;&quot;; for(int i = 0; i &amp;lt; S.length(); i++) { if(S.charAt(i) == '-') { numericStartingIndex = i; break; } else { rootVal += S.charAt(i); } } TreeNode node = new TreeNode(Integer.parseInt(rootVal)); boolean foundDepthOne = false; int currDepth = 0; boolean atRight = false; String left = &quot;&quot;; String right = &quot;&quot;; for(int i = numericStartingIndex; i &amp;lt; S.length(); i++) { if(S.charAt(i) == '-') { currDepth++; } else { char value = S.charAt(i); // If this depth is the same or less than max depth // then we have to switch from left to right if(currDepth == 1) { if(!foundDepthOne) { foundDepthOne = true; } else { atRight = true; } } if(atRight) { right = addNodeToString(right, value, currDepth - 1); } else { left = addNodeToString(left, value, currDepth - 1); } currDepth = 0; } } node.left = recoverFromPreorder(left); node.right = recoverFromPreorder(right); return node; } } public String addNodeToString(String curr, char value, int depth) { for(int i = 0; i &amp;lt; depth; i++) { curr += '-'; } curr += value; return curr; } }</summary></entry><entry><title type="html">CSCD58 Computer Networks - Routing</title><link href="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Routing" /><published>2019-10-20T10:26:00-04:00</published><updated>2019-10-20T10:26:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/20/cscd58-routing</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html">&lt;p&gt;Routers&lt;/p&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="codingpractices" /><category term="codingpractices" /><summary type="html">The actual question can be found here Coded in less than 30 minutes, don’t expect it to be very good, I might optimize this later. /** * Definition for a binary tree node. * public class TreeNode { * int val; * TreeNode left; * TreeNode right; * TreeNode(int x) { val = x; } * } */ class Solution { public TreeNode recoverFromPreorder(String S) { // This is a recursive solution if(S.length() == 0) return null; if(!S.contains(&quot;-&quot;)) { return new TreeNode(Integer.parseInt(S)); } else { int numericStartingIndex = 0; String rootVal = &quot;&quot;; for(int i = 0; i &amp;lt; S.length(); i++) { if(S.charAt(i) == '-') { numericStartingIndex = i; break; } else { rootVal += S.charAt(i); } } TreeNode node = new TreeNode(Integer.parseInt(rootVal)); boolean foundDepthOne = false; int currDepth = 0; boolean atRight = false; String left = &quot;&quot;; String right = &quot;&quot;; for(int i = numericStartingIndex; i &amp;lt; S.length(); i++) { if(S.charAt(i) == '-') { currDepth++; } else { char value = S.charAt(i); // If this depth is the same or less than max depth // then we have to switch from left to right if(currDepth == 1) { if(!foundDepthOne) { foundDepthOne = true; } else { atRight = true; } } if(atRight) { right = addNodeToString(right, value, currDepth - 1); } else { left = addNodeToString(left, value, currDepth - 1); } currDepth = 0; } } node.left = recoverFromPreorder(left); node.right = recoverFromPreorder(right); return node; } } public String addNodeToString(String curr, char value, int depth) { for(int i = 0; i &amp;lt; depth; i++) { curr += '-'; } curr += value; return curr; } }</summary></entry><entry><title type="html">CSCD58 Computer Networks - Routing</title><link href="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Routing" /><published>2019-10-20T09:26:00-05:00</published><updated>2019-10-20T09:26:00-05:00</updated><id>https://jackzh.com/cscd58/2019/10/20/cscd58-routing</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/20/cscd58-routing.html">&lt;p&gt;Routers&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -445,7 +670,7 @@
 
 &lt;p&gt;LS advertise incorrect link cost, each node then simply update its own table.&lt;/p&gt;
 
-&lt;p&gt;DV advertises incorrect path cost, which means error propogates, and might be slow to recover.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Routers</summary></entry><entry><title type="html">CSCD58 Computer Networks - Internet Protocol</title><link href="https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Internet Protocol" /><published>2019-10-18T13:18:00-04:00</published><updated>2019-10-18T13:18:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol.html">&lt;p&gt;Introduction to ethernet and IP&lt;/p&gt;
+&lt;p&gt;DV advertises incorrect path cost, which means error propogates, and might be slow to recover.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Routers</summary></entry><entry><title type="html">CSCD58 Computer Networks - Internet Protocol</title><link href="https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Internet Protocol" /><published>2019-10-18T12:18:00-05:00</published><updated>2019-10-18T12:18:00-05:00</updated><id>https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/18/cscd58-internet-protocol.html">&lt;p&gt;Introduction to ethernet and IP&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -824,7 +1049,7 @@
 
 &lt;p&gt;When ICMP arrives, source records RTT.&lt;/p&gt;
 
-&lt;p&gt;It will eventually arrive at destination host. Destination will return ICMP port unreachable (type 3, code 3), then source stops.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Introduction to ethernet and IP</summary></entry><entry><title type="html">CSCD58 Computer Networks - Link Layer</title><link href="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Link Layer" /><published>2019-10-17T20:22:00-04:00</published><updated>2019-10-17T20:22:00-04:00</updated><id>https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html">&lt;p&gt;Physical links and error correction/detection&lt;/p&gt;
+&lt;p&gt;It will eventually arrive at destination host. Destination will return ICMP port unreachable (type 3, code 3), then source stops.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Introduction to ethernet and IP</summary></entry><entry><title type="html">CSCD58 Computer Networks - Link Layer</title><link href="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html" rel="alternate" type="text/html" title="CSCD58 Computer Networks - Link Layer" /><published>2019-10-17T19:22:00-05:00</published><updated>2019-10-17T19:22:00-05:00</updated><id>https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer</id><content type="html" xml:base="https://jackzh.com/cscd58/2019/10/17/cscd58-link-layer.html">&lt;p&gt;Physical links and error correction/detection&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1178,7 +1403,7 @@ Physical        &amp;lt;- Ethernet cables, wireless signals
 
 &lt;p&gt;Mainly used for magnetic disks.&lt;/p&gt;
 
-&lt;p&gt;2t redundant bits can correct &amp;lt;= t errors.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Physical links and error correction/detection</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T13:00:00-04:00</published><updated>2019-03-12T13:00:00-04:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
+&lt;p&gt;2t redundant bits can correct &amp;lt;= t errors.&lt;/p&gt;</content><author><name></name></author><category term="cscd58" /><category term="cscd58" /><category term="course-notes" /><summary type="html">Physical links and error correction/detection</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Fibonacci Heaps</title><link href="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Fibonacci Heaps" /><published>2019-03-12T12:00:00-05:00</published><updated>2019-03-12T12:00:00-05:00</updated><id>https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/03/12/cscb63-fib-heap.html">&lt;p&gt;Basic introduction to fibonacci heaps and some comparson with regular heaps.&lt;/p&gt;
 
 &lt;!--more--&gt;
 
@@ -1278,7 +1503,7 @@ Physical        &amp;lt;- Ethernet cables, wireless signals
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;union(H1, H2) {
     connect H1.min and H2.min
 }
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Basic introduction to fibonacci heaps and some comparson with regular heaps.</summary></entry><entry><title type="html">CSCC69 Operating Systems - Threads</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Threads" /><published>2019-02-13T12:50:00-05:00</published><updated>2019-02-13T12:50:00-05:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-threads</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Basic introduction to fibonacci heaps and some comparson with regular heaps.</summary></entry><entry><title type="html">CSCC69 Operating Systems - Threads</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Threads" /><published>2019-02-13T11:50:00-06:00</published><updated>2019-02-13T11:50:00-06:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-threads</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-threads.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
 
 &lt;p&gt;Threads are basically mini-processes within a process. However they share the same address space.&lt;/p&gt;
 
@@ -1319,7 +1544,7 @@ Physical        &amp;lt;- Ethernet cables, wireless signals
 
 &lt;p&gt;In user space thread implementations, there is no clock interrupts. So a thread must give up the CPU before another thread can be run.&lt;/p&gt;
 
-&lt;h2 id=&quot;kernel-space-thread-implementation&quot;&gt;Kernel Space Thread Implementation&lt;/h2&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Overview Threads are basically mini-processes within a process. However they share the same address space. Creating threads are much faster than creating processes, in some systems, this can be 10x to 100x faster. Think of threads as JS event loops, basically it. Classic Thread Model The classic thread model basically have all threads with their own stack and own PC. Everything else is shared. The software library will take care of scheduling. POSIX Thread Standard Some useful calls: pthread_create: New thread pthread_exit: Quite the calling thread pthread_join: Wait for a thread to exit pthread_yield: Give up CPU for another thread pthread_attr_init: Create a thread attribute structure pthread_attr_destroy: Remove a thread’s attribute structure User Space Thread Implementation If implemented in user space, then the library have to take care of scheduling and switching. However if hardware do support store/load registers, this operation can be done very quickly, which is much faster than trapping to kernel. And since everything is local, no context switch is needed, no kernel calls, it is very fast. Each process can also have its own scheduling algorithm. Drawbacks Thread cannot make blocking kernel calls, since that will halt all threads. Sometimes library will wrap the actual system call, but it is not really that nice to do. Another issue is page fault. Which will be discussed in memory management (basically blocking the process because it needs to read instructions from disk). In user space thread implementations, there is no clock interrupts. So a thread must give up the CPU before another thread can be run. Kernel Space Thread Implementation</summary></entry><entry><title type="html">CSCC69 Operating Systems - Processes</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-processes.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Processes" /><published>2019-02-13T09:54:00-05:00</published><updated>2019-02-13T09:54:00-05:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-processes</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-processes.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
+&lt;h2 id=&quot;kernel-space-thread-implementation&quot;&gt;Kernel Space Thread Implementation&lt;/h2&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Overview Threads are basically mini-processes within a process. However they share the same address space. Creating threads are much faster than creating processes, in some systems, this can be 10x to 100x faster. Think of threads as JS event loops, basically it. Classic Thread Model The classic thread model basically have all threads with their own stack and own PC. Everything else is shared. The software library will take care of scheduling. POSIX Thread Standard Some useful calls: pthread_create: New thread pthread_exit: Quite the calling thread pthread_join: Wait for a thread to exit pthread_yield: Give up CPU for another thread pthread_attr_init: Create a thread attribute structure pthread_attr_destroy: Remove a thread’s attribute structure User Space Thread Implementation If implemented in user space, then the library have to take care of scheduling and switching. However if hardware do support store/load registers, this operation can be done very quickly, which is much faster than trapping to kernel. And since everything is local, no context switch is needed, no kernel calls, it is very fast. Each process can also have its own scheduling algorithm. Drawbacks Thread cannot make blocking kernel calls, since that will halt all threads. Sometimes library will wrap the actual system call, but it is not really that nice to do. Another issue is page fault. Which will be discussed in memory management (basically blocking the process because it needs to read instructions from disk). In user space thread implementations, there is no clock interrupts. So a thread must give up the CPU before another thread can be run. Kernel Space Thread Implementation</summary></entry><entry><title type="html">CSCC69 Operating Systems - Processes</title><link href="https://jackzh.com/cscc69/2019/02/13/cscc69-processes.html" rel="alternate" type="text/html" title="CSCC69 Operating Systems - Processes" /><published>2019-02-13T08:54:00-06:00</published><updated>2019-02-13T08:54:00-06:00</updated><id>https://jackzh.com/cscc69/2019/02/13/cscc69-processes</id><content type="html" xml:base="https://jackzh.com/cscc69/2019/02/13/cscc69-processes.html">&lt;h2 id=&quot;overview&quot;&gt;Overview&lt;/h2&gt;
 
 &lt;p&gt;Processes allows computers to do multiple things at once.&lt;/p&gt;
 
@@ -1429,125 +1654,4 @@ Physical        &amp;lt;- Ethernet cables, wireless signals
   &lt;li&gt;Scheduler decides which to run next.&lt;/li&gt;
   &lt;li&gt;C procedure returns to assembly code.&lt;/li&gt;
   &lt;li&gt;Assembly runs new process.&lt;/li&gt;
-&lt;/ul&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Overview Processes allows computers to do multiple things at once. In multiprogramming system, CPU switches from process to process very quickly, make it seem that it is running them concurrently. This is usually called pseudoparallelism, in contrast to real-parallelism with multiprocessor. In any given instant, only one process is running on one CPU. Context Switch: a context switch is the process of storing the state of a process or of a thread so that it can be restored and resumed later. Drawbacks Programs cannot have assumption of timing. Say if you know 1 loop takes 0.01 millisec, you loop 1000 times to get 10 millisec. However, while in the loop, OS might already switched to another process. Program vs Process An analogy: Recepe: Program Ingredients: Input Data Process: Reading the recepe, getting ingredients and baking the cake. Now the guy’s son runs into room and says he has been stung by a bee. The guy records where he was in the recipe, gets first aid book and following that. After first aid has been done, he goes back to cooking. This is basically how OS switches processes. In real OS this is called scheduling. And if a programming is running twice, it is two processes. Process Creation There are 4 principal events that cause processes to be created: System initialization Execution of a process creation system call by a running process A user request to create a new process Initiation of a batch job There are 2 main types: foreground and background (daemons). Technically, for all these cases, a new process is created by an existing process. In UNIX, only fork can be used to create new processes. After fork, the child may change its memory image using execve. Reason is so we can redirect IO before execve. Parent and child have different address space. However they may share text. Process Termination There are 4 ways for a process to terminate. Normal exit Error exit Fatal error Killed by another process Process Hierarchies In UNIX, a process and all of its children form a process group. When a user sends a signal from the keyboard, all members are notified. In UNIX, all processes belong to a single tree, which init at the root. Processes cannot change parent (unless parent is killed by some reason). Process States There are 3 main states: Running: Actually using the CPU Ready: Can run, but temp stopped for another process to run Blocked: Cannot run until some external event happens In UNIX, a process is automatically blocked if trying to read from an empty pipe. Process Implementation People use process table (PCB) to implement processes. Usually a table includes: State Memory allocation Open files Scheduling info Registers etc. Interrupt Vector Usually located at the bottom of the memory, when an interrupt happens, the hardware pushes process info onto stack, and jumps to interrupt vector. Then the interrupt procedure runs. All interrupts start by saving registers, this is usually done in assembly since C cannot access these information. Then the access is handed over to interrupt handler (stack is also reset). After the handler is done, the control is back to assembly to load the registers again. Overview of the basic procedures are listed below: Hardware stacks basic program information Hardware loads PC from IV. Assembly saves registers Assembly set up new stack. Runs C interrupt service. Scheduler decides which to run next. C procedure returns to assembly code. Assembly runs new process.</summary></entry><entry><title type="html">CSCB63 Data Structure Design and Analysis - Balanced Trees</title><link href="https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees.html" rel="alternate" type="text/html" title="CSCB63 Data Structure Design and Analysis - Balanced Trees" /><published>2019-01-14T12:13:00-05:00</published><updated>2019-01-14T12:13:00-05:00</updated><id>https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees</id><content type="html" xml:base="https://jackzh.com/cscb63/2019/01/14/cscb63-balanced-trees.html">&lt;h2 id=&quot;why-balanced-trees&quot;&gt;Why balanced trees?&lt;/h2&gt;
-
-&lt;p&gt;Binary tree: $O(n)$ for &lt;code class=&quot;highlighter-rouge&quot;&gt;insert&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;delete&lt;/code&gt; and &lt;code class=&quot;highlighter-rouge&quot;&gt;search&lt;/code&gt;.&lt;/p&gt;
-
-&lt;!--more--&gt;
-
-&lt;p&gt;Some better trees:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;AVL Trees&lt;/li&gt;
-  &lt;li&gt;B-trees&lt;/li&gt;
-  &lt;li&gt;Splay trees&lt;/li&gt;
-  &lt;li&gt;Weight …&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;avl-trees&quot;&gt;AVL Trees&lt;/h2&gt;
-
-&lt;p&gt;Similar to binary search tree. But also different in a few ways:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The height of an AVL tree is $O(log n)$.&lt;/li&gt;
-  &lt;li&gt;Each internal node has a balance property equal to -1, 0, 1.&lt;/li&gt;
-  &lt;li&gt;Balance value = height of the left subtree - height of the right sub tree.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;balance-property&quot;&gt;Balance Property&lt;/h3&gt;
-
-&lt;p&gt;Have to store the height of sub-trees.&lt;/p&gt;
-
-&lt;p&gt;-1 - Right heavy, +1 - Left heavy, 0 - Balanced.&lt;/p&gt;
-
-&lt;h3 id=&quot;searching&quot;&gt;Searching&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Same as BST&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;insertion&quot;&gt;Insertion&lt;/h3&gt;
-
-&lt;p&gt;After insert, if a node’s balance factor is not -1, 0 or +1, we have to do one single rotation to fix it.&lt;/p&gt;
-
-&lt;p&gt;If there is a “bent”, then we have to do double rotation&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;for (X = parent(Z); X != null; X = parent(Z)) { // Loop (possibly up to the root)
-    // BalanceFactor(X) has to be updated:
-    if (Z == right_child(X)) { // The right subtree increases
-        if (BalanceFactor(X) &amp;gt; 0) { // X is right-heavy
-            // ===&amp;gt; the temporary BalanceFactor(X) == +2
-            // ===&amp;gt; rebalancing is required.
-            G = parent(X); // Save parent of X around rotations
-            if (BalanceFactor(Z) &amp;lt; 0)      // Right Left Case     (see figure 5)
-                N = rotate_RightLeft(X, Z); // Double rotation: Right(Z) then Left(X)
-            else                           // Right Right Case    (see figure 4)
-                N = rotate_Left(X, Z);     // Single rotation Left(X)
-            // After rotation adapt parent link
-        } else {
-            if (BalanceFactor(X) &amp;lt; 0) {
-                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
-                break; // Leave the loop
-            }
-            BalanceFactor(X) = +1;
-            Z = X; // Height(Z) increases by 1
-            continue;
-        }
-    } else { // Z == left_child(X): the left subtree increases
-        if (BalanceFactor(X) &amp;lt; 0) { // X is left-heavy
-            // ===&amp;gt; the temporary BalanceFactor(X) == –2
-            // ===&amp;gt; rebalancing is required.
-            G = parent(X); // Save parent of X around rotations
-            if (BalanceFactor(Z) &amp;gt; 0)      // Left Right Case
-                N = rotate_LeftRight(X, Z); // Double rotation: Left(Z) then Right(X)
-            else                           // Left Left Case
-                N = rotate_Right(X, Z);    // Single rotation Right(X)
-            // After rotation adapt parent link
-        } else {
-            if (BalanceFactor(X) &amp;gt; 0) {
-                BalanceFactor(X) = 0; // Z’s height increase is absorbed at X.
-                break; // Leave the loop
-            }
-            BalanceFactor(X) = –1;
-            Z = X; // Height(Z) increases by 1
-            continue;
-        }
-    }
-    // After a rotation adapt parent link:
-    // N is the new root of the rotated subtree
-    // Height does not change: Height(N) == old Height(X)
-    parent(N) = G;
-    if (G != null) {
-        if (X == left_child(G))
-            left_child(G) = N;
-        else
-            right_child(G) = N;
-        break;
-    } else {
-        tree-&amp;gt;root = N; // N is the new root of the total tree
-        break;
-    }
-    // There is no fall thru, only break; or continue;
-}
-// Unless loop is left via break, the height of the total tree increases by 1.
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;h3 id=&quot;deletion&quot;&gt;Deletion&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;If the key is a leaf, delete and rebalance.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h3 id=&quot;tree-height&quot;&gt;Tree Height&lt;/h3&gt;
-
-&lt;p&gt;Maximum possible height is $log(n)$, if we have $n$ nodes.&lt;/p&gt;
-
-&lt;p&gt;If the height is $h$, let &lt;code class=&quot;highlighter-rouge&quot;&gt;minsize(h)&lt;/code&gt; be the minimum number of nodes for an AVL tree of height $h$.&lt;/p&gt;
-
-&lt;p&gt;Then&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;minsize(0) = 0,
-minsize(1) = 1,
-minsize(h + 2) = 1 + minsize(h + 1) + minsize(h)
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;minsize(h) = fib(h+2) - 1 (why?)&lt;/p&gt;</content><author><name></name></author><category term="cscb63" /><category term="cscb63" /><category term="course-notes" /><summary type="html">Why balanced trees? Binary tree: $O(n)$ for insert, delete and search.</summary></entry></feed>
+&lt;/ul&gt;</content><author><name></name></author><category term="cscc69" /><category term="cscc69" /><category term="course-notes" /><summary type="html">Overview Processes allows computers to do multiple things at once. In multiprogramming system, CPU switches from process to process very quickly, make it seem that it is running them concurrently. This is usually called pseudoparallelism, in contrast to real-parallelism with multiprocessor. In any given instant, only one process is running on one CPU. Context Switch: a context switch is the process of storing the state of a process or of a thread so that it can be restored and resumed later. Drawbacks Programs cannot have assumption of timing. Say if you know 1 loop takes 0.01 millisec, you loop 1000 times to get 10 millisec. However, while in the loop, OS might already switched to another process. Program vs Process An analogy: Recepe: Program Ingredients: Input Data Process: Reading the recepe, getting ingredients and baking the cake. Now the guy’s son runs into room and says he has been stung by a bee. The guy records where he was in the recipe, gets first aid book and following that. After first aid has been done, he goes back to cooking. This is basically how OS switches processes. In real OS this is called scheduling. And if a programming is running twice, it is two processes. Process Creation There are 4 principal events that cause processes to be created: System initialization Execution of a process creation system call by a running process A user request to create a new process Initiation of a batch job There are 2 main types: foreground and background (daemons). Technically, for all these cases, a new process is created by an existing process. In UNIX, only fork can be used to create new processes. After fork, the child may change its memory image using execve. Reason is so we can redirect IO before execve. Parent and child have different address space. However they may share text. Process Termination There are 4 ways for a process to terminate. Normal exit Error exit Fatal error Killed by another process Process Hierarchies In UNIX, a process and all of its children form a process group. When a user sends a signal from the keyboard, all members are notified. In UNIX, all processes belong to a single tree, which init at the root. Processes cannot change parent (unless parent is killed by some reason). Process States There are 3 main states: Running: Actually using the CPU Ready: Can run, but temp stopped for another process to run Blocked: Cannot run until some external event happens In UNIX, a process is automatically blocked if trying to read from an empty pipe. Process Implementation People use process table (PCB) to implement processes. Usually a table includes: State Memory allocation Open files Scheduling info Registers etc. Interrupt Vector Usually located at the bottom of the memory, when an interrupt happens, the hardware pushes process info onto stack, and jumps to interrupt vector. Then the interrupt procedure runs. All interrupts start by saving registers, this is usually done in assembly since C cannot access these information. Then the access is handed over to interrupt handler (stack is also reset). After the handler is done, the control is back to assembly to load the registers again. Overview of the basic procedures are listed below: Hardware stacks basic program information Hardware loads PC from IV. Assembly saves registers Assembly set up new stack. Runs C interrupt service. Scheduler decides which to run next. C procedure returns to assembly code. Assembly runs new process.</summary></entry></feed>
